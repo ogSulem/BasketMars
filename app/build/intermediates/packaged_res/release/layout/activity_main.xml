@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/root_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="@drawable/bg_gradient">
+
+    <ImageView
+        android:id="@+id/logo_hoop"
+        android:layout_width="280dp"
+        android:layout_height="160dp"
+        android:src="@drawable/hoop2"
+        android:layout_gravity="center"
+        android:layout_marginBottom="12dp"
+        android:contentDescription="Лого кольцо"/>
+
+    <TextView
+        android:id="@+id/title_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Yarullin Basket"
+        android:textSize="40sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        android:fontFamily="sans-serif-black"
+        android:layout_marginBottom="32dp"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/play_button"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Играть"
+        android:textSize="24sp"
+        android:textColor="#fff"
+        android:elevation="8dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/btn_modern_purple"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/leaderboard_button"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Лидерборд"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:elevation="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/btn_modern_purple"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/select_ball_button"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Инвентарь"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:elevation="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/btn_modern_purple"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/achievements_button"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Достижения"
+        android:textSize="20sp"
+        android:textColor="#fff"
+        android:elevation="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/btn_modern_purple"/>
+
+    <androidx.appcompat.widget.AppCompatButton
+        android:id="@+id/settings_button"
+        android:layout_width="220dp"
+        android:layout_height="wrap_content"
+        android:text="Профиль / Настройки"
+        android:textSize="18sp"
+        android:textColor="#fff"
+        android:elevation="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:fontFamily="sans-serif-medium"
+        android:background="@drawable/btn_modern_purple"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Яруллин Марсель\n09-253 группа КФУ"
+        android:textSize="16sp"
+        android:textColor="#BBAAFF"
+        android:gravity="center"
+        android:layout_marginTop="64dp"
+        android:fontFamily="sans-serif-medium"/>
+</LinearLayout> 

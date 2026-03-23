@@ -1,0 +1,190 @@
+[
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_bg_gradient2.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\bg_gradient2.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-xxxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-xxxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_bg_gradient.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\bg_gradient.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-anydpi-v26\\ic_launcher_round.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_hoop2.png.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\hoop2.png"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-hdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-hdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_music.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_music.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\layout_activity_settings.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\layout\\activity_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_next.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_next.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_hoop.png.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\hoop.png"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_prev.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_prev.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\layout_music_controls.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\layout\\music_controls.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_btn_rounded_gold.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\btn_rounded_gold.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\raw_music2.mp3.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\raw\\music2.mp3"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-mdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-mdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "com.example.basketballgame.app-merged_res-33:/layout_activity_leaderboard.xml.flat",
+        "source": "com.example.basketballgame.app-main-35:/layout/activity_leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\layout_bottomsheet_match_results.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\layout\\bottomsheet_match_results.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ball2.png.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ball2.png"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\layout_activity_leaderboard.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\layout\\activity_leaderboard.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_btn_rounded.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\btn_rounded.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-xhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-xhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\layout_bottomsheet_mode_select.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\layout\\bottomsheet_mode_select.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ball.png.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ball.png"
+    },
+    {
+        "merged": "com.example.basketballgame.app-merged_res-33:/drawable_ic_mode_duel.xml.flat",
+        "source": "com.example.basketballgame.app-main-35:/drawable/ic_mode_duel.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-anydpi-v26\\ic_launcher.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_mode_arcade.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_mode_arcade.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\layout_bottomsheet_duel_type.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\layout\\bottomsheet_duel_type.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_bg_gradient3.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\bg_gradient3.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_btn_rounded_dark.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\btn_rounded_dark.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-mdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-mdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-xhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-xhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_btn_modern_purple.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\btn_modern_purple.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-hdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-hdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_hoop3.png.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\hoop3.png"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_bg_mode_icon_circle.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\bg_mode_icon_circle.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-xxhdpi_ic_launcher_round.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-xxhdpi\\ic_launcher_round.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-xxxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-xxxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\mipmap-xxhdpi_ic_launcher.webp.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\mipmap-xxhdpi\\ic_launcher.webp"
+    },
+    {
+        "merged": "com.example.basketballgame.app-merged_res-33:/layout_activity_settings.xml.flat",
+        "source": "com.example.basketballgame.app-main-35:/layout/activity_settings.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_back.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_back.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_mode_timed.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_mode_timed.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ball3.png.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ball3.png"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\drawable_ic_mode_duel.xml.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\drawable\\ic_mode_duel.xml"
+    },
+    {
+        "merged": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-merged_res-33:\\raw_music3.mp3.flat",
+        "source": "C:\\Users\\timas\\.gradle\\daemon\\8.1.1\\com.example.basketballgame.app-main-35:\\raw\\music3.mp3"
+    }
+]

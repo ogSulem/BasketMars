@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<incidents format="6" by="lint 8.1.2" type="partial_results">
+    <map id="UnsafeIntentLaunch">
+            <map id="unprotected">
+                <entry
+                    name="com.example.basketballgame.MainActivity"
+                    boolean="true"/>
+            </map>
+    </map>
+    <map id="UnusedResources">
+        <location id="R.drawable.btn_rounded"
+            file="${:app*debug*sourceProvider*0*resDir*0}/drawable/btn_rounded.xml"
+            line="2"
+            column="1"
+            startOffset="40"
+            endLine="7"
+            endColumn="9"
+            endOffset="351"/>
+        <location id="R.raw.music3"
+            file="${:app*debug*sourceProvider*0*resDir*0}/raw/music3.mp3"/>
+        <location id="R.drawable.btn_rounded_gold"
+            file="${:app*debug*sourceProvider*0*resDir*0}/drawable/btn_rounded_gold.xml"
+            line="1"
+            column="1"
+            startOffset="0"
+            endLine="6"
+            endColumn="9"
+            endOffset="242"/>
+        <entry
+            name="model"
+            string="drawable[ball2(U),bg_gradient3(U),bg_gradient2(U),ball3(U),hoop3(U),hoop2(U),ic_back(U),btn_rounded_dark(U),ball(U),btn_rounded_gold(D),ic_launcher_foreground(U),ic_next(U),btn_rounded(D),ic_prev(U),ic_launcher_background(U),ic_music(U),hoop(U),ic_launcher_foreground_1(R),bg_gradient(U),btn_modern_purple(U)],id[stats_timed(U),card_toggles(U),settings_button(U),logo_hoop(D),root_layout(U),btn_back(U),button_save(U),settings_title(U),button_back(U),music_prev(U),music_play(U),switch_vibration(U),stats_container(U),card_profile(U),stats_duel(U),leaderboard_list(U),loading_spinner(U),leaderboard_title(U),leaderboard_button(U),achievements_button(U),player_name(U),mode_tabs(U),play_button(U),stats_arcade(U),select_ball_button(U),empty_state(U),button_reset(U),music_next(U),switch_music(U),title_text(U)],layout[activity_leaderboard(U),activity_main(U),activity_settings(U),music_controls(U)],mipmap[ic_launcher_round(U),ic_launcher(U)],raw[music3(D),music2(D)],style[Theme_BasketballGame(U),Theme_MaterialComponents_DayNight_NoActionBar(R)];a^11,32^12^7^6^25^20^29^2d,33^12^5^13,34^12^6^1b^21^15^1a,35^7^d^f^b,36^e^a,37^e^a,3a^3b;;;"/>
+        <location id="R.raw.music2"
+            file="${:app*debug*sourceProvider*0*resDir*0}/raw/music2.mp3"/>
+    </map>
+
+</incidents>

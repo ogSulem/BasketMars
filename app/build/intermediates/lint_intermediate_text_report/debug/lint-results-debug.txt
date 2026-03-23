@@ -1,0 +1,313 @@
+C:\Users\timas\OneDrive\Desktop\marsel\app\build.gradle:12: Warning: Not targeting the latest versions of Android; compatibility modes apply. Consider testing and updating this version. Consult the android.os.Build.VERSION_CODES javadoc for details. [OldTargetApi]
+        targetSdk 34
+        ~~~~~~~~~~~~
+
+   Explanation for issues of type "OldTargetApi":
+   When your application runs on a version of Android that is more recent than
+   your targetSdkVersion specifies that it has been tested with, various
+   compatibility modes kick in. This ensures that your application continues
+   to work, but it may look out of place. For example, if the targetSdkVersion
+   is less than 14, your app may get an option button in the UI.
+
+   To fix this issue, set the targetSdkVersion to the highest available value.
+   Then test your app to make sure everything works correctly. You may want to
+   consult the compatibility notes to see what changes apply to each version
+   you are adding support for:
+   https://developer.android.com/reference/android/os/Build.VERSION_CODES.html
+   as well as follow this guide:
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.
+   html
+
+   https://developer.android.com/distribute/best-practices/develop/target-sdk.html
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\build.gradle:31: Warning: A newer version of androidx.appcompat:appcompat than 1.6.1 is available: 1.7.1 [GradleDependency]
+    implementation 'androidx.appcompat:appcompat:1.6.1'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\build.gradle:32: Warning: A newer version of com.google.android.material:material than 1.9.0 is available: 1.13.0 [GradleDependency]
+    implementation 'com.google.android.material:material:1.9.0'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\build.gradle:33: Warning: A newer version of androidx.constraintlayout:constraintlayout than 2.1.4 is available: 2.2.1 [GradleDependency]
+    implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\build.gradle:35: Warning: A newer version of androidx.recyclerview:recyclerview than 1.3.2 is available: 1.4.0 [GradleDependency]
+    implementation 'androidx.recyclerview:recyclerview:1.3.2'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\build.gradle:36: Warning: A newer version of androidx.room:room-runtime than 2.6.1 is available: 2.8.4 [GradleDependency]
+    implementation 'androidx.room:room-runtime:2.6.1'
+                   ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\build.gradle:37: Warning: A newer version of androidx.room:room-compiler than 2.6.1 is available: 2.8.4 [GradleDependency]
+    annotationProcessor 'androidx.room:room-compiler:2.6.1'
+                        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "GradleDependency":
+   This detector looks for usages of libraries where the version you are using
+   is not the current stable release. Using older versions is fine, and there
+   are cases where you deliberately want to stick with an older version.
+   However, you may simply not be aware that a more recent version is
+   available, and that is what this lint check helps find.
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\MusicPlayer.java:26: Warning: Use of this function is discouraged because resource reflection makes it harder to perform build optimizations and compile-time verification of code. It is much more efficient to retrieve resources by identifier (e.g. R.foo.bar) than by name (e.g. getIdentifier("bar", "foo", null)). [DiscouragedApi]
+                    int resId = context.getResources().getIdentifier(name, "raw", context.getPackageName());
+                                                       ~~~~~~~~~~~~~
+
+   Explanation for issues of type "DiscouragedApi":
+   Discouraged APIs are allowed and are not deprecated, but they may be unfit
+   for common use (e.g. due to slow performance or subtle behavior).
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\AchievementsActivity.java:184: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                        android.graphics.Paint paint = new android.graphics.Paint();
+                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\BallSelectActivity.java:188: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                        android.graphics.Paint paint = new android.graphics.Paint();
+                                                       ~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:334: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+            Paint popupBg = new Paint();
+                            ~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:339: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+            Paint popupBorder = new Paint();
+                                ~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:357: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+            Paint cardBorder = new Paint();
+                               ~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:361: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+            Paint cardBg = new Paint();
+                           ~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:364: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+            RectF cardRect = new RectF(cardX, cardY, cardX + cardSize, cardY + cardSize);
+                             ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:368: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                Bitmap icon = BitmapFactory.decodeResource(getResources(), achievementIconRes);
+                              ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:369: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                RectF iconRect = new RectF(cardX + 32, cardY + 32, cardX + cardSize - 32, cardY + cardSize - 32);
+                                 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:370: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                canvas.drawBitmap(Bitmap.createScaledBitmap(icon, (int)(cardSize-64), (int)(cardSize-64), false), null, iconRect, null);
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:372: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                Paint bgPaint = new Paint();
+                                ~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:373: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                bgPaint.setShader(new android.graphics.LinearGradient(cardX, cardY, cardX + cardSize, cardY + cardSize, 0xFF3A2B5C, 0xFF2D193C, android.graphics.Shader.TileMode.CLAMP));
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:377: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                Paint bgPaint = new Paint();
+                                ~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:378: Warning: Avoid object allocations during draw/layout operations (preallocate and reuse instead) [DrawAllocation]
+                bgPaint.setShader(new android.graphics.LinearGradient(cardX, cardY, cardX + cardSize, cardY + cardSize, 0xFFFFA726, 0xFFFF7043, android.graphics.Shader.TileMode.CLAMP));
+                                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "DrawAllocation":
+   You should avoid allocating objects during a drawing or layout operation.
+   These are called frequently, so a smooth UI can be interrupted by garbage
+   collection pauses caused by the object allocations.
+
+   The way this is generally handled is to allocate the needed objects up
+   front and to reuse them for each drawing operation.
+
+   Some methods allocate memory on your behalf (such as Bitmap.create), and
+   these should be handled in the same way.
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\LeaderboardAdapter.java:24: Warning: It will always be more efficient to use more specific change events if you can. Rely on notifyDataSetChanged as a last resort. [NotifyDataSetChanged]
+        notifyDataSetChanged();
+        ~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "NotifyDataSetChanged":
+   The RecyclerView adapter's onNotifyDataSetChanged method does not specify
+   what about the data set has changed, forcing any observers to assume that
+   all existing items and structure may no longer be valid. `LayoutManager`s
+   will be forced to fully rebind and relayout all visible views.
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\btn_rounded.xml:2: Warning: The resource R.drawable.btn_rounded appears to be unused [UnusedResources]
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\btn_rounded_gold.xml:1: Warning: The resource R.drawable.btn_rounded_gold appears to be unused [UnusedResources]
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+^
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\raw\music2.mp3: Warning: The resource R.raw.music2 appears to be unused [UnusedResources]
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\raw\music3.mp3: Warning: The resource R.raw.music3 appears to be unused [UnusedResources]
+
+   Explanation for issues of type "UnusedResources":
+   Unused resources make applications larger and slow down builds.
+
+
+   The unused resource check can ignore tests. If you want to include
+   resources that are only referenced from tests, consider packaging them in a
+   test source set instead.
+
+   You can include test sources in the unused resource check by setting the
+   system property lint.unused-resources.include-tests =true, and to exclude
+   them (usually for performance reasons), use
+   lint.unused-resources.exclude-tests =true.
+   ,
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\mipmap-anydpi-v26\ic_launcher.xml:2: Warning: The application adaptive icon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\mipmap-anydpi-v26\ic_launcher_round.xml:2: Warning: The application adaptive roundIcon is missing a monochrome tag [MonochromeLauncherIcon]
+<adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+^
+
+   Explanation for issues of type "MonochromeLauncherIcon":
+   If android:roundIcon and android:icon are both in your manifest, you must
+   either remove the reference to android:roundIcon if it is not needed; or,
+   supply the monochrome icon in the drawable defined by the android:roundIcon
+   and android:icon attribute.
+
+   For example, if android:roundIcon and android:icon are both in the
+   manifest, a launcher might choose to use android:roundIcon over
+   android:icon to display the adaptive app icon. Therefore, your themed
+   application iconwill not show if your monochrome attribute is not also
+   specified in android:roundIcon.
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\ball.png: Warning: Found bitmap drawable res/drawable/ball.png in densityless folder [IconLocation]
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\ball2.png: Warning: Found bitmap drawable res/drawable/ball2.png in densityless folder [IconLocation]
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\ball3.png: Warning: Found bitmap drawable res/drawable/ball3.png in densityless folder [IconLocation]
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\hoop.png: Warning: Found bitmap drawable res/drawable/hoop.png in densityless folder [IconLocation]
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\hoop2.png: Warning: Found bitmap drawable res/drawable/hoop2.png in densityless folder [IconLocation]
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\drawable\hoop3.png: Warning: Found bitmap drawable res/drawable/hoop3.png in densityless folder [IconLocation]
+
+   Explanation for issues of type "IconLocation":
+   The res/drawable folder is intended for density-independent graphics such
+   as shapes defined in XML. For bitmaps, move it to drawable-mdpi and
+   consider providing higher and lower resolution versions in drawable-ldpi,
+   drawable-hdpi and drawable-xhdpi. If the icon really is density independent
+   (for example a solid color) you can place it in drawable-nodpi.
+
+   https://developer.android.com/guide/practices/screens_support.html
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:55: Warning: Missing autofillHints attribute [Autofill]
+            <EditText
+             ~~~~~~~~
+
+   Explanation for issues of type "Autofill":
+   Specify an autofillHints attribute when targeting SDK version 26 or higher
+   or explicitly specify that the view is not important for autofill. Your app
+   can help an autofill service classify the data correctly by providing the
+   meaning of each view that could be autofillable, such as views representing
+   usernames, passwords, credit card fields, email addresses, etc.
+
+   The hints can have any value, but it is recommended to use predefined
+   values like 'username' for a username or 'creditCardNumber' for a credit
+   card number. For a list of all predefined autofill hint constants, see the
+   AUTOFILL_HINT_ constants in the View reference at
+   https://developer.android.com/reference/android/view/View.html.
+
+   You can mark a view unimportant for autofill by specifying an
+   importantForAutofill attribute on that view or a parent view. See
+   https://developer.android.com/reference/android/view/View.html#setImportant
+   ForAutofill(int).
+
+   https://developer.android.com/guide/topics/text/autofill.html
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\java\com\example\basketballgame\GameView.java:414: Warning: Custom view GameView overrides onTouchEvent but not performClick [ClickableViewAccessibility]
+    public boolean onTouchEvent(MotionEvent event) {
+                   ~~~~~~~~~~~~
+
+   Explanation for issues of type "ClickableViewAccessibility":
+   If a View that overrides onTouchEvent or uses an OnTouchListener does not
+   also implement performClick and call it when clicks are detected, the View
+   may not handle accessibility actions properly. Logic handling the click
+   actions should ideally be placed in View#performClick as some accessibility
+   services invoke performClick when a click action should occur.
+
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:14: Warning: Hardcoded string "Назад", should use @string resource [HardcodedText]
+        android:contentDescription="Назад"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:25: Warning: Hardcoded string "Лидерборд", should use @string resource [HardcodedText]
+        android:text="Лидерборд"
+        ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:63: Warning: Hardcoded string "Аркада", should use @string resource [HardcodedText]
+                    android:text="Аркада"
+                    ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:71: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                    android:text="0"
+                    ~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:95: Warning: Hardcoded string "На время", should use @string resource [HardcodedText]
+                    android:text="На время"
+                    ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:103: Warning: Hardcoded string "0", should use @string resource [HardcodedText]
+                    android:text="0"
+                    ~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:126: Warning: Hardcoded string "Дуэли", should use @string resource [HardcodedText]
+                    android:text="Дуэли"
+                    ~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:134: Warning: Hardcoded string "0/0", should use @string resource [HardcodedText]
+                    android:text="0/0"
+                    ~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_leaderboard.xml:161: Warning: Hardcoded string "Пока нет результатов", should use @string resource [HardcodedText]
+        android:text="Пока нет результатов"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:17: Warning: Hardcoded string "Лого кольцо", should use @string resource [HardcodedText]
+        android:contentDescription="Лого кольцо"/>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:23: Warning: Hardcoded string "Yarullin Basket", should use @string resource [HardcodedText]
+        android:text="Yarullin Basket"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:34: Warning: Hardcoded string "Играть", should use @string resource [HardcodedText]
+        android:text="Играть"
+        ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:47: Warning: Hardcoded string "Лидерборд", should use @string resource [HardcodedText]
+        android:text="Лидерборд"
+        ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:60: Warning: Hardcoded string "Инвентарь", should use @string resource [HardcodedText]
+        android:text="Инвентарь"
+        ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:73: Warning: Hardcoded string "Достижения", should use @string resource [HardcodedText]
+        android:text="Достижения"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:86: Warning: Hardcoded string "Профиль / Настройки", should use @string resource [HardcodedText]
+        android:text="Профиль / Настройки"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_main.xml:98: Warning: Hardcoded string "Яруллин Марсельn09-253 группа КФУ", should use @string resource [HardcodedText]
+        android:text="Яруллин Марсель\n09-253 группа КФУ"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:14: Warning: Hardcoded string "Назад", should use @string resource [HardcodedText]
+        android:contentDescription="Назад"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:22: Warning: Hardcoded string "Профиль / Настройки", should use @string resource [HardcodedText]
+        android:text="Профиль / Настройки"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:51: Warning: Hardcoded string "Имя игрока", should use @string resource [HardcodedText]
+                android:text="Имя игрока"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:60: Warning: Hardcoded string "Введите имя", should use @string resource [HardcodedText]
+                android:hint="Введите имя"
+                ~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:91: Warning: Hardcoded string "Музыка", should use @string resource [HardcodedText]
+                android:text="Музыка"
+                ~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:99: Warning: Hardcoded string "Вибрация", should use @string resource [HardcodedText]
+                android:text="Вибрация"
+                ~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:110: Warning: Hardcoded string "Сохранить", should use @string resource [HardcodedText]
+        android:text="Сохранить"
+        ~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\activity_settings.xml:121: Warning: Hardcoded string "Сбросить прогресс", should use @string resource [HardcodedText]
+        android:text="Сбросить прогресс"
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\music_controls.xml:18: Warning: Hardcoded string "Назад", should use @string resource [HardcodedText]
+        android:contentDescription="Назад"/>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\music_controls.xml:30: Warning: Hardcoded string "Музыка", should use @string resource [HardcodedText]
+        android:contentDescription="Музыка"/>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\res\layout\music_controls.xml:40: Warning: Hardcoded string "Вперёд", should use @string resource [HardcodedText]
+        android:contentDescription="Вперёд"/>
+        ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+
+   Explanation for issues of type "HardcodedText":
+   Hardcoding text attributes directly in layout files is bad for several
+   reasons:
+
+   * When creating configuration variations (for example for landscape or
+   portrait) you have to repeat the actual text (and keep it up to date when
+   making changes)
+
+   * The application cannot be translated to other languages by just adding
+   new translations for existing string resources.
+
+   There are quickfixes to automatically extract this hardcoded string into a
+   resource lookup.
+
+0 errors, 65 warnings

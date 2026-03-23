@@ -1,0 +1,116 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.example.basketballgame"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="21"
+9        android:targetSdkVersion="34" />
+10
+11    <uses-permission android:name="android.permission.VIBRATE" />
+11-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:4:5-66
+11-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:4:22-63
+12
+13    <permission
+13-->[androidx.core:core:1.9.0] C:\Users\timas\.gradle\caches\transforms-3\d1eafaa8f45f4774d408ac3b3806c276\transformed\core-1.9.0\AndroidManifest.xml:22:5-24:47
+14        android:name="com.example.basketballgame.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION"
+14-->[androidx.core:core:1.9.0] C:\Users\timas\.gradle\caches\transforms-3\d1eafaa8f45f4774d408ac3b3806c276\transformed\core-1.9.0\AndroidManifest.xml:23:9-81
+15        android:protectionLevel="signature" />
+15-->[androidx.core:core:1.9.0] C:\Users\timas\.gradle\caches\transforms-3\d1eafaa8f45f4774d408ac3b3806c276\transformed\core-1.9.0\AndroidManifest.xml:24:9-44
+16
+17    <uses-permission android:name="com.example.basketballgame.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION" />
+17-->[androidx.core:core:1.9.0] C:\Users\timas\.gradle\caches\transforms-3\d1eafaa8f45f4774d408ac3b3806c276\transformed\core-1.9.0\AndroidManifest.xml:26:5-97
+17-->[androidx.core:core:1.9.0] C:\Users\timas\.gradle\caches\transforms-3\d1eafaa8f45f4774d408ac3b3806c276\transformed\core-1.9.0\AndroidManifest.xml:26:22-94
+18
+19    <application
+19-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:6:5-33:19
+20        android:name="com.example.basketballgame.BasketballGameApp"
+20-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:7:9-42
+21        android:allowBackup="true"
+21-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:8:9-35
+22        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+22-->[androidx.core:core:1.9.0] C:\Users\timas\.gradle\caches\transforms-3\d1eafaa8f45f4774d408ac3b3806c276\transformed\core-1.9.0\AndroidManifest.xml:28:18-86
+23        android:extractNativeLibs="true"
+24        android:icon="@mipmap/ic_launcher"
+24-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:9:9-43
+25        android:label="BasketballGame"
+25-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:10:9-39
+26        android:roundIcon="@mipmap/ic_launcher_round"
+26-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:11:9-54
+27        android:supportsRtl="true"
+27-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:12:9-35
+28        android:theme="@style/Theme.BasketballGame" >
+28-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:13:9-52
+29        <activity
+29-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:15:9-17:40
+30            android:name="com.example.basketballgame.GameActivity"
+30-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:16:13-41
+31            android:exported="false" />
+31-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:17:13-37
+32        <activity
+32-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:19:9-26:20
+33            android:name="com.example.basketballgame.MainActivity"
+33-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:20:13-41
+34            android:exported="true" >
+34-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:21:13-36
+35            <intent-filter>
+35-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:22:13-25:29
+36                <action android:name="android.intent.action.MAIN" />
+36-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:23:17-69
+36-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:23:25-66
+37
+38                <category android:name="android.intent.category.LAUNCHER" />
+38-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:24:17-77
+38-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:24:27-74
+39            </intent-filter>
+40        </activity>
+41        <activity android:name="com.example.basketballgame.BallSelectActivity" />
+41-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:27:9-56
+41-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:27:19-53
+42        <activity android:name="com.example.basketballgame.AchievementsActivity" />
+42-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:28:9-58
+42-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:28:19-55
+43        <activity android:name="com.example.basketballgame.LeaderboardActivity" />
+43-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:29:9-57
+43-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:29:19-54
+44        <activity
+44-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:30:9-32:40
+45            android:name="com.example.basketballgame.SettingsActivity"
+45-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:31:13-45
+46            android:exported="false" />
+46-->C:\Users\timas\OneDrive\Desktop\marsel\app\src\main\AndroidManifest.xml:32:13-37
+47
+48        <service
+48-->[androidx.room:room-runtime:2.6.1] C:\Users\timas\.gradle\caches\transforms-3\df2f016ee0d5e8f9d5656a1adba56674\transformed\room-runtime-2.6.1\AndroidManifest.xml:24:9-28:63
+49            android:name="androidx.room.MultiInstanceInvalidationService"
+49-->[androidx.room:room-runtime:2.6.1] C:\Users\timas\.gradle\caches\transforms-3\df2f016ee0d5e8f9d5656a1adba56674\transformed\room-runtime-2.6.1\AndroidManifest.xml:25:13-74
+50            android:directBootAware="true"
+50-->[androidx.room:room-runtime:2.6.1] C:\Users\timas\.gradle\caches\transforms-3\df2f016ee0d5e8f9d5656a1adba56674\transformed\room-runtime-2.6.1\AndroidManifest.xml:26:13-43
+51            android:exported="false" />
+51-->[androidx.room:room-runtime:2.6.1] C:\Users\timas\.gradle\caches\transforms-3\df2f016ee0d5e8f9d5656a1adba56674\transformed\room-runtime-2.6.1\AndroidManifest.xml:27:13-37
+52
+53        <provider
+53-->[androidx.emoji2:emoji2:1.2.0] C:\Users\timas\.gradle\caches\transforms-3\0e3da09a20b15816c008bd46efbb2aa4\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:24:9-32:20
+54            android:name="androidx.startup.InitializationProvider"
+54-->[androidx.emoji2:emoji2:1.2.0] C:\Users\timas\.gradle\caches\transforms-3\0e3da09a20b15816c008bd46efbb2aa4\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:25:13-67
+55            android:authorities="com.example.basketballgame.androidx-startup"
+55-->[androidx.emoji2:emoji2:1.2.0] C:\Users\timas\.gradle\caches\transforms-3\0e3da09a20b15816c008bd46efbb2aa4\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:26:13-68
+56            android:exported="false" >
+56-->[androidx.emoji2:emoji2:1.2.0] C:\Users\timas\.gradle\caches\transforms-3\0e3da09a20b15816c008bd46efbb2aa4\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:27:13-37
+57            <meta-data
+57-->[androidx.emoji2:emoji2:1.2.0] C:\Users\timas\.gradle\caches\transforms-3\0e3da09a20b15816c008bd46efbb2aa4\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:29:13-31:52
+58                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+58-->[androidx.emoji2:emoji2:1.2.0] C:\Users\timas\.gradle\caches\transforms-3\0e3da09a20b15816c008bd46efbb2aa4\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:30:17-75
+59                android:value="androidx.startup" />
+59-->[androidx.emoji2:emoji2:1.2.0] C:\Users\timas\.gradle\caches\transforms-3\0e3da09a20b15816c008bd46efbb2aa4\transformed\jetified-emoji2-1.2.0\AndroidManifest.xml:31:17-49
+60            <meta-data
+60-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\timas\.gradle\caches\transforms-3\d12e53b50c78de3719f72394683ec9a3\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:31:13-33:52
+61                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+61-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\timas\.gradle\caches\transforms-3\d12e53b50c78de3719f72394683ec9a3\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:32:17-78
+62                android:value="androidx.startup" />
+62-->[androidx.lifecycle:lifecycle-process:2.4.1] C:\Users\timas\.gradle\caches\transforms-3\d12e53b50c78de3719f72394683ec9a3\transformed\jetified-lifecycle-process-2.4.1\AndroidManifest.xml:33:17-49
+63        </provider>
+64    </application>
+65
+66</manifest>

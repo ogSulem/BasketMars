@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:gravity="center_horizontal|top"
+    android:paddingTop="32dp">
+
+    <ImageButton
+        android:id="@+id/music_prev"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/btn_rounded_dark"
+        android:src="@drawable/ic_prev"
+        android:scaleType="centerInside"
+        app:tint="#FFF"
+        android:contentDescription="Назад"/>
+
+    <ImageButton
+        android:id="@+id/music_play"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/btn_rounded_dark"
+        android:src="@drawable/ic_music"
+        android:scaleType="centerInside"
+        app:tint="#FFF"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:contentDescription="Музыка"/>
+
+    <ImageButton
+        android:id="@+id/music_next"
+        android:layout_width="64dp"
+        android:layout_height="64dp"
+        android:background="@drawable/btn_rounded_dark"
+        android:src="@drawable/ic_next"
+        android:scaleType="centerInside"
+        app:tint="#FFF"
+        android:contentDescription="Вперёд"/>
+
+</LinearLayout>
