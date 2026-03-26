@@ -83,5 +83,18 @@
     <string name="error_no_server">Сервер не настроен — включён бот</string>
     <string name="progress_reset_ok">Прогресс успешно сброшен</string>
     <string name="progress_reset_error">Ошибка при сбросе прогресса</string>
-    <string name="no_music">Нет музыки в папке res/raw!</string>
+    <string name="no_music">Нет музыки в папке res/raw!</string>    <string name="default_player_name">Игрок</string>
+
+    <!-- Аккаунт / Google Sign-In -->
+    <string name="account_section_title">Аккаунт Google</string>
+    <string name="btn_sign_in_google">Войти через Google</string>
+    <string name="btn_sign_out">Выйти из аккаунта</string>
+    <string name="account_signed_in">Аккаунт: %1$s</string>
+    <string name="account_signed_in_no_name">Аккаунт подключён</string>
+    <string name="sign_in_success">Вход выполнен!</string>
+    <string name="sign_in_error">Не удалось войти</string>
+
+    <!-- Строка для Google Services (web client ID — генерируется из google-services.json) -->
+    <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>
+
 </resources>

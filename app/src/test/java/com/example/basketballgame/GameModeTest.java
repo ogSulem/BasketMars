@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 /**
  * Unit-тесты для перечисления GameMode.
  * Проверяют корректность разбора имён режимов (fromName).
+ * ONLINE_DUEL сохранено как имя enum для совместимости с Room-базой данных.
  */
 public class GameModeTest {
 

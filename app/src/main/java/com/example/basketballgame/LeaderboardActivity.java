@@ -64,7 +64,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         tabs.removeAllTabs();
         tabs.addTab(tabs.newTab().setText("Аркада"), true);
         tabs.addTab(tabs.newTab().setText("На время"));
-        tabs.addTab(tabs.newTab().setText("Онлайн"));
+        tabs.addTab(tabs.newTab().setText("Дуэль"));
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
