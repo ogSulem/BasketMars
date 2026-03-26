@@ -53,6 +53,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:contentDescription="@string/cd_mode_arcade"
                     app:srcCompat="@drawable/ic_mode_arcade" />
 
                 <LinearLayout
@@ -102,6 +103,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:contentDescription="@string/cd_mode_timed"
                     app:srcCompat="@drawable/ic_mode_timed" />
 
                 <LinearLayout
@@ -150,6 +152,7 @@
                 <androidx.appcompat.widget.AppCompatImageView
                     android:layout_width="56dp"
                     android:layout_height="56dp"
+                    android:contentDescription="@string/cd_mode_duel"
                     app:srcCompat="@drawable/ic_mode_duel" />
 
                 <LinearLayout

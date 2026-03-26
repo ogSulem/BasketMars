@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BasketMars</string>
+
+    <!-- Главное меню -->
+    <string name="btn_play">Играть</string>
+    <string name="btn_leaderboard">Лидерборд</string>
+    <string name="btn_inventory">Инвентарь</string>
+    <string name="btn_achievements">Достижения</string>
+    <string name="btn_settings">Настройки</string>
+    <string name="app_author">Яруллин Марсель\n09-253 группа КФУ</string>
+
+    <!-- Навигация -->
+    <string name="btn_back">Назад</string>
+    <string name="btn_menu">Меню</string>
+    <string name="btn_restart">Заново</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="btn_reset_progress">Сбросить прогресс</string>
+
+    <!-- Игровые режимы -->
+    <string name="mode_arcade">Аркада</string>
+    <string name="mode_arcade_desc">Бесконечный режим с усложнением</string>
+    <string name="mode_timed">На время</string>
+    <string name="mode_timed_desc">Максимум очков за 60 секунд</string>
+    <string name="mode_duel">Дуэль</string>
+    <string name="mode_duel_desc">Игра против бота или онлайн</string>
+
+    <!-- Экран лидерборда -->
+    <string name="leaderboard_title">Лидерборд</string>
+    <string name="leaderboard_tab_arcade">Аркада</string>
+    <string name="leaderboard_tab_timed">На время</string>
+    <string name="leaderboard_tab_duel">Дуэли</string>
+    <string name="leaderboard_empty">Пока нет результатов</string>
+
+    <!-- Экран достижений -->
+    <string name="achievements_title">Достижения</string>
+
+    <!-- Инвентарь -->
+    <string name="inventory_title">Инвентарь</string>
+    <string name="inventory_section_balls">Мячи</string>
+    <string name="inventory_section_hoops">Сетки</string>
+    <string name="inventory_section_backgrounds">Фоны</string>
+    <string name="inventory_ball_default">Обычный</string>
+    <string name="inventory_ball_street">Стрит</string>
+    <string name="inventory_ball_legend">Легенда</string>
+    <string name="inventory_hoop_default">Обычная</string>
+    <string name="inventory_hoop_street">Стрит</string>
+    <string name="inventory_hoop_legend">Легенда</string>
+    <string name="inventory_bg_pink">Розовый</string>
+    <string name="inventory_bg_blue">Синий</string>
+    <string name="inventory_bg_orange">Оранжевый</string>
+
+    <!-- Настройки -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_player_name_label">Имя игрока</string>
+    <string name="settings_player_name_hint">Введите имя</string>
+    <string name="settings_music">Музыка</string>
+    <string name="settings_vibration">Вибрация</string>
+
+    <!-- Музыкальный плеер -->
+    <string name="music_prev">Предыдущий трек</string>
+    <string name="music_play">Музыка</string>
+    <string name="music_next">Следующий трек</string>
+
+    <!-- Результаты матча -->
+    <string name="result_win">Победа!</string>
+    <string name="result_lose">Поражение</string>
+    <string name="result_draw">Ничья!</string>
+    <string name="result_time_over">Время вышло!</string>
+    <string name="result_saved">Результат сохранён</string>
+
+    <!-- Режим дуэли -->
+    <string name="duel_type_bot">Против бота</string>
+    <string name="duel_type_online">Онлайн</string>
+
+    <!-- Описания для доступности (contentDescription) -->
+    <string name="cd_logo">Логотип игры — баскетбольное кольцо</string>
+    <string name="cd_mode_arcade">Иконка режима Аркада</string>
+    <string name="cd_mode_timed">Иконка режима На время</string>
+    <string name="cd_mode_duel">Иконка режима Дуэль</string>
+
+    <!-- Ошибки и уведомления -->
+    <string name="error_no_server">Сервер не настроен — включён бот</string>
+    <string name="progress_reset_ok">Прогресс успешно сброшен</string>
+    <string name="progress_reset_error">Ошибка при сбросе прогресса</string>
+    <string name="no_music">Нет музыки в папке res/raw!</string>
+</resources>

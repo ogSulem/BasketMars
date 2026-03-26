@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 GameView.animateButton(v);
-                Intent intent = new Intent(MainActivity.this, BallSelectActivity.class);
+                Intent intent = new Intent(MainActivity.this, InventoryActivity.class);
                 startActivity(intent);
             }
         });

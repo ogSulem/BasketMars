@@ -52,7 +52,7 @@
 ┌──────────────────────────────────────────────────────────┐
 │                     UI Layer (View)                       │
 │  MainActivity · GameActivity · LeaderboardActivity        │
-│  BallSelectActivity · AchievementsActivity · Settings     │
+│  InventoryActivity · AchievementsActivity · Settings     │
 ├──────────────────────────────────────────────────────────┤
 │               Game Engine (GameView)                      │
 │  Физика мяча · Отрисовка · Управление жестами            │
@@ -89,7 +89,7 @@ BasketMars/
 │   │   │   ├── GameActivity.java             # Экран игры
 │   │   │   ├── GameView.java                 # Игровой движок (custom View)
 │   │   │   ├── GameMode.java                 # Enum режимов игры
-│   │   │   ├── BallSelectActivity.java       # Инвентарь
+│   │   │   ├── InventoryActivity.java        # Инвентарь (мячи, кольца, фоны)
 │   │   │   ├── AchievementsActivity.java     # Достижения
 │   │   │   ├── LeaderboardActivity.java      # Таблица лидеров
 │   │   │   ├── LeaderboardAdapter.java       # RecyclerView адаптер
@@ -137,7 +137,7 @@ BasketMars/
 Главный экран приложения (точка входа). Содержит:
 - Кнопку **«Играть»** — открывает `BottomSheetDialog` выбора режима игры.
 - Кнопку **«Лидерборд»** — переход на `LeaderboardActivity`.
-- Кнопку **«Инвентарь»** — переход на `BallSelectActivity`.
+- Кнопку **«Инвентарь»** — переход на `InventoryActivity`.
 - Кнопку **«Достижения»** — переход на `AchievementsActivity`.
 - Кнопку **«Настройки»** — переход на `SettingsActivity`.
 - В `onResume` применяет выбранный фоновый градиент из `SharedPreferences`.
@@ -157,7 +157,7 @@ BasketMars/
 - Список ТОП-20 результатов в `RecyclerView`.
 - Золото/серебро/бронза для первых трёх мест.
 
-#### `BallSelectActivity`
+#### `InventoryActivity`
 Экран инвентаря с тремя секциями:
 - **Мячи**: Обычный / Стрит / Легенда.
 - **Сетки (кольца)**: Обычная / Стрит / Легенда.
@@ -525,11 +525,13 @@ CREATE TABLE player_stats (
 | Хранение | SharedPreferences | — | Настройки, прогресс, разблокировки |
 | Звук | MediaPlayer | — | Воспроизведение фоновых MP3-треков |
 | Тактильность | Vibrator / VibratorManager | — | Вибрация при попадании |
+| Тесты | JUnit4 | 4.13.2 | Unit-тесты бизнес-логики |
 
 ### Разрешения Android
 
 | Разрешение | Файл | Назначение |
 |---|---|---|
+| `INTERNET` | `AndroidManifest.xml` | WebSocket-соединение для онлайн-дуэли |
 | `VIBRATE` | `AndroidManifest.xml` | Тактильная обратная связь при попадании |
 
 ---
@@ -542,7 +544,7 @@ CREATE TABLE player_stats (
 MainActivity
   ├── [Играть]        → BottomSheet выбора режима → GameActivity
   ├── [Лидерборд]     → LeaderboardActivity
-  ├── [Инвентарь]     → BallSelectActivity
+  ├── [Инвентарь]     → InventoryActivity
   ├── [Достижения]    → AchievementsActivity
   └── [Настройки]     → SettingsActivity
 
@@ -619,6 +621,14 @@ cd BasketMars
 
 APK будет создан в: `app/build/outputs/apk/release/app-release.apk`
 
+### Запуск Unit-тестов
+
+```bash
+./gradlew test
+```
+
+Отчёт: `app/build/reports/tests/testDebugUnitTest/index.html`
+
 ### Подключение онлайн-дуэли
 
 1. Разверните WebSocket-сервер, совместимый с форматом сообщений:
@@ -635,15 +645,118 @@ APK будет создан в: `app/build/outputs/apk/release/app-release.apk`
 | Аспект | Текущее состояние | Что необходимо для продакшена |
 |---|---|---|
 | Онлайн-дуэль | Работает с AI-ботом; WebSocket-клиент реализован, сервер — заглушка | Реальный матчмейкинг-сервер |
-| Авторизация | Отсутствует | Аутентификация (Google, телефон и т.д.) |
+| Авторизация | Отсутствует | Аутентификация через Google Sign-In SDK |
 | Лидерборд | Локальный (Room SQLite) | Облачный (Firebase Firestore / REST API) |
 | Защита от читов | Отсутствует | Серверная валидация бросков |
 | Push-уведомления | Отсутствуют | Firebase Cloud Messaging |
 | App Store | Не опубликовано | Google Play: подписание, политика конфиденциальности |
-| Тесты | Отсутствуют | Unit-тесты (JUnit4), UI-тесты (Espresso) |
+| Unit-тесты | `GameModeTest`, `PlayerStatsTest` (JUnit4) | Покрытие `DemoDuelClient`, UI-тесты Espresso |
 | Аналитика | Отсутствует | Firebase Analytics / Crashlytics |
-| Локализация | Только русский | Добавить `res/values-en/strings.xml` |
-| Доступность | Частичная | `contentDescription`, масштабирование шрифта |
+| Локализация | `strings.xml` на русском | Добавить `res/values-en/strings.xml` |
+| Доступность | `contentDescription` на иконках | Проверка TalkBack, масштабирование шрифта |
+
+---
+
+## 12а. Как добавить Firebase (пошагово)
+
+Для перехода к облачному лидерборду, аутентификации и аналитике нужно подключить Firebase. Ниже — минимальный план.
+
+### A. Создание Firebase-проекта
+
+1. Открыть [Firebase Console](https://console.firebase.google.com/).
+2. Создать новый проект → ввести название → отключить Google Analytics (или включить).
+3. Нажать **«Добавить приложение» → Android**.
+4. Ввести package name: `com.example.basketballgame`.
+5. Скачать файл `google-services.json` и положить в папку `app/`.
+
+### B. Изменения в Gradle
+
+**`build.gradle` (корневой):**
+```groovy
+plugins {
+    id 'com.google.gms.google-services' version '4.4.1' apply false
+}
+```
+
+**`app/build.gradle`:**
+```groovy
+plugins {
+    id 'com.android.application'
+    id 'com.google.gms.google-services'
+}
+
+dependencies {
+    // Firebase BOM управляет версиями всех Firebase-зависимостей
+    implementation platform('com.google.firebase:firebase-bom:33.1.0')
+
+    implementation 'com.google.firebase:firebase-firestore'   // Облачный лидерборд
+    implementation 'com.google.firebase:firebase-auth'        // Аутентификация
+    implementation 'com.google.firebase:firebase-analytics'   // Аналитика
+    implementation 'com.google.firebase:firebase-crashlytics' // Краш-репорты
+
+    // Google Sign-In (для аутентификации через аккаунт Google)
+    implementation 'com.google.android.gms:play-services-auth:21.2.0'
+}
+```
+
+### C. Облачный лидерборд (Firestore)
+
+Замените вызовы `LeaderboardRepository` на Firestore:
+
+```java
+// Сохранить результат
+FirebaseFirestore db = FirebaseFirestore.getInstance();
+Map<String, Object> entry = new HashMap<>();
+entry.put("mode", mode);
+entry.put("score", score);
+entry.put("playerName", playerName);
+entry.put("timestamp", FieldValue.serverTimestamp());
+
+db.collection("leaderboard")
+  .add(entry)
+  .addOnSuccessListener(ref -> Log.d("Firestore", "Сохранено: " + ref.getId()))
+  .addOnFailureListener(e -> Log.e("Firestore", "Ошибка", e));
+```
+
+Запрос топ-20:
+```java
+db.collection("leaderboard")
+  .whereEqualTo("mode", mode)
+  .orderBy("score", Query.Direction.DESCENDING)
+  .limit(20)
+  .get()
+  .addOnSuccessListener(querySnapshot -> {
+      List<DocumentSnapshot> docs = querySnapshot.getDocuments();
+      // обработка результатов...
+  });
+```
+
+### D. Google Sign-In (авторизация)
+
+```java
+// В GameActivity / MainActivity
+GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+        .requestIdToken(getString(R.string.default_web_client_id)) // из google-services.json
+        .requestEmail()
+        .build();
+GoogleSignInClient signInClient = GoogleSignIn.getClient(this, gso);
+
+// Запустить экран входа
+startActivityForResult(signInClient.getSignInIntent(), RC_SIGN_IN);
+```
+
+### E. Firebase Analytics
+
+```java
+// В BasketballGameApp.onCreate()
+FirebaseAnalytics analytics = FirebaseAnalytics.getInstance(this);
+
+// Логировать событие попадания
+Bundle params = new Bundle();
+params.putString("mode", "ARCADE");
+params.putInt("score", score);
+analytics.logEvent("ball_scored", params);
+```
 
 ---
 
@@ -651,21 +764,21 @@ APK будет создан в: `app/build/outputs/apk/release/app-release.apk`
 
 ### Краткосрочные (v1.1)
 1. **Реальный онлайн-сервер** — Node.js/Go WebSocket-сервер с матчмейкингом (комнаты по 2 игрока).
-2. **Облачный лидерборд** — интеграция с Firebase Realtime Database или Firestore.
-3. **Unit-тесты** — покрытие логики `DemoDuelClient`, `LeaderboardRepository`.
+2. **Облачный лидерборд** — интеграция с Firebase Firestore (инструкция в разделе 12а).
+3. **Расширение тестов** — покрытие `DemoDuelClient` (Robolectric), UI-тесты Espresso.
 4. **Оптимизация Canvas** — кэширование `Path` объектов, предварительный рендер в `Bitmap`.
 
 ### Среднесрочные (v1.2)
-5. **Новые режимы** — «Испытание» (ограниченное количество попыток), «Турнир» (несколько раундов).
-6. **Расширение инвентаря** — анимированные скины, эффекты частиц при попадании.
-7. **Звуковые эффекты** — звук броска, попадания, промаха, комбо.
-8. **Профиль игрока** — аватар, история матчей.
+5. **Firebase аутентификация** — Google Sign-In, постоянный профиль игрока в облаке.
+6. **Новые режимы** — «Испытание» (ограниченное количество попыток), «Турнир» (несколько раундов).
+7. **Расширение инвентаря** — анимированные скины, эффекты частиц при попадании.
+8. **Звуковые эффекты** — звук броска, попадания, промаха, комбо.
 
 ### Долгосрочные (v2.0)
 9. **Публикация в Google Play** — иконки всех размеров, скриншоты, политика конфиденциальности.
 10. **Монетизация** — опциональные платные скины (без pay-to-win).
 11. **Турнирная система** — соревнования с расписанием и наградами.
-12. **Мультиязычность** — EN, TR и другие локализации.
+12. **Мультиязычность** — EN, TR и другие локализации (основа `strings.xml` уже есть).
 
 ---
 

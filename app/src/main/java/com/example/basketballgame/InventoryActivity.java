@@ -14,7 +14,7 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.GradientDrawable;
 import android.graphics.Typeface;
 
-public class BallSelectActivity extends AppCompatActivity {
+public class InventoryActivity extends AppCompatActivity {
     private FrameLayout root;
 
     @Override
@@ -36,7 +36,7 @@ public class BallSelectActivity extends AppCompatActivity {
 
         // Заголовок
         TextView title = new TextView(this);
-        title.setText("Инвентарь");
+        title.setText(R.string.inventory_title);
         title.setTextSize(32);
         title.setTextColor(0xFFFFFFFF);
         title.setGravity(Gravity.CENTER);
@@ -74,9 +74,14 @@ public class BallSelectActivity extends AppCompatActivity {
 
         // Секция Мячи
         container.addView(makeInventorySection(
-                "Мячи",
+                getString(R.string.inventory_section_balls),
+                SECTION_BALLS,
                 new int[]{R.drawable.ball, R.drawable.ball2, R.drawable.ball3},
-                new String[]{"Обычный", "Стрит", "Легенда"},
+                new String[]{
+                        getString(R.string.inventory_ball_default),
+                        getString(R.string.inventory_ball_street),
+                        getString(R.string.inventory_ball_legend)
+                },
                 selectedBall, unlockedBall, 3, new OnSelectListener() {
                     @Override
                     public void onSelect(int idx) {
@@ -88,9 +93,14 @@ public class BallSelectActivity extends AppCompatActivity {
 
         // Секция Кольца
         container.addView(makeInventorySection(
-                "Сетки",
+                getString(R.string.inventory_section_hoops),
+                SECTION_HOOPS,
                 new int[]{R.drawable.hoop, R.drawable.hoop2, R.drawable.hoop3},
-                new String[]{"Обычная", "Стрит", "Легенда"},
+                new String[]{
+                        getString(R.string.inventory_hoop_default),
+                        getString(R.string.inventory_hoop_street),
+                        getString(R.string.inventory_hoop_legend)
+                },
                 selectedHoop, unlockedHoop, 3, new OnSelectListener() {
                     @Override
                     public void onSelect(int idx) {
@@ -102,9 +112,14 @@ public class BallSelectActivity extends AppCompatActivity {
 
         // Секция Фоны
         container.addView(makeInventorySection(
-                "Фоны",
+                getString(R.string.inventory_section_backgrounds),
+                SECTION_BACKGROUNDS,
                 bgDrawables,
-                new String[]{"Розовый", "Синий", "Оранжевый"},
+                new String[]{
+                        getString(R.string.inventory_bg_pink),
+                        getString(R.string.inventory_bg_blue),
+                        getString(R.string.inventory_bg_orange)
+                },
                 selectedBg, unlockedBg, 3, new OnSelectListener() {
                     @Override
                     public void onSelect(int idx) {
@@ -121,8 +136,13 @@ public class BallSelectActivity extends AppCompatActivity {
         setContentView(root);
     }
 
+    // Типы секций инвентаря — вместо сравнения строк
+    private static final int SECTION_BALLS = 0;
+    private static final int SECTION_HOOPS = 1;
+    private static final int SECTION_BACKGROUNDS = 2;
+
     // Компактная секция инвентаря
-    private LinearLayout makeInventorySection(String header, int[] drawables, String[] labels, int selected, int unlocked, int count, OnSelectListener onSelect) {
+    private LinearLayout makeInventorySection(String header, int sectionType, int[] drawables, String[] labels, int selected, int unlocked, int count, OnSelectListener onSelect) {
         LinearLayout section = new LinearLayout(this);
         section.setOrientation(LinearLayout.VERTICAL);
         section.setPadding(0, dp(8), 0, dp(8));
@@ -156,15 +176,15 @@ public class BallSelectActivity extends AppCompatActivity {
             FrameLayout.LayoutParams frameParams = new FrameLayout.LayoutParams(dp(80), dp(80));
             frame.setLayoutParams(frameParams);
             View icon;
-            if (header.equals("Фоны")) {
+            if (sectionType == SECTION_BACKGROUNDS) {
                 icon = new View(this);
                 icon.setBackgroundResource(drawables[i]);
             } else {
                 ImageView img = new ImageView(this);
-                if (header.equals("Мячи")) {
+                if (sectionType == SECTION_BALLS) {
                     Bitmap b = GameView.renderBallPreview(this, i, dp(64));
                     img.setImageBitmap(b);
-                } else if (header.equals("Сетки")) {
+                } else if (sectionType == SECTION_HOOPS) {
                     Bitmap b = GameView.renderHoopPreview(this, i, dp(64));
                     img.setImageBitmap(b);
                 } else {
