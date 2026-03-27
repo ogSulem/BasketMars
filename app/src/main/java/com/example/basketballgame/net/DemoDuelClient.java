@@ -210,8 +210,8 @@ public class DemoDuelClient implements MatchClient {
         float pace = clamp(playerScorePerSec, 0f, 3.0f);
 
         // ── Шанс промаха ──────────────────────────────────────────────────
-        // Базовый: 35 % (бот промахивается чаще, чем раньше)
-        float missChance = 0.35f + 0.10f * scoreStreak - 0.06f * missStreak;
+        // Базовый: 47 % (бот попадает максимум в ~65 % бросков)
+        float missChance = 0.47f + 0.10f * scoreStreak - 0.05f * missStreak;
 
         // Банковские броски сложнее — шанс промаха выше
         if (currentShotType != SHOT_DIRECT) missChance += 0.12f;
@@ -222,7 +222,7 @@ public class DemoDuelClient implements MatchClient {
             missChance = 1.0f;
         }
 
-        missChance = clamp(missChance, 0.22f, 0.80f);
+        missChance = clamp(missChance, 0.35f, 0.88f);
 
         boolean miss = random.nextFloat() < missChance;
 
@@ -245,24 +245,24 @@ public class DemoDuelClient implements MatchClient {
             }
             remoteScore += delta;
 
-            // После горячей серии (3+ подряд) — запланировать «холодную» серию
-            if (scoreStreak >= 3 && random.nextFloat() < 0.45f) {
-                coldStreak = 3 + random.nextInt(4);  // 3–6 обязательных промахов
+            // После 2+ попаданий подряд — активируем «холодную серию» с более высокой вероятностью
+            if (scoreStreak >= 2 && random.nextFloat() < 0.55f) {
+                coldStreak = 4 + random.nextInt(5);  // 4–8 обязательных промахов
                 scoreStreak = 0;
             }
         }
 
         // ── Интервал до следующего броска ────────────────────────────────
-        // Базовый интервал уменьшается с темпом игрока, но медленнее прежнего
-        long base = (long) (3800L - pace * 620L);
+        // Базовый интервал длиннее — бот не спамит броски
+        long base = (long) (4500L - pace * 550L);
 
         int diff = lastPlayerScore - remoteScore;
-        if (diff > 5) base -= 300L;   // отстаёт → немного ускоряется
-        if (diff < -5) base += 350L;  // лидирует → немного медленнее
+        if (diff > 5) base -= 350L;   // отстаёт → немного ускоряется
+        if (diff < -5) base += 400L;  // лидирует → немного медленнее
 
-        if (miss) base += 500L + random.nextInt(500);  // после промаха — пауза
+        if (miss) base += 600L + random.nextInt(700);  // после промаха — пауза
 
-        base = (long) clamp(base, 1100L, 4500L);
+        base = (long) clamp(base, 1800L, 5500L);
         nextScoreAtMs = now + base + random.nextInt(600);
 
         // Выбрать тип следующего броска
