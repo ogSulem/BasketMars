@@ -35,6 +35,11 @@ public class GameActivity extends AppCompatActivity {
     private boolean arcadeSaved = false;
 
     @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 

@@ -19,6 +19,11 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 public class MainActivity extends AppCompatActivity {
 
     @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);

@@ -176,6 +176,63 @@
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
+        <!-- Карточка языка -->
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/card_language"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="20dp"
+            android:layout_marginEnd="20dp"
+            android:layout_marginTop="12dp"
+            app:cardCornerRadius="18dp"
+            app:cardBackgroundColor="#332d223f"
+            app:layout_constraintTop_toBottomOf="@id/card_toggles"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/settings_language_label"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="14sp" />
+
+                <RadioGroup
+                    android:id="@+id/radio_language"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/radio_lang_ru"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/language_ru"
+                        android:textColor="@android:color/white"
+                        android:buttonTint="@android:color/white" />
+
+                    <RadioButton
+                        android:id="@+id/radio_lang_en"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/language_en"
+                        android:textColor="@android:color/white"
+                        android:buttonTint="@android:color/white" />
+
+                </RadioGroup>
+
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/button_save"
             android:layout_width="0dp"
@@ -185,7 +242,7 @@
             android:layout_marginTop="14dp"
             android:text="@string/btn_save"
             app:cornerRadius="16dp"
-            app:layout_constraintTop_toBottomOf="@id/card_toggles"
+            app:layout_constraintTop_toBottomOf="@id/card_language"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent" />
 

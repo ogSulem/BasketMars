@@ -95,6 +95,12 @@
     <string name="sign_in_success">Вход выполнен!</string>
     <string name="sign_in_error">Не удалось войти</string>
 
+    <!-- Язык приложения -->
+    <string name="settings_language_label">Язык приложения</string>
+    <string name="language_ru">🇷🇺 Русский</string>
+    <string name="language_en">🇬🇧 English</string>
+    <string name="language_changed">Язык изменён — перезапустите приложение</string>
+
     <!-- Строка для Google Services (web client ID — генерируется из google-services.json) -->
     <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>
 

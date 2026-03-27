@@ -27,6 +27,11 @@ public class LeaderboardActivity extends AppCompatActivity {
     private String selectedMode = GameMode.ARCADE.name();
 
     @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_leaderboard);

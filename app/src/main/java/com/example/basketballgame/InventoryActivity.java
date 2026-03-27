@@ -18,6 +18,11 @@ public class InventoryActivity extends AppCompatActivity {
     private FrameLayout root;
 
     @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         root = new FrameLayout(this);

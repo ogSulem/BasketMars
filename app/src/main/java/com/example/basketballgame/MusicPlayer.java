@@ -41,7 +41,7 @@ public class MusicPlayer {
             } catch (Exception e) { Log.e("MusicPlayer", "Ошибка поиска mp3", e); }
             if (tracks.isEmpty()) {
                 Log.e("MusicPlayer", "Не найдено ни одного mp3 в res/raw");
-                Toast.makeText(appContext, "Нет музыки в папке res/raw!", Toast.LENGTH_LONG).show();
+                Toast.makeText(appContext, appContext.getString(R.string.no_music), Toast.LENGTH_LONG).show();
                 return;
             } else {
                 Log.i("MusicPlayer", "Найдены треки: " + found);

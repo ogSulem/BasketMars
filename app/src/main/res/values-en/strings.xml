@@ -92,5 +92,11 @@
     <string name="sign_in_success">Signed in!</string>
     <string name="sign_in_error">Sign-in failed</string>
 
+    <!-- App language -->
+    <string name="settings_language_label">App language</string>
+    <string name="language_ru">🇷🇺 Русский</string>
+    <string name="language_en">🇬🇧 English</string>
+    <string name="language_changed">Language changed — please restart the app</string>
+
     <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>
 </resources>

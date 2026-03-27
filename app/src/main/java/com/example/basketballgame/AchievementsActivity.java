@@ -21,6 +21,12 @@ import android.graphics.Path;
 import android.widget.ImageButton;
 
 public class AchievementsActivity extends AppCompatActivity {
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
