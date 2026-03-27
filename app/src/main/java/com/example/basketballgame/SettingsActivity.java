@@ -123,7 +123,7 @@ public class SettingsActivity extends AppCompatActivity {
                         if (name != null && !name.isEmpty()) {
                             SharedPreferences prefs = getSharedPreferences("basketball", MODE_PRIVATE);
                             String current = prefs.getString("playerName", getString(R.string.default_player_name));
-                            if ("Игрок".equals(current)) {
+                            if (getString(R.string.default_player_name).equals(current)) {
                                 playerNameEdit.setText(name);
                                 prefs.edit().putString("playerName", name).apply();
                             }
@@ -164,7 +164,7 @@ public class SettingsActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("basketball", MODE_PRIVATE);
         String name = playerNameEdit.getText() == null
                 ? null : playerNameEdit.getText().toString().trim();
-        if (TextUtils.isEmpty(name)) name = "Игрок";
+        if (TextUtils.isEmpty(name)) name = getString(R.string.default_player_name);
         prefs.edit().putString("playerName", name).apply();
     }
 }

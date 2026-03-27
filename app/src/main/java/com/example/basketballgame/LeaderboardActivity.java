@@ -62,9 +62,9 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     private void setupTabs() {
         tabs.removeAllTabs();
-        tabs.addTab(tabs.newTab().setText("Аркада"), true);
-        tabs.addTab(tabs.newTab().setText("На время"));
-        tabs.addTab(tabs.newTab().setText("Дуэль"));
+        tabs.addTab(tabs.newTab().setText(getString(R.string.leaderboard_tab_arcade)), true);
+        tabs.addTab(tabs.newTab().setText(getString(R.string.leaderboard_tab_timed)));
+        tabs.addTab(tabs.newTab().setText(getString(R.string.leaderboard_tab_duel)));
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override

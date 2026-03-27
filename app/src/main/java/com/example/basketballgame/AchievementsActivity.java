@@ -29,7 +29,7 @@ public class AchievementsActivity extends AppCompatActivity {
 
         // Заголовок
         final TextView title = new TextView(this);
-        title.setText("Достижения");
+        title.setText(R.string.achievements_title);
         title.setTextSize(36);
         title.setTextColor(Color.WHITE);
         title.setGravity(Gravity.CENTER);

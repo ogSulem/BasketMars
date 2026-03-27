@@ -16,6 +16,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import android.view.Gravity;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageButton;
 
 import com.example.basketballgame.data.LeaderboardRepository;
@@ -30,7 +31,7 @@ public class GameActivity extends AppCompatActivity {
     private GameView gameView;
     private GameMode mode = GameMode.ARCADE;
     private LeaderboardRepository leaderboardRepository;
-    private String playerName = "Игрок";
+    private String playerName;
     private boolean arcadeSaved = false;
 
     @Override
@@ -81,7 +82,7 @@ public class GameActivity extends AppCompatActivity {
 
         leaderboardRepository = ((BasketballGameApp) getApplication()).getLeaderboardRepository();
         SharedPreferences prefs = getSharedPreferences("basketball", MODE_PRIVATE);
-        playerName = prefs.getString("playerName", "Игрок");
+        playerName = prefs.getString("playerName", getString(R.string.default_player_name));
 
         if (mode == GameMode.ONLINE_DUEL) {
             initBotClient();
@@ -121,7 +122,8 @@ public class GameActivity extends AppCompatActivity {
 
     private void handleSessionComplete(GameMode mode, int playerScore, int rivalScore) {
         if (leaderboardRepository == null) return;
-        leaderboardRepository.saveScore(mode.name(), playerScore, playerName, null);
+        String userId = AuthManager.getInstance(this).getUserId();
+        leaderboardRepository.saveScore(mode.name(), playerScore, playerName, userId);
         leaderboardRepository.updateStats(
                 stats -> applyStats(stats, mode, playerScore, rivalScore),
                 () -> runOnUiThread(() -> {
@@ -162,11 +164,13 @@ public class GameActivity extends AppCompatActivity {
         if (mode == GameMode.TIMED) {
             title.setText(getString(R.string.result_time_over));
             rivalContainer.setVisibility(View.GONE);
+            showConfetti();
         } else {
             rivalScoreText.setText(String.valueOf(rivalScore));
             if (playerScore > rivalScore) {
                 title.setText(getString(R.string.result_win));
                 title.setTextColor(0xFF4CAF50);
+                showConfetti();
             } else if (playerScore < rivalScore) {
                 title.setText(getString(R.string.result_lose));
                 title.setTextColor(0xFFF44336);
@@ -194,6 +198,17 @@ public class GameActivity extends AppCompatActivity {
         sheet.show();
     }
 
+    /** Запускает анимацию конфетти поверх всего контента активити на 4 секунды. */
+    private void showConfetti() {
+        ViewGroup decor = (ViewGroup) getWindow().getDecorView();
+        ConfettiView confetti = new ConfettiView(this);
+        ViewGroup.LayoutParams lp = new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.MATCH_PARENT,
+                ViewGroup.LayoutParams.MATCH_PARENT);
+        decor.addView(confetti, lp);
+        confetti.start(4000);
+    }
+
     private void maybeSaveArcadeRun() {
         if (arcadeSaved) return;
         if (mode != GameMode.ARCADE) return;
@@ -203,7 +218,8 @@ public class GameActivity extends AppCompatActivity {
         if (score <= 0) return;
 
         arcadeSaved = true;
-        leaderboardRepository.saveScore(GameMode.ARCADE.name(), score, playerName, null);
+        String userId = AuthManager.getInstance(this).getUserId();
+        leaderboardRepository.saveScore(GameMode.ARCADE.name(), score, playerName, userId);
         leaderboardRepository.updateStats(stats -> applyStats(stats, GameMode.ARCADE, score, 0), null);
     }
 

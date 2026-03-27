@@ -83,7 +83,8 @@
     <string name="error_no_server">Сервер не настроен — включён бот</string>
     <string name="progress_reset_ok">Прогресс успешно сброшен</string>
     <string name="progress_reset_error">Ошибка при сбросе прогресса</string>
-    <string name="no_music">Нет музыки в папке res/raw!</string>    <string name="default_player_name">Игрок</string>
+    <string name="no_music">Нет музыки в папке res/raw!</string>
+    <string name="default_player_name">Игрок</string>
 
     <!-- Аккаунт / Google Sign-In -->
     <string name="account_section_title">Аккаунт Google</string>
