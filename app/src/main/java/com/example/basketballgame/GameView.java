@@ -167,6 +167,8 @@ public class GameView extends View {
     private float botFromX, botFromY;
     private float botToX, botToY;
     private float botPeakY;
+    private float botMidX;          // контрольная точка X дуги Безье (вычисляется заранее)
+    private boolean botShotIsBank;  // банковский бросок (дуга через стенку)
     private float botBallX, botBallY;
     private float botSwipeX1, botSwipeY1, botSwipeX2, botSwipeY2;
     private long botSwipeUntilMs = 0L;
@@ -2375,7 +2377,18 @@ public class GameView extends View {
 
         botShotDurMs = 460L + fxRandom.nextInt(280);
 
-        botFromX = getWidth() * (0.62f + fxRandom.nextFloat() * 0.22f);
+        // Бот стреляет с разных позиций: левая / центр / правая сторона
+        float posRoll = fxRandom.nextFloat();
+        if (posRoll < 0.28f) {
+            // Левая сторона (как будто бот отошёл влево)
+            botFromX = getWidth() * (0.08f + fxRandom.nextFloat() * 0.18f);
+        } else if (posRoll < 0.58f) {
+            // Правая сторона
+            botFromX = getWidth() * (0.64f + fxRandom.nextFloat() * 0.22f);
+        } else {
+            // Центр или чуть правее
+            botFromX = getWidth() * (0.35f + fxRandom.nextFloat() * 0.28f);
+        }
         botFromY = getHeight() - ballRadius * (2.0f + fxRandom.nextFloat() * 0.45f);
 
         // Мимо кольца: сдвигаем цель чуть влево/вправо и ниже
@@ -2384,6 +2397,10 @@ public class GameView extends View {
         botToY = rimYTop + rimDrawH * (1.55f + fxRandom.nextFloat() * 0.25f);
 
         botPeakY = Math.min(botFromY, botToY) - Math.max(getHeight() * 0.18f, 440f) - fxRandom.nextFloat() * 220f;
+
+        // Предвычисляем контрольную точку X дуги (стабильная траектория)
+        botShotIsBank = false;
+        botMidX = (botFromX + botToX) * 0.5f + (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.30f;
 
         botSwipeX1 = botFromX;
         botSwipeY1 = botFromY;
@@ -2425,12 +2442,21 @@ public class GameView extends View {
         // Вариативность длительности
         botShotDurMs = 440L + fxRandom.nextInt(260);
 
-        // Старт бота (право/центр, чуть гуляем)
-        botFromX = getWidth() * (0.64f + fxRandom.nextFloat() * 0.18f);
+        // Бот стреляет с разных позиций: левая / центр / правая
+        float posRoll = fxRandom.nextFloat();
+        if (posRoll < 0.28f) {
+            // Левая сторона
+            botFromX = getWidth() * (0.08f + fxRandom.nextFloat() * 0.18f);
+        } else if (posRoll < 0.62f) {
+            // Правая сторона
+            botFromX = getWidth() * (0.64f + fxRandom.nextFloat() * 0.18f);
+        } else {
+            // Центр или чуть правее
+            botFromX = getWidth() * (0.35f + fxRandom.nextFloat() * 0.28f);
+        }
         botFromY = getHeight() - ballRadius * (2.0f + fxRandom.nextFloat() * 0.35f);
 
-        // Цель — около центра кольца, но с заметной «человеческой» погрешностью
-        // (визуально не должно выглядеть как идеальный лазер в одну точку)
+        // Цель — около центра кольца с заметной «человеческой» погрешностью
         float jitterX = (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.32f;
         float jitterY = (fxRandom.nextFloat() - 0.5f) * rimDrawH * 0.55f;
         botToX = hoopX + hoopWidth / 2f + jitterX;
@@ -2438,6 +2464,20 @@ public class GameView extends View {
 
         float peakBase = Math.max(getHeight() * 0.20f, 460f);
         botPeakY = Math.min(botFromY, botToY) - (peakBase + fxRandom.nextFloat() * 260f);
+
+        // Банковский бросок (28% вероятность): дуга уходит к стенке, потом к кольцу.
+        // Реализуем через смещённую контрольную точку Безье — шар «обходит» стенку.
+        botShotIsBank = fxRandom.nextFloat() < 0.28f;
+        if (botShotIsBank) {
+            // Контрольная точка у ближайшей стенки
+            boolean leftWall = botFromX < getWidth() * 0.5f;
+            float wallX = leftWall ? getWidth() * 0.04f : getWidth() * 0.96f;
+            botMidX = wallX;
+            // Подбрасываем пик пониже чтобы траектория выглядела реалистично
+            botPeakY = Math.min(botFromY, botToY) - (peakBase * 0.55f + fxRandom.nextFloat() * 150f);
+        } else {
+            botMidX = (botFromX + botToX) * 0.5f + (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.30f;
+        }
 
         // Линия "свайпа"
         botSwipeX1 = botFromX;
@@ -2483,10 +2523,10 @@ public class GameView extends View {
             return;
         }
 
-        // Парабола: (1-t)^2*from + 2(1-t)t*peak + t^2*to
+        // Парабола: (1-t)^2*from + 2(1-t)t*control + t^2*to
+        // botMidX предвычислен (стабильная дуга без дрожания)
         float inv = 1f - t;
-        float midX = (botFromX + botToX) * 0.5f + (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.10f;
-        botBallX = inv * inv * botFromX + 2f * inv * t * midX + t * t * botToX;
+        botBallX = inv * inv * botFromX + 2f * inv * t * botMidX + t * t * botToX;
         botBallY = inv * inv * botFromY + 2f * inv * t * botPeakY + t * t * botToY;
 
         // Рисуем свайп-трейл

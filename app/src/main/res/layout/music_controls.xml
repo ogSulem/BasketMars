@@ -15,7 +15,7 @@
         android:src="@drawable/ic_prev"
         android:scaleType="centerInside"
         app:tint="#FFF"
-        android:contentDescription="Назад"/>
+        android:contentDescription="@string/music_prev"/>
 
     <ImageButton
         android:id="@+id/music_play"
@@ -27,7 +27,7 @@
         app:tint="#FFF"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:contentDescription="Музыка"/>
+        android:contentDescription="@string/music_play"/>
 
     <ImageButton
         android:id="@+id/music_next"
@@ -37,6 +37,6 @@
         android:src="@drawable/ic_next"
         android:scaleType="centerInside"
         app:tint="#FFF"
-        android:contentDescription="Вперёд"/>
+        android:contentDescription="@string/music_next"/>
 
 </LinearLayout>

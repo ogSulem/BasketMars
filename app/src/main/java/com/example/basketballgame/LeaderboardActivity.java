@@ -23,8 +23,14 @@ public class LeaderboardActivity extends AppCompatActivity {
     private TextView statsArcade;
     private TextView statsTimed;
     private TextView statsDuel;
+    private TextView statsOnlinePvp;
     private TextView emptyState;
     private String selectedMode = GameMode.ARCADE.name();
+
+    @Override
+    protected void attachBaseContext(android.content.Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,6 +55,7 @@ public class LeaderboardActivity extends AppCompatActivity {
         statsArcade = findViewById(R.id.stats_arcade);
         statsTimed = findViewById(R.id.stats_timed);
         statsDuel = findViewById(R.id.stats_duel);
+        statsOnlinePvp = findViewById(R.id.stats_online_pvp);
         emptyState = findViewById(R.id.empty_state);
 
         repository = ((BasketballGameApp) getApplication()).getLeaderboardRepository();
@@ -62,9 +69,10 @@ public class LeaderboardActivity extends AppCompatActivity {
 
     private void setupTabs() {
         tabs.removeAllTabs();
-        tabs.addTab(tabs.newTab().setText("Аркада"), true);
-        tabs.addTab(tabs.newTab().setText("На время"));
-        tabs.addTab(tabs.newTab().setText("Онлайн"));
+        tabs.addTab(tabs.newTab().setText(getString(R.string.leaderboard_tab_arcade)), true);
+        tabs.addTab(tabs.newTab().setText(getString(R.string.leaderboard_tab_timed)));
+        tabs.addTab(tabs.newTab().setText(getString(R.string.leaderboard_tab_duel)));
+        tabs.addTab(tabs.newTab().setText(getString(R.string.leaderboard_tab_online)));
 
         tabs.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
@@ -74,8 +82,10 @@ public class LeaderboardActivity extends AppCompatActivity {
                     selectedMode = GameMode.ARCADE.name();
                 } else if (pos == 1) {
                     selectedMode = GameMode.TIMED.name();
-                } else {
+                } else if (pos == 2) {
                     selectedMode = GameMode.ONLINE_DUEL.name();
+                } else {
+                    selectedMode = GameMode.ONLINE_PVP.name();
                 }
                 loadTopScores(selectedMode);
             }
@@ -111,5 +121,6 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (statsArcade != null) statsArcade.setText(String.valueOf(stats.arcadeBest));
         if (statsTimed != null) statsTimed.setText(String.valueOf(stats.timedBest));
         if (statsDuel != null) statsDuel.setText(String.valueOf(stats.duelBest));
+        if (statsOnlinePvp != null) statsOnlinePvp.setText(String.valueOf(stats.onlinePvpBest));
     }
 }
