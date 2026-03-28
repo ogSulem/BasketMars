@@ -1,0 +1,47 @@
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="56dp"
+    android:height="56dp"
+    android:viewportWidth="56"
+    android:viewportHeight="56">
+
+    <!-- Globe circle -->
+    <path
+        android:pathData="M28,6 A22,22 0 1,1 27.999,6 Z"
+        android:fillColor="#1A0A2E"
+        android:strokeColor="#8F5CFF"
+        android:strokeWidth="2.5" />
+
+    <!-- Vertical center line -->
+    <path
+        android:pathData="M28,6 Q28,28 28,50"
+        android:strokeColor="#8F5CFF"
+        android:strokeWidth="1.8"
+        android:fillColor="#00000000" />
+
+    <!-- Horizontal equator -->
+    <path
+        android:pathData="M6,28 Q28,28 50,28"
+        android:strokeColor="#8F5CFF"
+        android:strokeWidth="1.8"
+        android:fillColor="#00000000" />
+
+    <!-- Top latitude arc -->
+    <path
+        android:pathData="M10,18 Q28,22 46,18"
+        android:strokeColor="#8F5CFF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000" />
+
+    <!-- Bottom latitude arc -->
+    <path
+        android:pathData="M10,38 Q28,34 46,38"
+        android:strokeColor="#8F5CFF"
+        android:strokeWidth="1.5"
+        android:fillColor="#00000000" />
+
+    <!-- Signal dots -->
+    <path
+        android:pathData="M28,28 m-2,-2 a2,2 0 1,0 4,0 a2,2 0 1,0 -4,0"
+        android:fillColor="#FFFFFF" />
+
+</vector>

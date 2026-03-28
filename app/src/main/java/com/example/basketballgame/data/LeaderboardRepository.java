@@ -79,6 +79,11 @@ public class LeaderboardRepository {
         });
     }
 
+    /** Перегрузка без onDone-callback: сохранить с userId, без уведомления о завершении. */
+    public void saveScore(String mode, int score, String playerName, @Nullable String userId) {
+        saveScore(mode, score, playerName, userId, null);
+    }
+
     /** Перегрузка без userId (только локально). */
     public void saveScore(String mode, int score, String playerName, @Nullable Runnable onDone) {
         saveScore(mode, score, playerName, null, onDone);
@@ -169,6 +174,7 @@ public class LeaderboardRepository {
             insertDemo(n, GameMode.ARCADE.name(),      8 + r.nextInt(55));
             insertDemo(n, GameMode.TIMED.name(),       6 + r.nextInt(45));
             insertDemo(n, GameMode.ONLINE_DUEL.name(), 5 + r.nextInt(50));
+            insertDemo(n, GameMode.ONLINE_PVP.name(),  4 + r.nextInt(48));
         }
     }
 

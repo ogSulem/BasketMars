@@ -34,6 +34,7 @@ public class BasketballGameApp extends Application {
 
         // Room — всегда доступен
         database = Room.databaseBuilder(this, AppDatabase.class, "basketball_leaderboard.db")
+                .addMigrations(AppDatabase.MIGRATION_2_3)
                 .fallbackToDestructiveMigration()
                 .build();
 

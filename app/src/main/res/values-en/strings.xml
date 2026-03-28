@@ -24,12 +24,15 @@
     <string name="mode_timed_desc">Maximum score in 60 seconds</string>
     <string name="mode_duel">Duel</string>
     <string name="mode_duel_desc">Play against the bot</string>
+    <string name="mode_online_pvp">Online PvP</string>
+    <string name="mode_online_pvp_desc">Duel against a real player</string>
 
     <!-- Leaderboard -->
     <string name="leaderboard_title">Leaderboard</string>
     <string name="leaderboard_tab_arcade">Arcade</string>
     <string name="leaderboard_tab_timed">Timed</string>
     <string name="leaderboard_tab_duel">Duel</string>
+    <string name="leaderboard_tab_online">PvP</string>
     <string name="leaderboard_empty">No results yet</string>
 
     <!-- Achievements -->
@@ -74,16 +77,23 @@
     <string name="cd_mode_arcade">Arcade mode icon</string>
     <string name="cd_mode_timed">Timed mode icon</string>
     <string name="cd_mode_duel">Duel mode icon</string>
+    <string name="cd_mode_online">Online PvP mode icon</string>
 
     <!-- Errors and notifications -->
     <string name="error_no_server">Server not configured — bot enabled</string>
+    <string name="error_pvp_connection">Match connection error</string>
     <string name="progress_reset_ok">Progress successfully reset</string>
     <string name="progress_reset_error">Error resetting progress</string>
     <string name="no_music">No music files in res/raw!</string>
 
     <string name="default_player_name">Player</string>
 
-    <!-- Account / Google Sign-In -->
+    <!-- Matchmaking -->
+    <string name="matchmaking_searching">Searching for opponent…</string>
+    <string name="matchmaking_found">Opponent found: %1$s</string>
+    <string name="matchmaking_timeout">No opponent found — launching bot</string>
+    <string name="matchmaking_firebase_unavailable">Firebase not configured — launching bot</string>
+
     <string name="account_section_title">Google Account</string>
     <string name="btn_sign_in_google">Sign in with Google</string>
     <string name="btn_sign_out">Sign out</string>

@@ -23,6 +23,7 @@ import com.example.basketballgame.data.LeaderboardRepository;
 import com.example.basketballgame.data.PlayerStats;
 import com.example.basketballgame.net.DemoDuelClient;
 import com.example.basketballgame.net.MatchClient;
+import com.example.basketballgame.net.OnlinePvpClient;
 
 public class GameActivity extends AppCompatActivity {
 
@@ -91,6 +92,15 @@ public class GameActivity extends AppCompatActivity {
 
         if (mode == GameMode.ONLINE_DUEL) {
             initBotClient();
+        } else if (mode == GameMode.ONLINE_PVP) {
+            String roomId = getIntent().getStringExtra(MatchmakingActivity.EXTRA_ROOM_ID);
+            int myRole = getIntent().getIntExtra(MatchmakingActivity.EXTRA_MY_ROLE, 1);
+            if (roomId != null) {
+                initOnlinePvpClient(roomId, myRole);
+            } else {
+                // Нет данных матча — откат к боту
+                initBotClient();
+            }
         }
     }
 
@@ -112,6 +122,10 @@ public class GameActivity extends AppCompatActivity {
 
         if (mode == GameMode.ONLINE_DUEL && matchClient == null) {
             initBotClient();
+        } else if (mode == GameMode.ONLINE_PVP && matchClient == null) {
+            String roomId = getIntent().getStringExtra(MatchmakingActivity.EXTRA_ROOM_ID);
+            int myRole = getIntent().getIntExtra(MatchmakingActivity.EXTRA_MY_ROLE, 1);
+            if (roomId != null) initOnlinePvpClient(roomId, myRole);
         }
     }
 
@@ -187,9 +201,14 @@ public class GameActivity extends AppCompatActivity {
         content.findViewById(R.id.btn_restart).setOnClickListener(v -> {
             GameView.animateButton(v);
             sheet.dismiss();
-            Intent intent = new Intent(GameActivity.this, GameActivity.class);
-            intent.putExtra(GameMode.EXTRA_KEY, mode.name());
-            startActivity(intent);
+            if (mode == GameMode.ONLINE_PVP) {
+                // Для онлайн-режима переходим к матчмейкингу, а не в игру напрямую
+                startActivity(new Intent(GameActivity.this, MatchmakingActivity.class));
+            } else {
+                Intent intent = new Intent(GameActivity.this, GameActivity.class);
+                intent.putExtra(GameMode.EXTRA_KEY, mode.name());
+                startActivity(intent);
+            }
             finish();
         });
 
@@ -242,12 +261,16 @@ public class GameActivity extends AppCompatActivity {
                 if (playerScore >= rivalScore) stats.duelWins++;
                 else stats.duelLosses++;
                 break;
+            case ONLINE_PVP:
+                if (playerScore > stats.onlinePvpBest) stats.onlinePvpBest = playerScore;
+                if (playerScore >= rivalScore) stats.onlinePvpWins++;
+                else stats.onlinePvpLosses++;
+                break;
         }
     }
 
     /** Инициализация бота (единственный вариант дуэли). */
-    private void initBotClient() {
-        MatchClient.Listener listener = new MatchClient.Listener() {
+    private void initBotClient() {        MatchClient.Listener listener = new MatchClient.Listener() {
             @Override public void onConnected() { }
 
             @Override
@@ -273,5 +296,40 @@ public class GameActivity extends AppCompatActivity {
         gameView.setDeferOpponentStart(false);
         gameView.setOpponentConnectTarget("demo");
         matchClient.connect("demo");
+    }
+
+    /** Инициализация реального онлайн-клиента для режима ONLINE_PVP. */
+    private void initOnlinePvpClient(String roomId, int myRole) {
+        MatchClient.Listener listener = new MatchClient.Listener() {
+            @Override public void onConnected() { }
+
+            @Override
+            public void onDisconnected() {
+                runOnUiThread(() -> {
+                    if (gameView != null && !gameView.isGameOver()) {
+                        gameView.updateRemoteScore(0);
+                    }
+                });
+            }
+
+            @Override public void onError(String message, Throwable throwable) {
+                runOnUiThread(() -> Toast.makeText(GameActivity.this,
+                        getString(R.string.error_pvp_connection), Toast.LENGTH_SHORT).show());
+            }
+
+            @Override
+            public void onGhostSnapshot(float x, float y, boolean moving, int remoteScore) {
+                if (gameView != null) {
+                    gameView.applyGhostSnapshot(x, y, moving);
+                    gameView.updateRemoteScore(remoteScore);
+                }
+            }
+        };
+
+        matchClient = new OnlinePvpClient(roomId, myRole, listener);
+        gameView.setMatchClient(matchClient);
+        gameView.setDeferOpponentStart(false);
+        gameView.setOpponentConnectTarget(roomId);
+        matchClient.connect(roomId);
     }
 }

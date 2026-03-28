@@ -97,6 +97,12 @@ public class MainActivity extends AppCompatActivity {
             startGame(GameMode.ONLINE_DUEL);
         });
 
+        content.findViewById(R.id.btn_online_pvp).setOnClickListener(v -> {
+            GameView.animateButton(v);
+            sheet.dismiss();
+            startActivity(new Intent(MainActivity.this, MatchmakingActivity.class));
+        });
+
         sheet.setContentView(content);
         if (sheet.getWindow() != null) {
             sheet.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
