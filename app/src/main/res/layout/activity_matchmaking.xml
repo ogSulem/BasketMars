@@ -19,7 +19,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Онлайн PvP"
+        android:text="@string/mode_online_pvp"
         android:textColor="#FFFFFF"
         android:textSize="28sp"
         android:textStyle="bold"
@@ -30,7 +30,7 @@
         android:id="@+id/matchmaking_status"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Поиск соперника..."
+        android:text="@string/matchmaking_searching"
         android:textColor="#B0A0C0"
         android:textSize="16sp"
         android:layout_marginBottom="40dp" />
@@ -47,7 +47,7 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ожидание до 30 секунд..."
+        android:text="@string/matchmaking_waiting"
         android:textColor="#55FFFFFF"
         android:textSize="13sp"
         android:layout_marginBottom="48dp" />
@@ -57,7 +57,7 @@
         android:id="@+id/btn_cancel_matchmaking"
         android:layout_width="200dp"
         android:layout_height="52dp"
-        android:text="Отмена"
+        android:text="@string/btn_cancel"
         android:textColor="#FFFFFF"
         android:textSize="16sp"
         android:backgroundTint="#44FFFFFF"

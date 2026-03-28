@@ -26,6 +26,11 @@ public class GameModeTest {
     }
 
     @Test
+    public void fromName_onlinePvp_returnsOnlinePvp() {
+        assertEquals(GameMode.ONLINE_PVP, GameMode.fromName("ONLINE_PVP"));
+    }
+
+    @Test
     public void fromName_null_returnsArcadeDefault() {
         assertEquals(GameMode.ARCADE, GameMode.fromName(null));
     }
@@ -53,8 +58,8 @@ public class GameModeTest {
     }
 
     @Test
-    public void values_containsAllThreeModes() {
+    public void values_containsAllFourModes() {
         GameMode[] modes = GameMode.values();
-        assertEquals(3, modes.length);
+        assertEquals(4, modes.length);
     }
 }

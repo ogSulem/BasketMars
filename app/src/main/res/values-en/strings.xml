@@ -93,6 +93,8 @@
     <string name="matchmaking_found">Opponent found: %1$s</string>
     <string name="matchmaking_timeout">No opponent found — launching bot</string>
     <string name="matchmaking_firebase_unavailable">Firebase not configured — launching bot</string>
+    <string name="matchmaking_waiting">Waiting up to 30 seconds…</string>
+    <string name="btn_cancel">Cancel</string>
 
     <string name="account_section_title">Google Account</string>
     <string name="btn_sign_in_google">Sign in with Google</string>

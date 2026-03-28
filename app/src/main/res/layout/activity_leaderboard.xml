@@ -178,7 +178,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="PvP"
+                    android:text="@string/leaderboard_tab_online"
                     android:textColor="#B3FFFFFF"
                     android:textSize="14sp" />
 

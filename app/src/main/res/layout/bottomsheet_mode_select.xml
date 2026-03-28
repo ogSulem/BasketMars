@@ -221,7 +221,7 @@
                         <TextView
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Онлайн PvP"
+                            android:text="@string/mode_online_pvp"
                             android:textColor="#FFFFFF"
                             android:textSize="18sp"
                             android:textStyle="bold" />
@@ -237,7 +237,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Дуэль с реальным игроком"
+                        android:text="@string/mode_online_pvp_desc"
                         android:textColor="#B0A0C0"
                         android:textSize="14sp" />
                 </LinearLayout>

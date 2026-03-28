@@ -21,6 +21,14 @@ public class PlayerStatsTest {
     }
 
     @Test
+    public void defaultOnlinePvpValues_areZero() {
+        PlayerStats stats = new PlayerStats();
+        assertEquals(0, stats.onlinePvpBest);
+        assertEquals(0, stats.onlinePvpWins);
+        assertEquals(0, stats.onlinePvpLosses);
+    }
+
+    @Test
     public void id_defaultIsSingleton() {
         PlayerStats stats = new PlayerStats();
         assertEquals(1L, stats.id);
@@ -40,6 +48,22 @@ public class PlayerStatsTest {
         stats.duelLosses = 3;
         assertEquals(5, stats.duelWins);
         assertEquals(3, stats.duelLosses);
+    }
+
+    @Test
+    public void onlinePvpWinsAndLosses_areIndependent() {
+        PlayerStats stats = new PlayerStats();
+        stats.onlinePvpWins = 7;
+        stats.onlinePvpLosses = 2;
+        assertEquals(7, stats.onlinePvpWins);
+        assertEquals(2, stats.onlinePvpLosses);
+    }
+
+    @Test
+    public void onlinePvpBest_updatesCorrectly() {
+        PlayerStats stats = new PlayerStats();
+        stats.onlinePvpBest = 33;
+        assertEquals(33, stats.onlinePvpBest);
     }
 
     @Test
@@ -65,5 +89,16 @@ public class PlayerStatsTest {
         }
         // Должно остаться 15, а не 5
         assertEquals(15, stats.arcadeBest);
+    }
+
+    @Test
+    public void onlinePvpBest_updatesOnlyIfGreater() {
+        PlayerStats stats = new PlayerStats();
+        stats.onlinePvpBest = 20;
+        int lowerScore = 10;
+        if (lowerScore > stats.onlinePvpBest) {
+            stats.onlinePvpBest = lowerScore;
+        }
+        assertEquals(20, stats.onlinePvpBest);
     }
 }

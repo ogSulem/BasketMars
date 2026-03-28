@@ -96,6 +96,8 @@
     <string name="matchmaking_found">Соперник найден: %1$s</string>
     <string name="matchmaking_timeout">Соперник не найден — запускаем бота</string>
     <string name="matchmaking_firebase_unavailable">Firebase не настроен — запускаем бота</string>
+    <string name="matchmaking_waiting">Ожидание до 30 секунд…</string>
+    <string name="btn_cancel">Отмена</string>
 
     <!-- Аккаунт / Google Sign-In -->
     <string name="account_section_title">Аккаунт Google</string>
