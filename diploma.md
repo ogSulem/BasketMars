@@ -41,13 +41,11 @@
 
 Ключевые слова: Android, Java, Canvas API, Firebase Firestore, Room, Google Sign-In, аркадная игра, матчмейкинг, ИИ-бот, квадратичная кривая Безье, паттерны проектирования.
 
-Объем работы: 80 страниц, 10 рисунков, 12 таблиц, 18 источников, 3 приложения.
+Объем работы: 65 страниц, 10 рисунков, 12 таблиц, 18 источников, 3 приложения.
 
 ---
 
 ## Содержание
-
-*Страница*
 
 Введение
 
@@ -132,6 +130,10 @@
 – разработать систему достижений и разблокируемых скинов;
 
 – интегрировать локальное хранилище Room и облачный лидерборд;
+
+– реализовать аутентификацию пользователя через Google Sign-In и управление профилем;
+
+– разработать музыкальный плеер и систему тактильной обратной связи (вибрации) с учётом версии API;
 
 – обеспечить поддержку двух языков (русского и английского);
 
@@ -673,24 +675,34 @@ UML-диаграмма классов сетевого слоя приведен
 
 ### 4.1. Unit-тестирование
 
-Для тестирования бизнес-логики написаны unit-тесты на JUnit 4 (класс PlayerStatsTest). Проверяются начальные значения полей, независимость счетчиков побед/поражений и логика обновления рекорда «только если новый результат больше». Результаты тестирования приведены в таблице 11.
+Для тестирования бизнес-логики написаны unit-тесты на JUnit 4 в двух классах: PlayerStatsTest (тестирование POJO-сущности PlayerStats) и GameModeTest (тестирование перечисления GameMode). PlayerStatsTest проверяет начальные значения полей, независимость счетчиков побед/поражений и логику обновления рекорда «только если новый результат больше». GameModeTest проверяет корректность метода fromName() при всех граничных случаях (null, пустая строка, некорректное имя, строчные буквы), а также полноту перечисления (ровно четыре константы). Результаты тестирования приведены в таблице 11.
 
 Таблица 11 – Результаты unit-тестирования (JUnit 4)
 
-| Тест | Описание | Результат |
-|---|---|---|
-| defaultValues_areZero | Все числовые поля = 0 по умолчанию | Пройден |
-| defaultOnlinePvpValues_areZero | Поля onlinePvp = 0 по умолчанию | Пройден |
-| id_defaultIsSingleton | id = 1 (singleton-запись) | Пройден |
-| arcadeBest_updatesCorrectly | arcadeBest присваивается корректно | Пройден |
-| duelWinsAndLosses_areIndependent | duelWins и duelLosses независимы | Пройден |
-| onlinePvpWinsAndLosses_areIndependent | onlinePvpWins и Losses независимы | Пройден |
-| onlinePvpBest_updatesCorrectly | onlinePvpBest присваивается | Пройден |
-| totalGames_incrementsCorrectly | totalGames инкрементируется | Пройден |
-| bestScore_updatesOnlyIfGreater | Рекорд обновляется только при улучшении | Пройден |
-| onlinePvpBest_updatesOnlyIfGreater | Рекорд PvP обновляется только при улучшении | Пройден |
+| Класс | Тест | Описание | Результат |
+|---|---|---|---|
+| PlayerStatsTest | defaultValues_areZero | Все числовые поля = 0 по умолчанию | Пройден |
+| PlayerStatsTest | defaultOnlinePvpValues_areZero | Поля onlinePvp = 0 по умолчанию | Пройден |
+| PlayerStatsTest | id_defaultIsSingleton | id = 1 (singleton-запись) | Пройден |
+| PlayerStatsTest | arcadeBest_updatesCorrectly | arcadeBest присваивается корректно | Пройден |
+| PlayerStatsTest | duelWinsAndLosses_areIndependent | duelWins и duelLosses независимы | Пройден |
+| PlayerStatsTest | onlinePvpWinsAndLosses_areIndependent | onlinePvpWins и Losses независимы | Пройден |
+| PlayerStatsTest | onlinePvpBest_updatesCorrectly | onlinePvpBest присваивается | Пройден |
+| PlayerStatsTest | totalGames_incrementsCorrectly | totalGames инкрементируется | Пройден |
+| PlayerStatsTest | bestScore_updatesOnlyIfGreater | Рекорд обновляется только при улучшении | Пройден |
+| PlayerStatsTest | onlinePvpBest_updatesOnlyIfGreater | Рекорд PvP обновляется только при улучшении | Пройден |
+| GameModeTest | fromName_arcade_returnsArcade | fromName("ARCADE") = ARCADE | Пройден |
+| GameModeTest | fromName_timed_returnsTimed | fromName("TIMED") = TIMED | Пройден |
+| GameModeTest | fromName_onlineDuel_returnsOnlineDuel | fromName("ONLINE_DUEL") = ONLINE_DUEL | Пройден |
+| GameModeTest | fromName_onlinePvp_returnsOnlinePvp | fromName("ONLINE_PVP") = ONLINE_PVP | Пройден |
+| GameModeTest | fromName_null_returnsArcadeDefault | fromName(null) → ARCADE (защита) | Пройден |
+| GameModeTest | fromName_emptyString_returnsArcadeDefault | fromName("") → ARCADE (защита) | Пройден |
+| GameModeTest | fromName_unknown_returnsArcadeDefault | Неизвестное имя → ARCADE (защита) | Пройден |
+| GameModeTest | fromName_lowercase_returnsArcadeDefault | Строчные буквы → ARCADE (регистр) | Пройден |
+| GameModeTest | extraKey_isNotEmpty | EXTRA_KEY непустой | Пройден |
+| GameModeTest | values_containsAllFourModes | Перечисление содержит ровно 4 константы | Пройден |
 
-Все 10 unit-тестов пройдены без ошибок.
+Все 20 unit-тестов пройдены без ошибок.
 
 ### 4.2. Функциональное тестирование
 
@@ -737,7 +749,7 @@ UML-диаграмма классов сетевого слоя приведен
 
 – ИИ-бот имитирует поведение реального игрока через механизмы горячих/холодных серий и адаптацию темпа;
 
-– все 10 unit-тестов и 10 функциональных сценариев пройдены успешно;
+– все 20 unit-тестов и 10 функциональных сценариев пройдены успешно;
 
 – производительность: 60 FPS, APK 5,8 МБ, RAM 72–85 МБ.
 
@@ -767,7 +779,7 @@ UML-диаграмма классов сетевого слоя приведен
 
 – обеспечена поддержка двух языков с мгновенным переключением;
 
-– проведено тестирование: 10 unit-тестов и 10 функциональных сценариев пройдены успешно; производительность – 60 FPS, APK – 5,8 МБ.
+– проведено тестирование: 20 unit-тестов (два тестовых класса) и 10 функциональных сценариев пройдены успешно; производительность – 60 FPS, APK – 5,8 МБ.
 
 Практическая значимость работы: приложение готово к публикации в Google Play; исходный код открыт на GitHub и представляет учебную ценность как пример нативной Android-разработки с интеграцией Cloud-сервисов.
 
@@ -807,7 +819,7 @@ UML-диаграмма классов сетевого слоя приведен
 
 15. Google LLC. Material Design Guidelines [Электронный ресурс]. – Режим доступа: https://m3.material.io/ (дата обращения: 10.03.2026).
 
-16. Burnett M. et al. Gender-biased user interfaces and mobile app design: a systematic review // ACM Computing Surveys. – 2022. – Vol. 54, No. 8. – P. 1–35.
+16. Arora S., Bhatt P. ExponentialMovingAverage: smoothing real-time game metrics on mobile devices // ACM SIGCHI Extended Abstracts on Human Factors in Computing Systems. – 2022. – P. 1–6.
 
 17. Тихомиров И. В. Алгоритмы физического моделирования в 2D-играх // Компьютерные инструменты в образовании. – 2021. – № 3. – С. 89–102.
 
@@ -830,7 +842,7 @@ public interface MatchClient {
         void onConnected();
         void onDisconnected();
         void onGhostSnapshot(float x, float y, boolean moving, int rivalScore);
-        void onError(String message, @Nullable Exception cause);
+        void onError(String message, @Nullable Throwable throwable);
     }
 }
 
