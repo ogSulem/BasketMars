@@ -101,11 +101,15 @@ public class DemoDuelClient implements MatchClient {
             lastPlayerRateAtMs = now;
         }
 
+        // x, y приходят нормализованными [0,1] — переводим во внутреннее виртуальное пространство.
+        float screenX = x * SCREEN_W;
+        float screenY = y * SCREEN_H;
+
         // Изредка подстраиваем цель рядом с игроком (человечная реакция).
         if (random.nextFloat() < 0.10f) {
             float amp = 200f + Math.min(160f, playerScorePerSec * 60f);
-            float nx = clamp(x + jitter(amp), 0f, SCREEN_W);
-            float ny = clamp(y + jitter(amp), 0f, SCREEN_H);
+            float nx = clamp(screenX + jitter(amp), 0f, SCREEN_W);
+            float ny = clamp(screenY + jitter(amp), 0f, SCREEN_H);
             setTarget(nx, ny);
         }
     }

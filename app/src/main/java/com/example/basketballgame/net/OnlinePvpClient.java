@@ -4,8 +4,6 @@ import android.os.Handler;
 import android.os.Looper;
 import android.util.Log;
 
-import androidx.annotation.Nullable;
-
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -19,19 +17,18 @@ import java.util.Map;
  * <p>Структура документа матча в Firestore:
  * <pre>
  *   matches/{roomId}/
- *     player1Id:   "uid1"
- *     player1Name: "Марсель"
- *     player2Id:   "uid2"
- *     player2Name: "Tim"
+ *     player1Id:   "uid1"          player2Id:   "uid2"
+ *     player1Name: "Марсель"       player2Name: "Tim"
  *     status:      "waiting" | "playing" | "finished"
  *     startTime:   epoch_ms
- *     score1:      0          ← счёт player1
- *     score2:      0          ← счёт player2
+ *     score1:      0               score2:      0      ← счёт игроков
+ *     bx1: 0.5  by1: 0.75  bm1: false              ← позиция мяча player1 (норм. 0-1)
+ *     bx2: 0.5  by2: 0.75  bm2: false              ← позиция мяча player2 (норм. 0-1)
  * </pre>
  * </p>
  *
- * <p>Клиент знает roomId и myRole (1 или 2). В sendSnapshot он обновляет
- * своё поле score1/score2; в слушателе — читает поле соперника.</p>
+ * <p>Координаты мяча нормализованы в диапазон [0, 1] (x / ширина, y / высота),
+ * что обеспечивает корректное отображение на экранах с разным разрешением.</p>
  */
 public class OnlinePvpClient implements MatchClient {
 
@@ -39,12 +36,18 @@ public class OnlinePvpClient implements MatchClient {
     private static final String COLLECTION = "matches";
 
     /** Минимальный интервал между записями счёта в Firestore, мс. */
-    private static final long SCORE_WRITE_INTERVAL_MS = 800;
+    private static final long SCORE_WRITE_INTERVAL_MS = 500;
+    /** Интервал записи позиции мяча (~10 fps — баланс между плавностью и нагрузкой). */
+    private static final long POS_WRITE_INTERVAL_MS = 100;
 
     private final String roomId;
-    private final int myRole;          // 1 или 2
-    private final String myScoreField; // "score1" или "score2"
-    private final String opScoreField; // "score2" или "score1"
+    private final int myRole;           // 1 или 2
+    private final String myScoreField;  // "score1" или "score2"
+    private final String opScoreField;  // "score2" или "score1"
+    // Поля позиции мяча (нормализованные 0-1): bx1/by1/bm1 или bx2/by2/bm2
+    private final String myBxField, myByField, myBmField;
+    private final String opBxField, opByField, opBmField;
+
     private final Handler handler = new Handler(Looper.getMainLooper());
 
     private Listener listener;
@@ -54,11 +57,9 @@ public class OnlinePvpClient implements MatchClient {
 
     private boolean connected = false;
     private int lastWrittenScore = -1;
-    private long lastWriteMs = 0;
-
-    /** Последняя позиция "призрака" — фиксированная центральная зона для онлайн-режима. */
-    private static final float GHOST_X = 540f;
-    private static final float GHOST_Y = 400f;
+    private long lastScoreWriteMs = 0;
+    private long lastPosWriteMs = 0;
+    private boolean lastWrittenMoving = false;
 
     /**
      * @param roomId   идентификатор матча в Firestore
@@ -69,8 +70,16 @@ public class OnlinePvpClient implements MatchClient {
         this.roomId = roomId;
         this.myRole = myRole;
         this.listener = listener;
-        this.myScoreField = myRole == 1 ? "score1" : "score2";
-        this.opScoreField = myRole == 1 ? "score2" : "score1";
+        String s = String.valueOf(myRole);
+        String op = myRole == 1 ? "2" : "1";
+        this.myScoreField = "score" + s;
+        this.opScoreField = "score" + op;
+        this.myBxField = "bx" + s;
+        this.myByField = "by" + s;
+        this.myBmField = "bm" + s;
+        this.opBxField = "bx" + op;
+        this.opByField = "by" + op;
+        this.opBmField = "bm" + op;
     }
 
     @Override
@@ -87,7 +96,7 @@ public class OnlinePvpClient implements MatchClient {
 
         connected = true;
 
-        // Слушаем документ матча для получения счёта соперника
+        // Слушаем документ матча: получаем позицию мяча и счёт соперника в реальном времени.
         listenerRegistration = matchRef.addSnapshotListener((snapshot, error) -> {
             if (error != null) {
                 Log.w(TAG, "Match listener error", error);
@@ -95,42 +104,72 @@ public class OnlinePvpClient implements MatchClient {
             }
             if (snapshot == null || !snapshot.exists()) return;
 
-            Long opScore = snapshot.getLong(opScoreField);
-            int rivalScore = opScore != null ? opScore.intValue() : 0;
+            // Читаем данные снапшота до handler.post, пока объект ещё валиден.
+            final Long opScoreLong = snapshot.getLong(opScoreField);
+            final Double opBx = snapshot.getDouble(opBxField);
+            final Double opBy = snapshot.getDouble(opByField);
+            final Boolean opBm = snapshot.getBoolean(opBmField);
 
             handler.post(() -> {
-                if (connected && listener != null) {
-                    listener.onGhostSnapshot(GHOST_X, GHOST_Y, true, rivalScore);
-                }
+                if (!connected || listener == null) return;
+
+                int rivalScore = opScoreLong != null ? opScoreLong.intValue() : 0;
+                // Нормализованные координаты [0,1]; при отсутствии данных — нейтральная позиция
+                float ghostX = opBx != null ? opBx.floatValue() : 0.5f;
+                float ghostY = opBy != null ? opBy.floatValue() : 0.75f;
+                boolean ghostMoving = Boolean.TRUE.equals(opBm);
+
+                listener.onGhostSnapshot(ghostX, ghostY, ghostMoving, rivalScore);
             });
         });
 
-        // Обновляем статус матча на "playing", если оба подключились
+        // Обновляем статус матча на "playing" (второй игрок может написать позже — это нормально)
         Map<String, Object> update = new HashMap<>();
         update.put("status", "playing");
         update.put("startTime", System.currentTimeMillis());
         matchRef.update(update)
                 .addOnSuccessListener(v -> handler.post(() -> listener.onConnected()))
                 .addOnFailureListener(e -> {
-                    // Документ мог быть уже обновлён другим игроком — это нормально
-                    Log.d(TAG, "Status update skipped (likely already set)");
+                    Log.d(TAG, "Status update skipped (likely already set by other player)");
                     handler.post(() -> listener.onConnected());
                 });
     }
 
+    /**
+     * Отправляет снапшот состояния мяча.
+     * x, y — нормализованные координаты [0, 1] (ballX/width, ballY/height).
+     */
     @Override
     public void sendSnapshot(float x, float y, boolean moving, int score) {
         if (!connected || matchRef == null) return;
-        if (score == lastWrittenScore) return;
 
         long now = System.currentTimeMillis();
-        if (now - lastWriteMs < SCORE_WRITE_INTERVAL_MS) return;
+        Map<String, Object> batch = new HashMap<>();
 
-        lastWrittenScore = score;
-        lastWriteMs = now;
+        // --- Позиция мяча: пишем когда мяч летит (~10 fps) ---
+        if (moving && now - lastPosWriteMs >= POS_WRITE_INTERVAL_MS) {
+            batch.put(myBxField, (double) x);
+            batch.put(myByField, (double) y);
+            batch.put(myBmField, true);
+            lastPosWriteMs = now;
+            lastWrittenMoving = true;
+        } else if (!moving && lastWrittenMoving) {
+            // Мяч остановился — одиночное обновление флага
+            batch.put(myBmField, false);
+            lastWrittenMoving = false;
+        }
 
-        matchRef.update(myScoreField, score)
-                .addOnFailureListener(e -> Log.w(TAG, "Score write failed", e));
+        // --- Счёт: пишем при изменении (с троттлингом) ---
+        if (score != lastWrittenScore && now - lastScoreWriteMs >= SCORE_WRITE_INTERVAL_MS) {
+            batch.put(myScoreField, score);
+            lastWrittenScore = score;
+            lastScoreWriteMs = now;
+        }
+
+        if (!batch.isEmpty()) {
+            matchRef.update(batch)
+                    .addOnFailureListener(e -> Log.w(TAG, "Snapshot write failed", e));
+        }
     }
 
     @Override
@@ -144,7 +183,6 @@ public class OnlinePvpClient implements MatchClient {
         }
 
         if (matchRef != null) {
-            // Помечаем матч как завершённый
             matchRef.update("status", "finished")
                     .addOnFailureListener(e -> Log.w(TAG, "Finish update failed", e));
         }

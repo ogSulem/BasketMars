@@ -1609,6 +1609,12 @@ public class GameView extends View {
 
         if (onlineMode) {
             drawBotShot(canvas);
+            // В реальном PvP-матче также рисуем живую позицию мяча соперника между анимациями броска.
+            if (gameMode == GameMode.ONLINE_PVP && !botShotActive && ghostState.active && ghostState.moving) {
+                if (System.currentTimeMillis() - ghostState.lastUpdate < 800L) {
+                    drawGhostBall(canvas);
+                }
+            }
         } else if (ghostState.active) {
             drawGhostBall(canvas);
         }
@@ -2330,10 +2336,12 @@ public class GameView extends View {
     }
 
     private void drawGhostBall(Canvas canvas) {
+        // В PvP используем скин 2 (фиолетовый "легенда") чтобы отличить мяч соперника от своего.
+        int skin = (onlineMode && gameMode == GameMode.ONLINE_PVP) ? 2 : selectedBall;
         int a = ghostState.moving ? 150 : 110;
         canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), a);
         float r = ballRadius * 0.92f;
-        renderBallLikePng(canvas, selectedBall, ghostState.x, ghostState.y, r);
+        renderBallLikePng(canvas, skin, ghostState.x, ghostState.y, r);
         canvas.restore();
     }
 
@@ -2347,21 +2355,27 @@ public class GameView extends View {
     public void applyGhostSnapshot(float x, float y, boolean moving) {
         if (!onlineMode) return;
         if (paused || gameOver) return;
-        ghostState.x = x;
-        ghostState.y = y;
+
+        // В режиме ONLINE_PVP приходят нормализованные координаты [0,1] — масштабируем в пиксели.
+        // В режиме ONLINE_DUEL (бот) координаты в виртуальном пространстве 1080x2400 — храним как есть
+        // (они не используются для рисования ghostState напрямую, только drawBotShot).
+        if (gameMode == GameMode.ONLINE_PVP) {
+            ghostState.x = x * getWidth();
+            ghostState.y = y * getHeight();
+        } else {
+            ghostState.x = x;
+            ghostState.y = y;
+        }
         ghostState.moving = moving;
         ghostState.active = true;
         ghostState.lastUpdate = System.currentTimeMillis();
 
-        // Видимый «промах» бота: если бот двигается, но счёт не меняется, периодически показываем бросок мимо.
+        // Анимация «промаха» бота: только для ONLINE_DUEL (в PvP мяч соперника виден напрямую).
         long now = System.currentTimeMillis();
-        if (moving && !botShotActive && now - lastBotMissAnimAtMs > 1400L) {
-            // небольшой шанс, чтобы не спамило
+        if (gameMode != GameMode.ONLINE_PVP && moving && !botShotActive && now - lastBotMissAnimAtMs > 1400L) {
             if (fxRandom.nextFloat() < 0.35f) {
                 startBotMissShotAnimation();
                 lastBotMissAnimAtMs = now;
-
-                // Промах должен сбрасывать серию бота
                 remoteComboStreak = 0;
                 remoteComboShowUntilMs = 0L;
             }
@@ -2581,7 +2595,11 @@ public class GameView extends View {
         if (matchClient == null || !onlineMode) return;
         long now = System.currentTimeMillis();
         if (now - lastSnapshotSent < 60) return;
-        matchClient.sendSnapshot(ballX, ballY, isMoving, score);
+        // Нормализуем координаты [0,1] для кросс-девайсной совместимости.
+        // DemoDuelClient игнорирует x,y (только score); OnlinePvpClient использует как 0-1.
+        float normX = getWidth() > 0 ? ballX / getWidth() : 0.5f;
+        float normY = getHeight() > 0 ? ballY / getHeight() : 0.75f;
+        matchClient.sendSnapshot(normX, normY, isMoving, score);
         lastSnapshotSent = now;
     }
 
