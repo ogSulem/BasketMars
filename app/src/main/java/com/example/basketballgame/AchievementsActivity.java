@@ -57,28 +57,11 @@ public class AchievementsActivity extends AppCompatActivity {
         list.setGravity(Gravity.CENTER_HORIZONTAL);
         scroll.addView(list);
 
-        // Данные достижений
-        String[] titles = {
-                "Первый бросок!",
-                "Уличный игрок",
-                "Стритболер",
-                "Легенда площадки",
-                "Мастер броска",
-                "Король улиц",
-                "Градиент: Синий фон",
-                "Градиент: Оранжевый фон"
-        };
-        String[] descs = {
-                "Ты в игре! Новый мяч: Стрит",
-                "Ты как Майкл Джордан! Открыта сетка: Стрит",
-                "Открыт мяч: Легенда",
-                "Открыта сетка: Легенда",
-                "Все мячи теперь твои!",
-                "Все сетки теперь твои!",
-                "Открыт синий фон!",
-                "Открыт оранжевый фон!"
-        };
-        int[] unlockScore = {5, 10, 15, 20, 25, 30, 35, 45};
+        // Achievement data from string resources (i18n-safe)
+        String[] titles = getResources().getStringArray(R.array.achievement_titles);
+        String[] descs  = getResources().getStringArray(R.array.achievement_descs);
+        // Unlock thresholds must match GameView logic: score % 3 == 0 → levels 1..8 at scores 3,6,9,12,15,18,21,24
+        int[] unlockScore = {3, 6, 9, 12, 15, 18, 21, 24};
         SharedPreferences prefs = getSharedPreferences("basketball", Context.MODE_PRIVATE);
         int achievementLevel = prefs.getInt("achievementLevel", 0);
 

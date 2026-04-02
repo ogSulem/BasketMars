@@ -108,6 +108,51 @@
     <string name="matchmaking_waiting">Waiting up to 30 seconds…</string>
     <string name="btn_cancel">Cancel</string>
 
+    <!-- Onboarding hints -->
+    <string name="onboarding_arcade">Arcade: score points, difficulty increases</string>
+    <string name="onboarding_timed">Timed: 60 sec. Combos give score bonus</string>
+    <string name="onboarding_duel">Duel: outscore the rival in 60 sec</string>
+
+    <!-- Achievement popup notifications -->
+    <string name="ach_popup_streetballer">Streetballer</string>
+    <string name="ach_popup_streetballer_desc">Ball unlocked: Street</string>
+    <string name="ach_popup_legend">Court Legend</string>
+    <string name="ach_popup_legend_desc">Ball unlocked: Legend</string>
+    <string name="ach_popup_blue_style">Blue Style</string>
+    <string name="ach_popup_blue_style_desc">Blue background unlocked!</string>
+    <string name="ach_popup_hoop_master">Hoop Master</string>
+    <string name="ach_popup_hoop_master_desc">Hoop unlocked: Street</string>
+    <string name="ach_popup_hoop_champ">Hoop Champion</string>
+    <string name="ach_popup_hoop_champ_desc">Hoop unlocked: Legend</string>
+    <string name="ach_popup_orange_style">Orange Style</string>
+    <string name="ach_popup_orange_style_desc">Orange background unlocked!</string>
+    <string name="ach_popup_ball_collector">Ball Collector</string>
+    <string name="ach_popup_ball_collector_desc">All balls are yours!</string>
+    <string name="ach_popup_hoop_king">Hoop King</string>
+    <string name="ach_popup_hoop_king_desc">All hoops are yours!</string>
+
+    <!-- Achievement titles and descriptions (Achievements screen) -->
+    <string-array name="achievement_titles">
+        <item>First Shot!</item>
+        <item>Street Player</item>
+        <item>Streetballer</item>
+        <item>Court Legend</item>
+        <item>Shot Master</item>
+        <item>King of the Court</item>
+        <item>Gradient: Blue BG</item>
+        <item>Gradient: Orange BG</item>
+    </string-array>
+    <string-array name="achievement_descs">
+        <item>You\'re in! New ball: Street</item>
+        <item>Like Michael Jordan! Hoop unlocked: Street</item>
+        <item>Ball unlocked: Legend</item>
+        <item>Hoop unlocked: Legend</item>
+        <item>All balls are yours!</item>
+        <item>All hoops are yours!</item>
+        <item>Blue background unlocked!</item>
+        <item>Orange background unlocked!</item>
+    </string-array>
+
     <string name="account_section_title">Google Account</string>
     <string name="btn_sign_in_google">Sign in with Google</string>
     <string name="btn_sign_out">Sign out</string>

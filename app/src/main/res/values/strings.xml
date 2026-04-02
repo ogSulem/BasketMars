@@ -109,6 +109,51 @@
     <string name="matchmaking_waiting">Ожидание до 30 секунд…</string>
     <string name="btn_cancel">Отмена</string>
 
+    <!-- Onboarding-подсказки при старте игры -->
+    <string name="onboarding_arcade">Аркада: набирай очки, сложность растёт</string>
+    <string name="onboarding_timed">На время: 60 сек. Комбо даёт бонус к очкам</string>
+    <string name="onboarding_duel">Дуэль: обгони соперника за 60 сек</string>
+
+    <!-- Всплывающие уведомления о разблокировке достижений -->
+    <string name="ach_popup_streetballer">Стритболер</string>
+    <string name="ach_popup_streetballer_desc">Открыт мяч: Стрит</string>
+    <string name="ach_popup_legend">Легенда площадки</string>
+    <string name="ach_popup_legend_desc">Открыт мяч: Легенда</string>
+    <string name="ach_popup_blue_style">Синий стиль</string>
+    <string name="ach_popup_blue_style_desc">Открыт синий фон!</string>
+    <string name="ach_popup_hoop_master">Сеточный мастер</string>
+    <string name="ach_popup_hoop_master_desc">Открыта сетка: Стрит</string>
+    <string name="ach_popup_hoop_champ">Сеточный чемпион</string>
+    <string name="ach_popup_hoop_champ_desc">Открыта сетка: Легенда</string>
+    <string name="ach_popup_orange_style">Оранжевый стиль</string>
+    <string name="ach_popup_orange_style_desc">Открыт оранжевый фон!</string>
+    <string name="ach_popup_ball_collector">Коллекционер мячей</string>
+    <string name="ach_popup_ball_collector_desc">Все мячи теперь ваши!</string>
+    <string name="ach_popup_hoop_king">Властелин сеток</string>
+    <string name="ach_popup_hoop_king_desc">Все сетки теперь ваши!</string>
+
+    <!-- Названия и описания достижений (экран Достижений) -->
+    <string-array name="achievement_titles">
+        <item>Первый бросок!</item>
+        <item>Уличный игрок</item>
+        <item>Стритболер</item>
+        <item>Легенда площадки</item>
+        <item>Мастер броска</item>
+        <item>Король улиц</item>
+        <item>Градиент: Синий фон</item>
+        <item>Градиент: Оранжевый фон</item>
+    </string-array>
+    <string-array name="achievement_descs">
+        <item>Ты в игре! Новый мяч: Стрит</item>
+        <item>Ты как Майкл Джордан! Открыта сетка: Стрит</item>
+        <item>Открыт мяч: Легенда</item>
+        <item>Открыта сетка: Легенда</item>
+        <item>Все мячи теперь твои!</item>
+        <item>Все сетки теперь твои!</item>
+        <item>Открыт синий фон!</item>
+        <item>Открыт оранжевый фон!</item>
+    </string-array>
+
     <!-- Аккаунт / Google Sign-In -->
     <string name="account_section_title">Аккаунт Google</string>
     <string name="btn_sign_in_google">Войти через Google</string>

@@ -72,6 +72,8 @@ public class GameView extends View {
     private Bitmap hoopBitmap2;
     private String achievementDesc = null;
     private int achievementIconRes = 0;
+    /** 0 = no BG change, 1 = blue BG, 2 = orange BG — avoids fragile string.contains() checks. */
+    private int achievementBgColorType = 0;
 
     private final Bitmap[] hoopPngBitmaps = new Bitmap[3];
 
@@ -339,11 +341,11 @@ public class GameView extends View {
         if (shown) return;
 
         if (gameMode == GameMode.ARCADE) {
-            onboardingText = "Аркада: набирай очки, сложность растёт";
+            onboardingText = getContext().getString(R.string.onboarding_arcade);
         } else if (gameMode == GameMode.TIMED) {
-            onboardingText = "На время: 60 сек. Комбо даёт бонус к очкам";
+            onboardingText = getContext().getString(R.string.onboarding_timed);
         } else {
-            onboardingText = "Дуэль: обгони соперника за 60 сек";
+            onboardingText = getContext().getString(R.string.onboarding_duel);
         }
 
         onboardingUntilMs = System.currentTimeMillis() + 2300L;
@@ -1662,12 +1664,12 @@ public class GameView extends View {
                 Bitmap icon = BitmapFactory.decodeResource(getResources(), achievementIconRes);
                 RectF iconRect = new RectF(cardX + 32, cardY + 32, cardX + cardSize - 32, cardY + cardSize - 32);
                 canvas.drawBitmap(Bitmap.createScaledBitmap(icon, (int)(cardSize-64), (int)(cardSize-64), false), null, iconRect, null);
-            } else if (achievementDesc != null && achievementDesc.contains("синий")) {
+            } else if (achievementBgColorType == 1) {
                 Paint bgPaint = new Paint();
                 bgPaint.setShader(new android.graphics.LinearGradient(cardX, cardY, cardX + cardSize, cardY + cardSize, 0xFF3A2B5C, 0xFF2D193C, android.graphics.Shader.TileMode.CLAMP));
                 canvas.drawRoundRect(cardRect, 48, 48, bgPaint);
                 canvas.drawRoundRect(cardRect, 48, 48, cardBorder);
-            } else if (achievementDesc != null && achievementDesc.contains("оранжевый")) {
+            } else if (achievementBgColorType == 2) {
                 Paint bgPaint = new Paint();
                 bgPaint.setShader(new android.graphics.LinearGradient(cardX, cardY, cardX + cardSize, cardY + cardSize, 0xFFFFA726, 0xFFFF7043, android.graphics.Shader.TileMode.CLAMP));
                 canvas.drawRoundRect(cardRect, 48, 48, bgPaint);
@@ -2172,51 +2174,59 @@ public class GameView extends View {
                 if (achievementLevel == 1) {
                     unlockedBall = Math.max(unlockedBall, 1);
                     prefs.edit().putInt("unlockedBall", unlockedBall).apply();
-                    achievementText = "Стритболер";
-                    achievementDesc = "Открыт мяч: Стрит";
+                    achievementText = getContext().getString(R.string.ach_popup_streetballer);
+                    achievementDesc = getContext().getString(R.string.ach_popup_streetballer_desc);
                     achievementIconRes = R.drawable.ball2;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 4) {
                     unlockedBall = Math.max(unlockedBall, 2);
                     prefs.edit().putInt("unlockedBall", unlockedBall).apply();
-                    achievementText = "Легенда площадки";
-                    achievementDesc = "Открыт мяч: Легенда";
+                    achievementText = getContext().getString(R.string.ach_popup_legend);
+                    achievementDesc = getContext().getString(R.string.ach_popup_legend_desc);
                     achievementIconRes = R.drawable.ball3;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 7) {
                     unlockedBg = Math.max(unlockedBg, 1);
                     prefs.edit().putInt("unlockedBg", unlockedBg).apply();
-                    achievementText = "Синий стиль";
-                    achievementDesc = "Открыт синий фон!";
+                    achievementText = getContext().getString(R.string.ach_popup_blue_style);
+                    achievementDesc = getContext().getString(R.string.ach_popup_blue_style_desc);
                     achievementIconRes = 0;
+                    achievementBgColorType = 1;
                 }
             } else if (cycle == 1) {
                 if (achievementLevel == 2) {
                     unlockedHoop = Math.max(unlockedHoop, 1);
                     prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
-                    achievementText = "Сеточный мастер";
-                    achievementDesc = "Открыта сетка: Стрит";
+                    achievementText = getContext().getString(R.string.ach_popup_hoop_master);
+                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_master_desc);
                     achievementIconRes = R.drawable.hoop2;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 5) {
                     unlockedHoop = Math.max(unlockedHoop, 2);
                     prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
-                    achievementText = "Сеточный чемпион";
-                    achievementDesc = "Открыта сетка: Легенда";
+                    achievementText = getContext().getString(R.string.ach_popup_hoop_champ);
+                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_champ_desc);
                     achievementIconRes = R.drawable.hoop3;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 8) {
                     unlockedBg = 2;
                     prefs.edit().putInt("unlockedBg", unlockedBg).apply();
-                    achievementText = "Оранжевый стиль";
-                    achievementDesc = "Открыт оранжевый фон!";
+                    achievementText = getContext().getString(R.string.ach_popup_orange_style);
+                    achievementDesc = getContext().getString(R.string.ach_popup_orange_style_desc);
                     achievementIconRes = 0;
+                    achievementBgColorType = 2;
                 }
             } else if (cycle == 2) {
                 if (achievementLevel == 3) {
-                    achievementText = "Коллекционер мячей";
-                    achievementDesc = "Все мячи теперь ваши!";
+                    achievementText = getContext().getString(R.string.ach_popup_ball_collector);
+                    achievementDesc = getContext().getString(R.string.ach_popup_ball_collector_desc);
                     achievementIconRes = R.drawable.ball3;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 6) {
-                    achievementText = "Властелин сеток";
-                    achievementDesc = "Все сетки теперь ваши!";
+                    achievementText = getContext().getString(R.string.ach_popup_hoop_king);
+                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_king_desc);
                     achievementIconRes = R.drawable.hoop3;
+                    achievementBgColorType = 0;
                 }
             }
 
