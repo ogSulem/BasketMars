@@ -589,14 +589,14 @@ playerScorePerSec = 0.75f * playerScorePerSec + 0.25f * instRate;
 
 | Уровень | Порог (очков) | Награда |
 |---|---|---|
-| 1 | 5 | Мяч «Стрит» |
-| 2 | 10 | Сетка «Стрит» |
-| 3 | 15 | Мяч «Легенда» |
-| 4 | 20 | Сетка «Легенда» |
-| 5 | 25 | Все мячи |
-| 6 | 30 | Все сетки |
-| 7 | 35 | Синий фон |
-| 8 | 45 | Оранжевый фон |
+| 1 | 3 | Мяч «Стрит» |
+| 2 | 6 | Сетка «Стрит» |
+| 3 | 9 | Все мячи («Коллекционер мячей») |
+| 4 | 12 | Мяч «Легенда» |
+| 5 | 15 | Сетка «Легенда» |
+| 6 | 18 | Все сетки («Властелин сеток») |
+| 7 | 21 | Синий фон |
+| 8 | 24 | Оранжевый фон |
 
 Текущий уровень достижений (`achievementLevel`) хранится в `SharedPreferences`. Разблокированные предметы отображаются в `InventoryActivity`, где игрок может выбрать активный скин мяча, сетки и фон. Выбор применяется немедленно и сохраняется между сессиями.
 
@@ -874,48 +874,71 @@ private void executeShot(long now) {
 
 ## Приложение Б
 
-### Реализация паттерна Repository и объединения источников данных
+### Реализация метода handleFairScoring и геометрии обода
 
-Фрагмент класса `LeaderboardRepository`, демонстрирующий объединение облачных и локальных данных:
+Метод `handleFairScoring` реализует двухфазную геометрическую детекцию попадания мяча в кольцо. Вместо проверки по конечной точке траектории метод анализирует каждый шаг анимации, что устраняет «несправедливые» попадания при быстрых бросках:
 
 ```java
-public void getTopScores(String mode, int limit,
-        ListCallback<List<LeaderboardEntry>> callback) {
-    if (cloudRepo != null && cloudRepo.isAvailable()) {
-        cloudRepo.getTopScores(mode, limit, cloudEntries ->
-            ioExecutor.execute(() -> {
-                List<LeaderboardEntry> local =
-                    leaderboardDao.getTop(mode, limit);
-                List<LeaderboardEntry> merged =
-                    merge(local, cloudEntries, limit);
-                if (callback != null) callback.onResult(merged);
-            }));
-    } else {
-        ioExecutor.execute(() -> {
-            List<LeaderboardEntry> entries =
-                leaderboardDao.getTop(mode, limit);
-            if (callback != null) callback.onResult(entries);
-        });
-    }
-}
+private void handleFairScoring(float prevX, float prevY) {
+    if (gameOver) return;
+    if (scored) return;
+    // Засчитываем только нисходящее движение (мяч летит вниз)
+    if (velocityY <= 0) return;
 
-private List<LeaderboardEntry> merge(
-        List<LeaderboardEntry> local,
-        List<LeaderboardEntry> cloud, int limit) {
-    Map<String, LeaderboardEntry> best = new LinkedHashMap<>();
-    for (LeaderboardEntry e : cloud)
-        if (e.playerName != null) best.put(e.playerName, e);
-    for (LeaderboardEntry e : local) {
-        if (e.playerName == null) continue;
-        LeaderboardEntry ex = best.get(e.playerName);
-        if (ex == null || e.score > ex.score)
-            best.put(e.playerName, e);
+    // Сужаем допуск на ширину мяча, чтобы визуальный проход
+    // точно соответствовал геометрии обода
+    float left  = rimInnerLeft  + ballRadius * 0.25f;
+    float right = rimInnerRight - ballRadius * 0.25f;
+    if (left >= right) return;
+
+    // Фаза 1: мяч вошёл в отверстие сверху
+    float prevBottom = prevY + ballRadius;
+    float currBottom = ballY + ballRadius;
+    boolean crossesTopDown = prevBottom < rimYTop && currBottom >= rimYTop;
+    if (crossesTopDown && ballX > left && ballX < right) {
+        enteredHoop = true;
     }
-    List<LeaderboardEntry> result = new ArrayList<>(best.values());
-    result.sort((a, b) -> Integer.compare(b.score, a.score));
-    return result.subList(0, Math.min(result.size(), limit));
+
+    // Фаза 2: мяч полностью прошёл сквозь отверстие снизу
+    if (enteredHoop) {
+        float prevTop = prevY - ballRadius;
+        float currTop  = ballY - ballRadius;
+        boolean passesThrough = prevTop < rimYBottom && currTop >= rimYBottom;
+        if (passesThrough && ballX > left && ballX < right) {
+            onScored();
+        }
+    }
 }
 ```
+
+**Параметры геометрии обода.** Кольцо определяется шестью координатными переменными, обновляемыми методом `spawnHoop()` при каждом создании нового кольца:
+
+```
+rimX, rimY          — верхний левый угол описывающего прямоугольника
+rimW, rimH          — ширина и высота кольца (3D-эллипс)
+rimInnerLeft        — X левого края внутреннего отверстия
+rimInnerRight       — X правого края внутреннего отверстия
+rimYTop             — Y верхней плоскости отверстия обода
+rimYBottom          — Y нижней плоскости отверстия обода
+```
+
+Схема геометрии обода (вид сбоку):
+
+```
+         rimX                   rimX+rimW
+          │←──────── rimW ────────▶│
+          │                        │
+rimYTop ──┼────────────────────────┼── верхняя плоскость
+          │  rimInnerLeft          │
+          │      │←── hole ──▶│   │
+rimYBottom┼──────┼─────────────┼───┼── нижняя плоскость
+          │      │             │   │
+          └──────┴─────────────┴───┘
+```
+
+Рисунок Б.1 – Геометрическая схема обода кольца
+
+Двухфазный алгоритм гарантирует, что мяч получит очко только при прохождении сквозь внутреннее отверстие сверху вниз. Броски «сзади» (снизу вверх) и касания края обода не засчитываются. Это соответствует реальным правилам баскетбола и обеспечивает предсказуемость игровой механики.
 
 ---
 
