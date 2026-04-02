@@ -120,9 +120,9 @@ public class GameActivity extends AppCompatActivity {
         MusicPlayer.ensureState(this);
         updateMusicNoteColor();
 
-        if (mode == GameMode.ONLINE_DUEL && matchClient == null) {
+        if (mode == GameMode.ONLINE_DUEL && matchClient == null && gameView != null && !gameView.isGameOver()) {
             initBotClient();
-        } else if (mode == GameMode.ONLINE_PVP && matchClient == null) {
+        } else if (mode == GameMode.ONLINE_PVP && matchClient == null && gameView != null && !gameView.isGameOver()) {
             String roomId = getIntent().getStringExtra(MatchmakingActivity.EXTRA_ROOM_ID);
             int myRole = getIntent().getIntExtra(MatchmakingActivity.EXTRA_MY_ROLE, 1);
             if (roomId != null) initOnlinePvpClient(roomId, myRole);
@@ -176,16 +176,30 @@ public class GameActivity extends AppCompatActivity {
         TextView title = content.findViewById(R.id.result_title);
         TextView playerScoreText = content.findViewById(R.id.player_score_value);
         TextView rivalScoreText = content.findViewById(R.id.rival_score_value);
+        TextView rivalScoreLabel = content.findViewById(R.id.rival_score_label);
         View rivalContainer = content.findViewById(R.id.rival_score_container);
+        View scoreDivider = content.findViewById(R.id.score_divider);
 
         playerScoreText.setText(String.valueOf(playerScore));
 
         if (mode == GameMode.TIMED) {
             title.setText(getString(R.string.result_time_over));
             rivalContainer.setVisibility(View.GONE);
+            if (scoreDivider != null) scoreDivider.setVisibility(View.GONE);
             showConfetti();
         } else {
             rivalScoreText.setText(String.valueOf(rivalScore));
+            // Set rival label: opponent name for PvP, "БОТ" for duel
+            if (rivalScoreLabel != null) {
+                if (mode == GameMode.ONLINE_PVP) {
+                    String opponentName = getIntent().getStringExtra(MatchmakingActivity.EXTRA_OPPONENT_NAME);
+                    rivalScoreLabel.setText(opponentName != null && !opponentName.isEmpty()
+                            ? opponentName.toUpperCase()
+                            : getString(R.string.result_rival_label_online));
+                } else {
+                    rivalScoreLabel.setText(getString(R.string.result_rival_label_bot));
+                }
+            }
             if (playerScore > rivalScore) {
                 title.setText(getString(R.string.result_win));
                 title.setTextColor(0xFF4CAF50);

@@ -72,7 +72,19 @@
     <string name="result_time_over">Time\'s up!</string>
     <string name="result_saved">Result saved</string>
 
-    <!-- Accessibility -->
+    <!-- Duel mode -->
+    <string name="duel_type_bot">vs Bot</string>
+    <string name="duel_type_online">Online</string>
+
+    <!-- Mode selection -->
+    <string name="mode_select_title">Select Mode</string>
+
+    <!-- Match results — extra strings -->
+    <string name="result_your_score">YOU</string>
+    <string name="result_rival_label_bot">BOT</string>
+    <string name="result_rival_label_online">RIVAL</string>
+    <string name="result_btn_replay">Play Again</string>
+    <string name="result_btn_menu">Menu</string>
     <string name="cd_logo">Game logo — basketball hoop</string>
     <string name="cd_mode_arcade">Arcade mode icon</string>
     <string name="cd_mode_timed">Timed mode icon</string>

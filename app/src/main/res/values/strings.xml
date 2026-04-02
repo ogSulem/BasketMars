@@ -23,7 +23,7 @@
     <string name="mode_timed">На время</string>
     <string name="mode_timed_desc">Максимум очков за 60 секунд</string>
     <string name="mode_duel">Дуэль</string>
-    <string name="mode_duel_desc">Игра против бота или онлайн</string>
+    <string name="mode_duel_desc">Игра против бота</string>
     <string name="mode_online_pvp">Онлайн PvP</string>
     <string name="mode_online_pvp_desc">Дуэль с реальным игроком</string>
 
@@ -75,6 +75,16 @@
     <!-- Режим дуэли -->
     <string name="duel_type_bot">Против бота</string>
     <string name="duel_type_online">Онлайн</string>
+
+    <!-- Выбор режима -->
+    <string name="mode_select_title">Выберите режим</string>
+
+    <!-- Результаты матча — доп. строки -->
+    <string name="result_your_score">ВЫ</string>
+    <string name="result_rival_label_bot">БОТ</string>
+    <string name="result_rival_label_online">СОПЕРНИК</string>
+    <string name="result_btn_replay">Ещё раз</string>
+    <string name="result_btn_menu">В меню</string>
 
     <!-- Описания для доступности (contentDescription) -->
     <string name="cd_logo">Логотип игры — баскетбольное кольцо</string>

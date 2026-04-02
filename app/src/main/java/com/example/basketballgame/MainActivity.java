@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.widget.Button;
 import android.widget.LinearLayout;
-import android.widget.TextView;
 import android.widget.Toast;
 import android.content.pm.ApplicationInfo;
 
@@ -124,21 +123,5 @@ public class MainActivity extends AppCompatActivity {
         int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
         LinearLayout root = findViewById(R.id.root_layout);
         if (root != null) root.setBackgroundResource(bgDrawables[bgIdx]);
-
-        // Показываем имя аккаунта Google, если вошли
-        TextView authorText = null;
-        // (поиск по корневому layout'у)
-        View v = root != null ? root.findViewWithTag("account_label") : null;
-        if (v instanceof TextView) {
-            AuthManager auth = AuthManager.getInstance(this);
-            if (auth.isSignedIn()) {
-                ((TextView) v).setText(auth.getDisplayName());
-            }
-        }
-    }
-
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
     }
 }
