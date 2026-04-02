@@ -507,7 +507,7 @@ if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
 
 – **ONLINE_DUEL** – дуэль против ИИ-бота `DemoDuelClient` с синхронизацией через интерфейс `MatchClient`;
 
-– **ONLINE_PVP** – дуэль против реального игрока через Firebase Firestore, с матчмейкингом в `MatchmakingActivity`.
+– **ONLINE_PVP** – дуэль против реального игрока через Firebase Firestore, с матчмейкингом в `MatchmakingActivity`. В методе `initModeState()` режим устанавливает флаги `onlineMode = true` и `timedMode = true`, что активирует все визуальные функции онлайн-режима: отображение призрака мяча соперника, счёт соперника в HUD, отправку снапшотов через `maybeSendSnapshot()`, анимацию смены кольца после гола соперника.
 
 Таблица 6 – Сравнение игровых режимов
 

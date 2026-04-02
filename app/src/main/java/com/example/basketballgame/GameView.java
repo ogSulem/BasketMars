@@ -1325,6 +1325,7 @@ public class GameView extends View {
                 modeDurationMs = 60_000; // 60 seconds
                 break;
             case ONLINE_DUEL:
+            case ONLINE_PVP:
                 timedMode = true;
                 onlineMode = true;
                 modeDurationMs = 60_000; // 60 seconds
