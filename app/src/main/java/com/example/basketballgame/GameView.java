@@ -1411,6 +1411,17 @@ public class GameView extends View {
         applyArcadeDifficulty();
 
         ensureObstaclesNotBlockingHoop(w, h);
+
+        // Kick-start the game loop on first valid layout so the view never stays black.
+        if (w > 0 && h > 0) postInvalidate();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        // Ensure the render loop is running whenever the view re-enters a window
+        // (e.g. after returning from Inventory after changing skin).
+        if (!gameOver) postInvalidate();
     }
 
     private void preloadSkinBitmaps() {
