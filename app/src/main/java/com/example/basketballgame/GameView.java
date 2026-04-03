@@ -72,6 +72,8 @@ public class GameView extends View {
     private Bitmap hoopBitmap2;
     private String achievementDesc = null;
     private int achievementIconRes = 0;
+    /** 0 = no BG change, 1 = blue BG, 2 = orange BG — avoids fragile string.contains() checks. */
+    private int achievementBgColorType = 0;
 
     private final Bitmap[] hoopPngBitmaps = new Bitmap[3];
 
@@ -167,6 +169,8 @@ public class GameView extends View {
     private float botFromX, botFromY;
     private float botToX, botToY;
     private float botPeakY;
+    private float botMidX;          // контрольная точка X дуги Безье (вычисляется заранее)
+    private boolean botShotIsBank;  // банковский бросок (дуга через стенку)
     private float botBallX, botBallY;
     private float botSwipeX1, botSwipeY1, botSwipeX2, botSwipeY2;
     private long botSwipeUntilMs = 0L;
@@ -176,6 +180,14 @@ public class GameView extends View {
     private int botShotPlannedDelta = 0;
 
     private boolean botPendingHoopMoveOnScore = false;
+
+    // Bot shot display score — updated only when animation completes, so score
+    // counter increments visually at the same time as the ball reaches the hoop.
+    private int displayRemoteScore = 0;
+
+    // BitmapShader cache — reused across frames, invalidated when ball radius changes.
+    private final BitmapShader[] ballShaderCache = new BitmapShader[3];
+    private float ballShaderCacheRadius = -1f;
 
     private boolean enteredHoop = false;
     private float rimYTop = 0f;
@@ -312,6 +324,7 @@ public class GameView extends View {
         // Читаем выбор мяча, корзины, фона и достижения
         SharedPreferences prefs = context.getSharedPreferences("basketball", Context.MODE_PRIVATE);
         selectedBall = prefs.getInt("selectedBall", 0);
+        if (selectedBall < 0 || selectedBall > 2) selectedBall = 0;
         selectedHoop = prefs.getInt("selectedHoop", 0);
         if (selectedHoop < 0) selectedHoop = 0;
         if (selectedHoop > 2) selectedHoop = selectedHoop % 3;
@@ -337,11 +350,11 @@ public class GameView extends View {
         if (shown) return;
 
         if (gameMode == GameMode.ARCADE) {
-            onboardingText = "Аркада: набирай очки, сложность растёт";
+            onboardingText = getContext().getString(R.string.onboarding_arcade);
         } else if (gameMode == GameMode.TIMED) {
-            onboardingText = "На время: 60 сек. Комбо даёт бонус к очкам";
+            onboardingText = getContext().getString(R.string.onboarding_timed);
         } else {
-            onboardingText = "Дуэль: обгони соперника за 60 сек";
+            onboardingText = getContext().getString(R.string.onboarding_duel);
         }
 
         onboardingUntilMs = System.currentTimeMillis() + 2300L;
@@ -367,18 +380,28 @@ public class GameView extends View {
         else if (ballSkin >= 2) resId = R.drawable.ball3;
         else resId = R.drawable.ball;
 
-        Bitmap src = ballPngBitmaps[Math.max(0, Math.min(2, ballSkin))];
+        int idx = Math.max(0, Math.min(2, ballSkin));
+        Bitmap src = ballPngBitmaps[idx];
         if (src == null || src.isRecycled()) {
             try {
                 src = BitmapFactory.decodeResource(getResources(), resId);
-                ballPngBitmaps[Math.max(0, Math.min(2, ballSkin))] = src;
+                ballPngBitmaps[idx] = src;
             } catch (Exception ignored) {
                 src = null;
             }
         }
         if (src == null) return false;
 
-        BitmapShader shader = new BitmapShader(src, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+        // Reuse cached BitmapShader — avoid per-frame allocation
+        if (radius != ballShaderCacheRadius) {
+            java.util.Arrays.fill(ballShaderCache, null);
+            ballShaderCacheRadius = radius;
+        }
+        BitmapShader shader = ballShaderCache[idx];
+        if (shader == null) {
+            shader = new BitmapShader(src, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
+            ballShaderCache[idx] = shader;
+        }
         float scale = (radius * 2f) / Math.min(src.getWidth(), src.getHeight());
         ballPngMatrix.reset();
         ballPngMatrix.postScale(scale, scale);
@@ -1323,6 +1346,7 @@ public class GameView extends View {
                 modeDurationMs = 60_000; // 60 seconds
                 break;
             case ONLINE_DUEL:
+            case ONLINE_PVP:
                 timedMode = true;
                 onlineMode = true;
                 modeDurationMs = 60_000; // 60 seconds
@@ -1354,6 +1378,11 @@ public class GameView extends View {
         cachedBallRadius = -1;
         cachedHoopWidth = -1;
         cachedHoopHeight = -1;
+        // Invalidate shader cache when size changes (radius will change)
+        ballShaderCacheRadius = -1f;
+        java.util.Arrays.fill(ballShaderCache, null);
+        // Preload all ball and hoop bitmaps now so first frame doesn't stutter
+        preloadSkinBitmaps();
         spawnHoop(w, h);
         computeHoopGeometry();
         obstacleW = w / 4f;
@@ -1382,6 +1411,34 @@ public class GameView extends View {
         applyArcadeDifficulty();
 
         ensureObstaclesNotBlockingHoop(w, h);
+
+        // Kick-start the game loop on first valid layout so the view never stays black.
+        if (w > 0 && h > 0) postInvalidate();
+    }
+
+    @Override
+    protected void onAttachedToWindow() {
+        super.onAttachedToWindow();
+        // Ensure the render loop is running whenever the view re-enters a window
+        // (e.g. after returning from Inventory after changing skin).
+        if (!gameOver) postInvalidate();
+    }
+
+    private void preloadSkinBitmaps() {
+        int[] ballResIds = {R.drawable.ball, R.drawable.ball2, R.drawable.ball3};
+        int[] hoopResIds = {R.drawable.hoop, R.drawable.hoop2, R.drawable.hoop3};
+        for (int i = 0; i < 3; i++) {
+            if (ballPngBitmaps[i] == null || ballPngBitmaps[i].isRecycled()) {
+                try {
+                    ballPngBitmaps[i] = BitmapFactory.decodeResource(getResources(), ballResIds[i]);
+                } catch (Exception ignored) {}
+            }
+            if (hoopPngBitmaps[i] == null || hoopPngBitmaps[i].isRecycled()) {
+                try {
+                    hoopPngBitmaps[i] = BitmapFactory.decodeResource(getResources(), hoopResIds[i]);
+                } catch (Exception ignored) {}
+            }
+        }
     }
 
     private void applyArcadeDifficulty() {
@@ -1572,7 +1629,7 @@ public class GameView extends View {
             rp.setTextSize(160f);
             rp.setColor(0xFFB266FF); // Фиолетовый для бота
             rp.setShadowLayer(20, 0, 10, 0xAA2D193C);
-            canvas.drawText(String.valueOf(remoteScore), getWidth() - 80f, scoreY, rp);
+            canvas.drawText(String.valueOf(displayRemoteScore), getWidth() - 80f, scoreY, rp);
         } else {
             canvas.drawText(String.valueOf(score), getWidth() / 2f, scoreY, scorePaint);
         }
@@ -1606,6 +1663,12 @@ public class GameView extends View {
 
         if (onlineMode) {
             drawBotShot(canvas);
+            // В реальном PvP-матче также рисуем живую позицию мяча соперника между анимациями броска.
+            if (gameMode == GameMode.ONLINE_PVP && !botShotActive && ghostState.active && ghostState.moving) {
+                if (System.currentTimeMillis() - ghostState.lastUpdate < 800L) {
+                    drawGhostBall(canvas);
+                }
+            }
         } else if (ghostState.active) {
             drawGhostBall(canvas);
         }
@@ -1653,12 +1716,12 @@ public class GameView extends View {
                 Bitmap icon = BitmapFactory.decodeResource(getResources(), achievementIconRes);
                 RectF iconRect = new RectF(cardX + 32, cardY + 32, cardX + cardSize - 32, cardY + cardSize - 32);
                 canvas.drawBitmap(Bitmap.createScaledBitmap(icon, (int)(cardSize-64), (int)(cardSize-64), false), null, iconRect, null);
-            } else if (achievementDesc != null && achievementDesc.contains("синий")) {
+            } else if (achievementBgColorType == 1) {
                 Paint bgPaint = new Paint();
                 bgPaint.setShader(new android.graphics.LinearGradient(cardX, cardY, cardX + cardSize, cardY + cardSize, 0xFF3A2B5C, 0xFF2D193C, android.graphics.Shader.TileMode.CLAMP));
                 canvas.drawRoundRect(cardRect, 48, 48, bgPaint);
                 canvas.drawRoundRect(cardRect, 48, 48, cardBorder);
-            } else if (achievementDesc != null && achievementDesc.contains("оранжевый")) {
+            } else if (achievementBgColorType == 2) {
                 Paint bgPaint = new Paint();
                 bgPaint.setShader(new android.graphics.LinearGradient(cardX, cardY, cardX + cardSize, cardY + cardSize, 0xFFFFA726, 0xFFFF7043, android.graphics.Shader.TileMode.CLAMP));
                 canvas.drawRoundRect(cardRect, 48, 48, bgPaint);
@@ -2163,51 +2226,59 @@ public class GameView extends View {
                 if (achievementLevel == 1) {
                     unlockedBall = Math.max(unlockedBall, 1);
                     prefs.edit().putInt("unlockedBall", unlockedBall).apply();
-                    achievementText = "Стритболер";
-                    achievementDesc = "Открыт мяч: Стрит";
+                    achievementText = getContext().getString(R.string.ach_popup_streetballer);
+                    achievementDesc = getContext().getString(R.string.ach_popup_streetballer_desc);
                     achievementIconRes = R.drawable.ball2;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 4) {
                     unlockedBall = Math.max(unlockedBall, 2);
                     prefs.edit().putInt("unlockedBall", unlockedBall).apply();
-                    achievementText = "Легенда площадки";
-                    achievementDesc = "Открыт мяч: Легенда";
+                    achievementText = getContext().getString(R.string.ach_popup_legend);
+                    achievementDesc = getContext().getString(R.string.ach_popup_legend_desc);
                     achievementIconRes = R.drawable.ball3;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 7) {
                     unlockedBg = Math.max(unlockedBg, 1);
                     prefs.edit().putInt("unlockedBg", unlockedBg).apply();
-                    achievementText = "Синий стиль";
-                    achievementDesc = "Открыт синий фон!";
+                    achievementText = getContext().getString(R.string.ach_popup_blue_style);
+                    achievementDesc = getContext().getString(R.string.ach_popup_blue_style_desc);
                     achievementIconRes = 0;
+                    achievementBgColorType = 1;
                 }
             } else if (cycle == 1) {
                 if (achievementLevel == 2) {
                     unlockedHoop = Math.max(unlockedHoop, 1);
                     prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
-                    achievementText = "Сеточный мастер";
-                    achievementDesc = "Открыта сетка: Стрит";
+                    achievementText = getContext().getString(R.string.ach_popup_hoop_master);
+                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_master_desc);
                     achievementIconRes = R.drawable.hoop2;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 5) {
                     unlockedHoop = Math.max(unlockedHoop, 2);
                     prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
-                    achievementText = "Сеточный чемпион";
-                    achievementDesc = "Открыта сетка: Легенда";
+                    achievementText = getContext().getString(R.string.ach_popup_hoop_champ);
+                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_champ_desc);
                     achievementIconRes = R.drawable.hoop3;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 8) {
                     unlockedBg = 2;
                     prefs.edit().putInt("unlockedBg", unlockedBg).apply();
-                    achievementText = "Оранжевый стиль";
-                    achievementDesc = "Открыт оранжевый фон!";
+                    achievementText = getContext().getString(R.string.ach_popup_orange_style);
+                    achievementDesc = getContext().getString(R.string.ach_popup_orange_style_desc);
                     achievementIconRes = 0;
+                    achievementBgColorType = 2;
                 }
             } else if (cycle == 2) {
                 if (achievementLevel == 3) {
-                    achievementText = "Коллекционер мячей";
-                    achievementDesc = "Все мячи теперь ваши!";
+                    achievementText = getContext().getString(R.string.ach_popup_ball_collector);
+                    achievementDesc = getContext().getString(R.string.ach_popup_ball_collector_desc);
                     achievementIconRes = R.drawable.ball3;
+                    achievementBgColorType = 0;
                 } else if (achievementLevel == 6) {
-                    achievementText = "Властелин сеток";
-                    achievementDesc = "Все сетки теперь ваши!";
+                    achievementText = getContext().getString(R.string.ach_popup_hoop_king);
+                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_king_desc);
                     achievementIconRes = R.drawable.hoop3;
+                    achievementBgColorType = 0;
                 }
             }
 
@@ -2327,10 +2398,15 @@ public class GameView extends View {
     }
 
     private void drawGhostBall(Canvas canvas) {
-        int a = ghostState.moving ? 150 : 110;
-        canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), a);
+        // В PvP используем скин 2 (фиолетовый "легенда") чтобы отличить мяч соперника от своего.
+        int skin = (onlineMode && gameMode == GameMode.ONLINE_PVP) ? 2 : selectedBall;
         float r = ballRadius * 0.92f;
-        renderBallLikePng(canvas, selectedBall, ghostState.x, ghostState.y, r);
+        // Limit offscreen buffer to ball bounding rect for performance
+        float margin = r + 2f;
+        canvas.saveLayerAlpha(ghostState.x - margin, ghostState.y - margin,
+                ghostState.x + margin, ghostState.y + margin,
+                ghostState.moving ? 150 : 110);
+        renderBallLikePng(canvas, skin, ghostState.x, ghostState.y, r);
         canvas.restore();
     }
 
@@ -2344,21 +2420,27 @@ public class GameView extends View {
     public void applyGhostSnapshot(float x, float y, boolean moving) {
         if (!onlineMode) return;
         if (paused || gameOver) return;
-        ghostState.x = x;
-        ghostState.y = y;
+
+        // В режиме ONLINE_PVP приходят нормализованные координаты [0,1] — масштабируем в пиксели.
+        // В режиме ONLINE_DUEL (бот) координаты в виртуальном пространстве 1080x2400 — храним как есть
+        // (они не используются для рисования ghostState напрямую, только drawBotShot).
+        if (gameMode == GameMode.ONLINE_PVP) {
+            ghostState.x = x * getWidth();
+            ghostState.y = y * getHeight();
+        } else {
+            ghostState.x = x;
+            ghostState.y = y;
+        }
         ghostState.moving = moving;
         ghostState.active = true;
         ghostState.lastUpdate = System.currentTimeMillis();
 
-        // Видимый «промах» бота: если бот двигается, но счёт не меняется, периодически показываем бросок мимо.
+        // Анимация «промаха» бота: только для ONLINE_DUEL (в PvP мяч соперника виден напрямую).
         long now = System.currentTimeMillis();
-        if (moving && !botShotActive && now - lastBotMissAnimAtMs > 1400L) {
-            // небольшой шанс, чтобы не спамило
+        if (gameMode != GameMode.ONLINE_PVP && moving && !botShotActive && now - lastBotMissAnimAtMs > 1400L) {
             if (fxRandom.nextFloat() < 0.35f) {
                 startBotMissShotAnimation();
                 lastBotMissAnimAtMs = now;
-
-                // Промах должен сбрасывать серию бота
                 remoteComboStreak = 0;
                 remoteComboShowUntilMs = 0L;
             }
@@ -2375,7 +2457,18 @@ public class GameView extends View {
 
         botShotDurMs = 460L + fxRandom.nextInt(280);
 
-        botFromX = getWidth() * (0.62f + fxRandom.nextFloat() * 0.22f);
+        // Бот стреляет с разных позиций: левая / центр / правая сторона
+        float posRoll = fxRandom.nextFloat();
+        if (posRoll < 0.28f) {
+            // Левая сторона (как будто бот отошёл влево)
+            botFromX = getWidth() * (0.08f + fxRandom.nextFloat() * 0.18f);
+        } else if (posRoll < 0.58f) {
+            // Правая сторона
+            botFromX = getWidth() * (0.64f + fxRandom.nextFloat() * 0.22f);
+        } else {
+            // Центр или чуть правее
+            botFromX = getWidth() * (0.35f + fxRandom.nextFloat() * 0.28f);
+        }
         botFromY = getHeight() - ballRadius * (2.0f + fxRandom.nextFloat() * 0.45f);
 
         // Мимо кольца: сдвигаем цель чуть влево/вправо и ниже
@@ -2384,6 +2477,10 @@ public class GameView extends View {
         botToY = rimYTop + rimDrawH * (1.55f + fxRandom.nextFloat() * 0.25f);
 
         botPeakY = Math.min(botFromY, botToY) - Math.max(getHeight() * 0.18f, 440f) - fxRandom.nextFloat() * 220f;
+
+        // Предвычисляем контрольную точку X дуги (стабильная траектория)
+        botShotIsBank = false;
+        botMidX = (botFromX + botToX) * 0.5f + (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.30f;
 
         botSwipeX1 = botFromX;
         botSwipeY1 = botFromY;
@@ -2401,9 +2498,13 @@ public class GameView extends View {
             remoteComboShowUntilMs = System.currentTimeMillis() + 1400L;
             planBotShotAnimation(delta);
             botPendingHoopMoveOnScore = true;
+            // Keep remoteScore updated (used for final results) but don't bump
+            // displayRemoteScore yet — it will be applied when the animation ends.
         } else if (value < remoteScore) {
             remoteComboStreak = 0;
             remoteComboShowUntilMs = 0L;
+            // Correction (e.g. game reset): sync display immediately
+            displayRemoteScore = value;
         }
         remoteScore = value;
         lastRemoteScore = value;
@@ -2425,12 +2526,21 @@ public class GameView extends View {
         // Вариативность длительности
         botShotDurMs = 440L + fxRandom.nextInt(260);
 
-        // Старт бота (право/центр, чуть гуляем)
-        botFromX = getWidth() * (0.64f + fxRandom.nextFloat() * 0.18f);
+        // Бот стреляет с разных позиций: левая / центр / правая
+        float posRoll = fxRandom.nextFloat();
+        if (posRoll < 0.28f) {
+            // Левая сторона
+            botFromX = getWidth() * (0.08f + fxRandom.nextFloat() * 0.18f);
+        } else if (posRoll < 0.62f) {
+            // Правая сторона
+            botFromX = getWidth() * (0.64f + fxRandom.nextFloat() * 0.18f);
+        } else {
+            // Центр или чуть правее
+            botFromX = getWidth() * (0.35f + fxRandom.nextFloat() * 0.28f);
+        }
         botFromY = getHeight() - ballRadius * (2.0f + fxRandom.nextFloat() * 0.35f);
 
-        // Цель — около центра кольца, но с заметной «человеческой» погрешностью
-        // (визуально не должно выглядеть как идеальный лазер в одну точку)
+        // Цель — около центра кольца с заметной «человеческой» погрешностью
         float jitterX = (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.32f;
         float jitterY = (fxRandom.nextFloat() - 0.5f) * rimDrawH * 0.55f;
         botToX = hoopX + hoopWidth / 2f + jitterX;
@@ -2438,6 +2548,20 @@ public class GameView extends View {
 
         float peakBase = Math.max(getHeight() * 0.20f, 460f);
         botPeakY = Math.min(botFromY, botToY) - (peakBase + fxRandom.nextFloat() * 260f);
+
+        // Банковский бросок (28% вероятность): дуга уходит к стенке, потом к кольцу.
+        // Реализуем через смещённую контрольную точку Безье — шар «обходит» стенку.
+        botShotIsBank = fxRandom.nextFloat() < 0.28f;
+        if (botShotIsBank) {
+            // Контрольная точка у ближайшей стенки
+            boolean leftWall = botFromX < getWidth() * 0.5f;
+            float wallX = leftWall ? getWidth() * 0.04f : getWidth() * 0.96f;
+            botMidX = wallX;
+            // Подбрасываем пик пониже чтобы траектория выглядела реалистично
+            botPeakY = Math.min(botFromY, botToY) - (peakBase * 0.55f + fxRandom.nextFloat() * 150f);
+        } else {
+            botMidX = (botFromX + botToX) * 0.5f + (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.30f;
+        }
 
         // Линия "свайпа"
         botSwipeX1 = botFromX;
@@ -2463,6 +2587,8 @@ public class GameView extends View {
         float t = (now - botShotStartMs) / (float) botShotDurMs;
         if (t >= 1f) {
             botShotActive = false;
+            // Animation complete — now apply the queued score to the display counter
+            displayRemoteScore = remoteScore;
 
             // После гола бота — переносим кольцо как после гола игрока.
             if (botPendingHoopMoveOnScore) {
@@ -2483,10 +2609,10 @@ public class GameView extends View {
             return;
         }
 
-        // Парабола: (1-t)^2*from + 2(1-t)t*peak + t^2*to
+        // Парабола: (1-t)^2*from + 2(1-t)t*control + t^2*to
+        // botMidX предвычислен (стабильная дуга без дрожания)
         float inv = 1f - t;
-        float midX = (botFromX + botToX) * 0.5f + (fxRandom.nextFloat() - 0.5f) * hoopWidth * 0.10f;
-        botBallX = inv * inv * botFromX + 2f * inv * t * midX + t * t * botToX;
+        botBallX = inv * inv * botFromX + 2f * inv * t * botMidX + t * t * botToX;
         botBallY = inv * inv * botFromY + 2f * inv * t * botPeakY + t * t * botToY;
 
         // Рисуем свайп-трейл
@@ -2500,11 +2626,13 @@ public class GameView extends View {
             canvas.drawLine(botSwipeX1, botSwipeY1, botSwipeX2, botSwipeY2, p);
         }
 
-        // Рисуем мяч бота (фиолетовый контур)
-        canvas.saveLayerAlpha(0, 0, getWidth(), getHeight(), 170);
-        int prev = selectedBall;
-        // временно рисуем как "легенда" (фиолетовый)
-        renderBallLikePng(canvas, 2, botBallX, botBallY, ballRadius * 0.92f);
+        // Рисуем мяч бота (фиолетовый контур), ограничиваем offscreen-буфер размером мяча
+        float botR = ballRadius * 0.92f;
+        float botMargin = botR + 2f;
+        canvas.saveLayerAlpha(botBallX - botMargin, botBallY - botMargin,
+                botBallX + botMargin, botBallY + botMargin, 170);
+        // Рисуем как "легенда" (фиолетовый) чтобы отличить мяч бота
+        renderBallLikePng(canvas, 2, botBallX, botBallY, botR);
         canvas.restore();
 
         // Поддерживаем ghostState для совместимости
@@ -2540,7 +2668,11 @@ public class GameView extends View {
         if (matchClient == null || !onlineMode) return;
         long now = System.currentTimeMillis();
         if (now - lastSnapshotSent < 60) return;
-        matchClient.sendSnapshot(ballX, ballY, isMoving, score);
+        // Нормализуем координаты [0,1] для кросс-девайсной совместимости.
+        // DemoDuelClient игнорирует x,y (только score); OnlinePvpClient использует как 0-1.
+        float normX = getWidth() > 0 ? ballX / getWidth() : 0.5f;
+        float normY = getHeight() > 0 ? ballY / getHeight() : 0.75f;
+        matchClient.sendSnapshot(normX, normY, isMoving, score);
         lastSnapshotSent = now;
     }
 

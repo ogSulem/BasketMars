@@ -1,0 +1,175 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BasketMars</string>
+
+    <!-- Главное меню -->
+    <string name="btn_play">Играть</string>
+    <string name="btn_leaderboard">Лидерборд</string>
+    <string name="btn_inventory">Инвентарь</string>
+    <string name="btn_achievements">Достижения</string>
+    <string name="btn_settings">Настройки</string>
+    <string name="app_author">Яруллин Марсель\n09-253 группа КФУ</string>
+
+    <!-- Навигация -->
+    <string name="btn_back">Назад</string>
+    <string name="btn_menu">Меню</string>
+    <string name="btn_restart">Заново</string>
+    <string name="btn_save">Сохранить</string>
+    <string name="btn_reset_progress">Сбросить прогресс</string>
+
+    <!-- Игровые режимы -->
+    <string name="mode_arcade">Аркада</string>
+    <string name="mode_arcade_desc">Бесконечный режим с усложнением</string>
+    <string name="mode_timed">На время</string>
+    <string name="mode_timed_desc">Максимум очков за 60 секунд</string>
+    <string name="mode_duel">С ботом</string>
+    <string name="mode_duel_desc">Игра против бота</string>
+    <string name="mode_online_pvp">Дуэль</string>
+    <string name="mode_online_pvp_desc">Дуэль с реальным игроком</string>
+
+    <!-- Экран лидерборда -->
+    <string name="leaderboard_title">Лидерборд</string>
+    <string name="leaderboard_tab_arcade">Аркада</string>
+    <string name="leaderboard_tab_timed">На время</string>
+    <string name="leaderboard_tab_duel">С ботом</string>
+    <string name="leaderboard_tab_online">PvP</string>
+    <string name="leaderboard_empty">Пока нет результатов</string>
+
+    <!-- Экран достижений -->
+    <string name="achievements_title">Достижения</string>
+
+    <!-- Инвентарь -->
+    <string name="inventory_title">Инвентарь</string>
+    <string name="inventory_section_balls">Мячи</string>
+    <string name="inventory_section_hoops">Сетки</string>
+    <string name="inventory_section_backgrounds">Фоны</string>
+    <string name="inventory_ball_default">Обычный</string>
+    <string name="inventory_ball_street">Стрит</string>
+    <string name="inventory_ball_legend">Легенда</string>
+    <string name="inventory_hoop_default">Обычная</string>
+    <string name="inventory_hoop_street">Стрит</string>
+    <string name="inventory_hoop_legend">Легенда</string>
+    <string name="inventory_bg_pink">Розовый</string>
+    <string name="inventory_bg_blue">Синий</string>
+    <string name="inventory_bg_orange">Оранжевый</string>
+
+    <!-- Настройки -->
+    <string name="settings_title">Настройки</string>
+    <string name="settings_player_name_label">Имя игрока</string>
+    <string name="settings_player_name_hint">Введите имя</string>
+    <string name="settings_music">Музыка</string>
+    <string name="settings_vibration">Вибрация</string>
+
+    <!-- Музыкальный плеер -->
+    <string name="music_prev">Предыдущий трек</string>
+    <string name="music_play">Музыка</string>
+    <string name="music_next">Следующий трек</string>
+
+    <!-- Результаты матча -->
+    <string name="result_win">Победа!</string>
+    <string name="result_lose">Поражение</string>
+    <string name="result_draw">Ничья!</string>
+    <string name="result_time_over">Время вышло!</string>
+    <string name="result_saved">Результат сохранён</string>
+
+    <!-- Режим дуэли -->
+    <string name="duel_type_bot">Против бота</string>
+    <string name="duel_type_online">Онлайн</string>
+
+    <!-- Выбор режима -->
+    <string name="mode_select_title">Выберите режим</string>
+
+    <!-- Результаты матча — доп. строки -->
+    <string name="result_your_score">ВЫ</string>
+    <string name="result_rival_label_bot">БОТ</string>
+    <string name="result_rival_label_online">СОПЕРНИК</string>
+    <string name="result_btn_replay">Ещё раз</string>
+    <string name="result_btn_menu">В меню</string>
+
+    <!-- Описания для доступности (contentDescription) -->
+    <string name="cd_logo">Логотип игры — баскетбольное кольцо</string>
+    <string name="cd_mode_arcade">Иконка режима Аркада</string>
+    <string name="cd_mode_timed">Иконка режима На время</string>
+    <string name="cd_mode_duel">Иконка режима С ботом</string>
+    <string name="cd_mode_online">Иконка режима Дуэль</string>
+
+    <!-- Ошибки и уведомления -->
+    <string name="error_no_server">Сервер не настроен — включён бот</string>
+    <string name="error_pvp_connection">Ошибка подключения к матчу</string>
+    <string name="progress_reset_ok">Прогресс успешно сброшен</string>
+    <string name="progress_reset_error">Ошибка при сбросе прогресса</string>
+    <string name="no_music">Нет музыки в папке res/raw!</string>
+    <string name="default_player_name">Игрок</string>
+
+    <!-- Матчмейкинг -->
+    <string name="matchmaking_searching">Поиск соперника…</string>
+    <string name="matchmaking_found">Соперник найден: %1$s</string>
+    <string name="matchmaking_timeout">Соперник не найден — запускаем бота</string>
+    <string name="matchmaking_firebase_unavailable">Firebase не настроен — запускаем бота</string>
+    <string name="matchmaking_waiting">Ожидание до 30 секунд…</string>
+    <string name="btn_cancel">Отмена</string>
+
+    <!-- Onboarding-подсказки при старте игры -->
+    <string name="onboarding_arcade">Аркада: набирай очки, сложность растёт</string>
+    <string name="onboarding_timed">На время: 60 сек. Комбо даёт бонус к очкам</string>
+    <string name="onboarding_duel">С ботом: обгони соперника за 60 сек</string>
+
+    <!-- Всплывающие уведомления о разблокировке достижений -->
+    <string name="ach_popup_streetballer">Стритболер</string>
+    <string name="ach_popup_streetballer_desc">Открыт мяч: Стрит</string>
+    <string name="ach_popup_legend">Легенда площадки</string>
+    <string name="ach_popup_legend_desc">Открыт мяч: Легенда</string>
+    <string name="ach_popup_blue_style">Синий стиль</string>
+    <string name="ach_popup_blue_style_desc">Открыт синий фон!</string>
+    <string name="ach_popup_hoop_master">Сеточный мастер</string>
+    <string name="ach_popup_hoop_master_desc">Открыта сетка: Стрит</string>
+    <string name="ach_popup_hoop_champ">Сеточный чемпион</string>
+    <string name="ach_popup_hoop_champ_desc">Открыта сетка: Легенда</string>
+    <string name="ach_popup_orange_style">Оранжевый стиль</string>
+    <string name="ach_popup_orange_style_desc">Открыт оранжевый фон!</string>
+    <string name="ach_popup_ball_collector">Коллекционер мячей</string>
+    <string name="ach_popup_ball_collector_desc">Все мячи теперь ваши!</string>
+    <string name="ach_popup_hoop_king">Властелин сеток</string>
+    <string name="ach_popup_hoop_king_desc">Все сетки теперь ваши!</string>
+
+    <!-- Названия и описания достижений (экран Достижений) -->
+    <string-array name="achievement_titles">
+        <item>Первый бросок!</item>
+        <item>Уличный игрок</item>
+        <item>Стритболер</item>
+        <item>Легенда площадки</item>
+        <item>Мастер броска</item>
+        <item>Король улиц</item>
+        <item>Градиент: Синий фон</item>
+        <item>Градиент: Оранжевый фон</item>
+    </string-array>
+    <string-array name="achievement_descs">
+        <item>Ты в игре! Новый мяч: Стрит</item>
+        <item>Ты как Майкл Джордан! Открыта сетка: Стрит</item>
+        <item>Открыт мяч: Легенда</item>
+        <item>Открыта сетка: Легенда</item>
+        <item>Все мячи теперь твои!</item>
+        <item>Все сетки теперь твои!</item>
+        <item>Открыт синий фон!</item>
+        <item>Открыт оранжевый фон!</item>
+    </string-array>
+
+    <!-- Аккаунт / Google Sign-In -->
+    <string name="account_section_title">Аккаунт Google</string>
+    <string name="btn_sign_in_google">Войти через Google</string>
+    <string name="btn_sign_out">Выйти из аккаунта</string>
+    <string name="account_signed_in">Аккаунт: %1$s</string>
+    <string name="account_signed_in_no_name">Аккаунт подключён</string>
+    <string name="sign_in_success">Вход выполнен!</string>
+    <string name="sign_in_error">Не удалось войти</string>
+
+    <!-- Язык приложения -->
+    <string name="settings_language_label">Язык приложения</string>
+    <string name="language_ru">🇷🇺 Русский</string>
+    <string name="language_en">🇬🇧 English</string>
+    <string name="language_changed">Язык изменён — перезапустите приложение</string>
+
+    <!-- Строка для Google Services (web client ID — генерируется из google-services.json) -->
+    <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>
+
+</resources>

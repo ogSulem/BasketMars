@@ -3,13 +3,15 @@ package com.example.basketballgame;
 /**
  * Перечисление доступных игровых режимов.
  * ARCADE      — бесконечный набор очков с возрастающей сложностью.
- * TIMED       — ограничение по времени.
- * ONLINE_DUEL — онлайн матч 1 на 1 с призрачным соперником.
+ * TIMED       — ограничение по времени (60 секунд).
+ * ONLINE_DUEL — дуэль против умного бота (название сохранено для совместимости с Room-базой).
+ * ONLINE_PVP  — дуэль против реального игрока через Firebase Firestore.
  */
 public enum GameMode {
     ARCADE,
     TIMED,
-    ONLINE_DUEL;
+    ONLINE_DUEL,
+    ONLINE_PVP;
 
     public static final String EXTRA_KEY = "com.example.basketballgame.EXTRA_GAME_MODE";
 

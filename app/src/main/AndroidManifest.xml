@@ -1,13 +1,14 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.basketballgame">
 
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".BasketballGameApp"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
-        android:label="BasketballGame"
+        android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.BasketballGame">
@@ -24,9 +25,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".BallSelectActivity" />
+        <activity android:name=".InventoryActivity" />
         <activity android:name=".AchievementsActivity" />
         <activity android:name=".LeaderboardActivity" />
+        <activity android:name=".MatchmakingActivity" android:exported="false" />
         <activity
             android:name=".SettingsActivity"
             android:exported="false" />

@@ -21,6 +21,12 @@ import android.graphics.Path;
 import android.widget.ImageButton;
 
 public class AchievementsActivity extends AppCompatActivity {
+
+    @Override
+    protected void attachBaseContext(Context base) {
+        super.attachBaseContext(LocaleHelper.wrap(base));
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,7 +35,7 @@ public class AchievementsActivity extends AppCompatActivity {
 
         // Заголовок
         final TextView title = new TextView(this);
-        title.setText("Достижения");
+        title.setText(R.string.achievements_title);
         title.setTextSize(36);
         title.setTextColor(Color.WHITE);
         title.setGravity(Gravity.CENTER);
@@ -51,28 +57,11 @@ public class AchievementsActivity extends AppCompatActivity {
         list.setGravity(Gravity.CENTER_HORIZONTAL);
         scroll.addView(list);
 
-        // Данные достижений
-        String[] titles = {
-                "Первый бросок!",
-                "Уличный игрок",
-                "Стритболер",
-                "Легенда площадки",
-                "Мастер броска",
-                "Король улиц",
-                "Градиент: Синий фон",
-                "Градиент: Оранжевый фон"
-        };
-        String[] descs = {
-                "Ты в игре! Новый мяч: Стрит",
-                "Ты как Майкл Джордан! Открыта сетка: Стрит",
-                "Открыт мяч: Легенда",
-                "Открыта сетка: Легенда",
-                "Все мячи теперь твои!",
-                "Все сетки теперь твои!",
-                "Открыт синий фон!",
-                "Открыт оранжевый фон!"
-        };
-        int[] unlockScore = {5, 10, 15, 20, 25, 30, 35, 45};
+        // Achievement data from string resources (i18n-safe)
+        String[] titles = getResources().getStringArray(R.array.achievement_titles);
+        String[] descs  = getResources().getStringArray(R.array.achievement_descs);
+        // Unlock thresholds must match GameView logic: score % 3 == 0 → levels 1..8 at scores 3,6,9,12,15,18,21,24
+        int[] unlockScore = {3, 6, 9, 12, 15, 18, 21, 24};
         SharedPreferences prefs = getSharedPreferences("basketball", Context.MODE_PRIVATE);
         int achievementLevel = prefs.getInt("achievementLevel", 0);
 
@@ -134,8 +123,8 @@ public class AchievementsActivity extends AppCompatActivity {
             if (i == 1) { rewardRes = R.drawable.hoop2; rewardLabel = "Стрит (сетка)"; }
             if (i == 2) { rewardRes = R.drawable.ball3; rewardLabel = "Легенда"; }
             if (i == 3) { rewardRes = R.drawable.hoop3; rewardLabel = "Легенда (сетка)"; }
-            if (i == 4) { rewardRes = R.drawable.ball3; rewardLabel = "Все мячи"; }
-            if (i == 5) { rewardRes = R.drawable.hoop3; rewardLabel = "Все сетки"; }
+            if (i == 4) { rewardRes = R.drawable.ball; rewardLabel = "Все мячи"; }
+            if (i == 5) { rewardRes = R.drawable.hoop; rewardLabel = "Все сетки"; }
             if (i == 6) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; rewardLabel = "Синий фон"; }
             if (i == 7) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; rewardLabel = "Оранжевый фон"; }
             if (rewardRes != 0) {
@@ -147,11 +136,17 @@ public class AchievementsActivity extends AppCompatActivity {
                 } else if (rewardRes == R.drawable.ball3) {
                     Bitmap b = GameView.renderBallPreview(this, 2, 160);
                     rewardImg.setImageBitmap(b);
+                } else if (rewardRes == R.drawable.ball) {
+                    Bitmap b = GameView.renderBallPreview(this, 0, 160);
+                    rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.hoop2) {
                     Bitmap b = GameView.renderHoopPreview(this, 1, 160);
                     rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.hoop3) {
                     Bitmap b = GameView.renderHoopPreview(this, 2, 160);
+                    rewardImg.setImageBitmap(b);
+                } else if (rewardRes == R.drawable.hoop) {
+                    Bitmap b = GameView.renderHoopPreview(this, 0, 160);
                     rewardImg.setImageBitmap(b);
                 } else {
                     rewardImg.setImageResource(rewardRes);

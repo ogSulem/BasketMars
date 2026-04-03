@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">BasketMars</string>
+
+    <!-- Main menu -->
+    <string name="btn_play">Play</string>
+    <string name="btn_leaderboard">Leaderboard</string>
+    <string name="btn_inventory">Inventory</string>
+    <string name="btn_achievements">Achievements</string>
+    <string name="btn_settings">Settings</string>
+    <string name="app_author">Yarullin Marcel\nGroup 09-253, KFU</string>
+
+    <!-- Navigation -->
+    <string name="btn_back">Back</string>
+    <string name="btn_menu">Menu</string>
+    <string name="btn_restart">Restart</string>
+    <string name="btn_save">Save</string>
+    <string name="btn_reset_progress">Reset Progress</string>
+
+    <!-- Game modes -->
+    <string name="mode_arcade">Arcade</string>
+    <string name="mode_arcade_desc">Endless mode with increasing difficulty</string>
+    <string name="mode_timed">Timed</string>
+    <string name="mode_timed_desc">Maximum score in 60 seconds</string>
+    <string name="mode_duel">vs Bot</string>
+    <string name="mode_duel_desc">Play against the bot</string>
+    <string name="mode_online_pvp">Duel</string>
+    <string name="mode_online_pvp_desc">Duel against a real player</string>
+
+    <!-- Leaderboard -->
+    <string name="leaderboard_title">Leaderboard</string>
+    <string name="leaderboard_tab_arcade">Arcade</string>
+    <string name="leaderboard_tab_timed">Timed</string>
+    <string name="leaderboard_tab_duel">vs Bot</string>
+    <string name="leaderboard_tab_online">PvP</string>
+    <string name="leaderboard_empty">No results yet</string>
+
+    <!-- Achievements -->
+    <string name="achievements_title">Achievements</string>
+
+    <!-- Inventory -->
+    <string name="inventory_title">Inventory</string>
+    <string name="inventory_section_balls">Balls</string>
+    <string name="inventory_section_hoops">Hoops</string>
+    <string name="inventory_section_backgrounds">Backgrounds</string>
+    <string name="inventory_ball_default">Default</string>
+    <string name="inventory_ball_street">Street</string>
+    <string name="inventory_ball_legend">Legend</string>
+    <string name="inventory_hoop_default">Default</string>
+    <string name="inventory_hoop_street">Street</string>
+    <string name="inventory_hoop_legend">Legend</string>
+    <string name="inventory_bg_pink">Pink</string>
+    <string name="inventory_bg_blue">Blue</string>
+    <string name="inventory_bg_orange">Orange</string>
+
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="settings_player_name_label">Player name</string>
+    <string name="settings_player_name_hint">Enter name</string>
+    <string name="settings_music">Music</string>
+    <string name="settings_vibration">Vibration</string>
+
+    <!-- Music player -->
+    <string name="music_prev">Previous track</string>
+    <string name="music_play">Music</string>
+    <string name="music_next">Next track</string>
+
+    <!-- Match results -->
+    <string name="result_win">Victory!</string>
+    <string name="result_lose">Defeat</string>
+    <string name="result_draw">Draw!</string>
+    <string name="result_time_over">Time\'s up!</string>
+    <string name="result_saved">Result saved</string>
+
+    <!-- Duel mode -->
+    <string name="duel_type_bot">vs Bot</string>
+    <string name="duel_type_online">Online</string>
+
+    <!-- Mode selection -->
+    <string name="mode_select_title">Select Mode</string>
+
+    <!-- Match results — extra strings -->
+    <string name="result_your_score">YOU</string>
+    <string name="result_rival_label_bot">BOT</string>
+    <string name="result_rival_label_online">RIVAL</string>
+    <string name="result_btn_replay">Play Again</string>
+    <string name="result_btn_menu">Menu</string>
+    <string name="cd_logo">Game logo — basketball hoop</string>
+    <string name="cd_mode_arcade">Arcade mode icon</string>
+    <string name="cd_mode_timed">Timed mode icon</string>
+    <string name="cd_mode_duel">vs Bot mode icon</string>
+    <string name="cd_mode_online">Duel mode icon</string>
+
+    <!-- Errors and notifications -->
+    <string name="error_no_server">Server not configured — bot enabled</string>
+    <string name="error_pvp_connection">Match connection error</string>
+    <string name="progress_reset_ok">Progress successfully reset</string>
+    <string name="progress_reset_error">Error resetting progress</string>
+    <string name="no_music">No music files in res/raw!</string>
+
+    <string name="default_player_name">Player</string>
+
+    <!-- Matchmaking -->
+    <string name="matchmaking_searching">Searching for opponent…</string>
+    <string name="matchmaking_found">Opponent found: %1$s</string>
+    <string name="matchmaking_timeout">No opponent found — launching bot</string>
+    <string name="matchmaking_firebase_unavailable">Firebase not configured — launching bot</string>
+    <string name="matchmaking_waiting">Waiting up to 30 seconds…</string>
+    <string name="btn_cancel">Cancel</string>
+
+    <!-- Onboarding hints -->
+    <string name="onboarding_arcade">Arcade: score points, difficulty increases</string>
+    <string name="onboarding_timed">Timed: 60 sec. Combos give score bonus</string>
+    <string name="onboarding_duel">vs Bot: outscore the rival in 60 sec</string>
+
+    <!-- Achievement popup notifications -->
+    <string name="ach_popup_streetballer">Streetballer</string>
+    <string name="ach_popup_streetballer_desc">Ball unlocked: Street</string>
+    <string name="ach_popup_legend">Court Legend</string>
+    <string name="ach_popup_legend_desc">Ball unlocked: Legend</string>
+    <string name="ach_popup_blue_style">Blue Style</string>
+    <string name="ach_popup_blue_style_desc">Blue background unlocked!</string>
+    <string name="ach_popup_hoop_master">Hoop Master</string>
+    <string name="ach_popup_hoop_master_desc">Hoop unlocked: Street</string>
+    <string name="ach_popup_hoop_champ">Hoop Champion</string>
+    <string name="ach_popup_hoop_champ_desc">Hoop unlocked: Legend</string>
+    <string name="ach_popup_orange_style">Orange Style</string>
+    <string name="ach_popup_orange_style_desc">Orange background unlocked!</string>
+    <string name="ach_popup_ball_collector">Ball Collector</string>
+    <string name="ach_popup_ball_collector_desc">All balls are yours!</string>
+    <string name="ach_popup_hoop_king">Hoop King</string>
+    <string name="ach_popup_hoop_king_desc">All hoops are yours!</string>
+
+    <!-- Achievement titles and descriptions (Achievements screen) -->
+    <string-array name="achievement_titles">
+        <item>First Shot!</item>
+        <item>Street Player</item>
+        <item>Streetballer</item>
+        <item>Court Legend</item>
+        <item>Shot Master</item>
+        <item>King of the Court</item>
+        <item>Gradient: Blue BG</item>
+        <item>Gradient: Orange BG</item>
+    </string-array>
+    <string-array name="achievement_descs">
+        <item>You\'re in! New ball: Street</item>
+        <item>Like Michael Jordan! Hoop unlocked: Street</item>
+        <item>Ball unlocked: Legend</item>
+        <item>Hoop unlocked: Legend</item>
+        <item>All balls are yours!</item>
+        <item>All hoops are yours!</item>
+        <item>Blue background unlocked!</item>
+        <item>Orange background unlocked!</item>
+    </string-array>
+
+    <string name="account_section_title">Google Account</string>
+    <string name="btn_sign_in_google">Sign in with Google</string>
+    <string name="btn_sign_out">Sign out</string>
+    <string name="account_signed_in">Account: %1$s</string>
+    <string name="account_signed_in_no_name">Account connected</string>
+    <string name="sign_in_success">Signed in!</string>
+    <string name="sign_in_error">Sign-in failed</string>
+
+    <!-- App language -->
+    <string name="settings_language_label">App language</string>
+    <string name="language_ru">🇷🇺 Русский</string>
+    <string name="language_en">🇬🇧 English</string>
+    <string name="language_changed">Language changed — please restart the app</string>
+
+    <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>
+</resources>
