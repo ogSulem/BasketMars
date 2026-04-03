@@ -1,96 +1,82 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!--
+  App icon foreground: basketball hoop ring with "MARS" label on the rim.
+  Adaptive icon safe-zone is the inner 72×72 box starting at (18,18).
+-->
 <vector xmlns:android="http://schemas.android.com/apk/res/android"
     android:width="108dp"
     android:height="108dp"
     android:viewportWidth="108"
     android:viewportHeight="108">
 
-    <!-- ═══════════════════ HOOP / RING ═══════════════════ -->
-
-    <!-- Backboard (thin dark bar above rim) -->
-    <path
-        android:fillColor="#3D2A5A"
-        android:pathData="M46,14 L62,14 L62,22 L46,22 Z"/>
-
-    <!-- Rim bar — orange rounded rectangle -->
-    <path
-        android:fillColor="#FF6D00"
-        android:pathData="M24,22 Q24,19 27,19 L81,19 Q84,19 84,22 L84,27 Q84,30 81,30 L27,30 Q24,30 24,27 Z"/>
-
-    <!-- Rim highlight -->
-    <path
-        android:fillColor="#FFAB40"
-        android:pathData="M26,20 L82,20 L82,22 L26,22 Z"/>
-
-    <!-- Net — vertical lines (7 lines, slightly converging) -->
+    <!-- ── Outer ring glow (shadow/halo) ── -->
     <path
         android:fillColor="#00000000"
-        android:strokeColor="#CCCCCC"
+        android:strokeColor="#BF7B2FFF"
+        android:strokeWidth="6"
+        android:pathData="M54,28 A26,26 0 1,1 53.999,28 Z"/>
+
+    <!-- ── Main rim ring — orange thick torus ── -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FF6D00"
+        android:strokeWidth="10"
+        android:pathData="M54,28 A26,26 0 1,1 53.999,28 Z"/>
+
+    <!-- ── Rim highlight arc (top-left shine) ── -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFAB40"
+        android:strokeWidth="4"
+        android:pathData="M35,40 A20,20 0 0,1 73,40"/>
+
+    <!-- ── Net — 7 converging vertical strings ── -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#DDDDDD"
+        android:strokeWidth="1.6"
+        android:pathData="M38,53 L36,72
+                          M43,54 L42,72
+                          M48,54 L48,73
+                          M54,54 L54,73
+                          M60,54 L60,73
+                          M65,54 L66,72
+                          M70,53 L72,72"/>
+
+    <!-- ── Net — horizontal weave bands ── -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#DDDDDD"
         android:strokeWidth="1.4"
-        android:pathData="M29,30 L27,47
-                          M36,30 L35,47
-                          M43,30 L43,47
-                          M54,30 L54,47
-                          M65,30 L65,47
-                          M72,30 L73,47
-                          M79,30 L81,47"/>
+        android:pathData="M37,62 Q54,58 71,62
+                          M36,72 Q54,69 72,72"/>
 
-    <!-- Net — horizontal weave lines -->
+    <!-- ── Net bottom closing arc ── -->
     <path
         android:fillColor="#00000000"
         android:strokeColor="#CCCCCC"
-        android:strokeWidth="1.2"
-        android:pathData="M27,37 Q54,33 81,37
-                          M27,47 Q54,44 81,47"/>
-
-    <!-- ═══════════════════ BASKETBALL ═══════════════════ -->
-
-    <!-- Ball shadow (subtle ellipse below) -->
-    <path
-        android:fillColor="#22000000"
-        android:pathData="M36,95 Q54,99 72,95 Q72,91 54,91 Q36,91 36,95 Z"/>
-
-    <!-- Ball body (orange circle, center 54,68 radius 24) -->
-    <path
-        android:fillColor="#FF6D00"
-        android:pathData="M30,68 A24,24 0 1,1 78,68 A24,24 0 1,1 30,68 Z"/>
-
-    <!-- Ball highlight (top-left sheen) -->
-    <path
-        android:fillColor="#33FFFFFF"
-        android:pathData="M37,52 Q46,44 57,46 Q52,50 42,56 Z"/>
-
-    <!-- Seam: vertical curve -->
-    <path
-        android:fillColor="#00000000"
-        android:strokeColor="#BF360C"
-        android:strokeWidth="2.2"
-        android:pathData="M54,44 Q62,56 62,68 Q62,80 54,92"/>
-
-    <!-- Seam: horizontal center -->
-    <path
-        android:fillColor="#00000000"
-        android:strokeColor="#BF360C"
-        android:strokeWidth="2.2"
-        android:pathData="M30,68 Q42,62 54,62 Q66,62 78,68"/>
-
-    <!-- Seam: upper arc -->
-    <path
-        android:fillColor="#00000000"
-        android:strokeColor="#BF360C"
         android:strokeWidth="1.8"
-        android:pathData="M37,55 Q54,48 71,55"/>
+        android:pathData="M36,72 Q54,78 72,72"/>
 
-    <!-- Seam: lower arc -->
+    <!-- ── "MARS" text on the rim ──
+         Each letter is a simple path drawn along the top of the ring.
+         Letters are spaced around the arc at y≈29, x-offsets for each.
+    -->
+    <!-- M -->
     <path
-        android:fillColor="#00000000"
-        android:strokeColor="#BF360C"
-        android:strokeWidth="1.8"
-        android:pathData="M37,81 Q54,88 71,81"/>
-
-    <!-- ═══════════════════ STAR SPARKLE (top-right) ═══════════════════ -->
+        android:fillColor="#FFFFFF"
+        android:pathData="M29,33 L29,26 L32,30 L35,26 L35,33"/>
+    <!-- A -->
     <path
-        android:fillColor="#FFFF00"
-        android:pathData="M89,16 L90.4,20.2 L95,20.2 L91.3,22.8 L92.7,27 L89,24.4 L85.3,27 L86.7,22.8 L83,20.2 L87.6,20.2 Z"/>
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,33 L40.5,26 L43,33 M38.8,30.5 L42.2,30.5"/>
+    <!-- R -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M46,33 L46,26 L49,26 Q51,26 51,28.5 Q51,31 49,31 L46,31 M49,31 L51,33"/>
+    <!-- S -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M54,26 Q57,26 57,28 Q57,30 54,30 Q57,30 57,32 Q57,34 54,34"/>
 
 </vector>

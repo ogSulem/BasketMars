@@ -22,16 +22,16 @@
     <string name="mode_arcade_desc">Бесконечный режим с усложнением</string>
     <string name="mode_timed">На время</string>
     <string name="mode_timed_desc">Максимум очков за 60 секунд</string>
-    <string name="mode_duel">Дуэль</string>
+    <string name="mode_duel">С ботом</string>
     <string name="mode_duel_desc">Игра против бота</string>
-    <string name="mode_online_pvp">Онлайн PvP</string>
+    <string name="mode_online_pvp">Дуэль</string>
     <string name="mode_online_pvp_desc">Дуэль с реальным игроком</string>
 
     <!-- Экран лидерборда -->
     <string name="leaderboard_title">Лидерборд</string>
     <string name="leaderboard_tab_arcade">Аркада</string>
     <string name="leaderboard_tab_timed">На время</string>
-    <string name="leaderboard_tab_duel">Дуэли</string>
+    <string name="leaderboard_tab_duel">С ботом</string>
     <string name="leaderboard_tab_online">PvP</string>
     <string name="leaderboard_empty">Пока нет результатов</string>
 
@@ -90,8 +90,8 @@
     <string name="cd_logo">Логотип игры — баскетбольное кольцо</string>
     <string name="cd_mode_arcade">Иконка режима Аркада</string>
     <string name="cd_mode_timed">Иконка режима На время</string>
-    <string name="cd_mode_duel">Иконка режима Дуэль</string>
-    <string name="cd_mode_online">Иконка режима Онлайн PvP</string>
+    <string name="cd_mode_duel">Иконка режима С ботом</string>
+    <string name="cd_mode_online">Иконка режима Дуэль</string>
 
     <!-- Ошибки и уведомления -->
     <string name="error_no_server">Сервер не настроен — включён бот</string>
@@ -112,7 +112,7 @@
     <!-- Onboarding-подсказки при старте игры -->
     <string name="onboarding_arcade">Аркада: набирай очки, сложность растёт</string>
     <string name="onboarding_timed">На время: 60 сек. Комбо даёт бонус к очкам</string>
-    <string name="onboarding_duel">Дуэль: обгони соперника за 60 сек</string>
+    <string name="onboarding_duel">С ботом: обгони соперника за 60 сек</string>
 
     <!-- Всплывающие уведомления о разблокировке достижений -->
     <string name="ach_popup_streetballer">Стритболер</string>

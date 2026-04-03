@@ -123,8 +123,8 @@ public class AchievementsActivity extends AppCompatActivity {
             if (i == 1) { rewardRes = R.drawable.hoop2; rewardLabel = "Стрит (сетка)"; }
             if (i == 2) { rewardRes = R.drawable.ball3; rewardLabel = "Легенда"; }
             if (i == 3) { rewardRes = R.drawable.hoop3; rewardLabel = "Легенда (сетка)"; }
-            if (i == 4) { rewardRes = R.drawable.ball3; rewardLabel = "Все мячи"; }
-            if (i == 5) { rewardRes = R.drawable.hoop3; rewardLabel = "Все сетки"; }
+            if (i == 4) { rewardRes = R.drawable.ball; rewardLabel = "Все мячи"; }
+            if (i == 5) { rewardRes = R.drawable.hoop; rewardLabel = "Все сетки"; }
             if (i == 6) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; rewardLabel = "Синий фон"; }
             if (i == 7) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; rewardLabel = "Оранжевый фон"; }
             if (rewardRes != 0) {
@@ -136,11 +136,17 @@ public class AchievementsActivity extends AppCompatActivity {
                 } else if (rewardRes == R.drawable.ball3) {
                     Bitmap b = GameView.renderBallPreview(this, 2, 160);
                     rewardImg.setImageBitmap(b);
+                } else if (rewardRes == R.drawable.ball) {
+                    Bitmap b = GameView.renderBallPreview(this, 0, 160);
+                    rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.hoop2) {
                     Bitmap b = GameView.renderHoopPreview(this, 1, 160);
                     rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.hoop3) {
                     Bitmap b = GameView.renderHoopPreview(this, 2, 160);
+                    rewardImg.setImageBitmap(b);
+                } else if (rewardRes == R.drawable.hoop) {
+                    Bitmap b = GameView.renderHoopPreview(this, 0, 160);
                     rewardImg.setImageBitmap(b);
                 } else {
                     rewardImg.setImageResource(rewardRes);

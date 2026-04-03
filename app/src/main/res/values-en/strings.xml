@@ -22,16 +22,16 @@
     <string name="mode_arcade_desc">Endless mode with increasing difficulty</string>
     <string name="mode_timed">Timed</string>
     <string name="mode_timed_desc">Maximum score in 60 seconds</string>
-    <string name="mode_duel">Duel</string>
+    <string name="mode_duel">vs Bot</string>
     <string name="mode_duel_desc">Play against the bot</string>
-    <string name="mode_online_pvp">Online PvP</string>
+    <string name="mode_online_pvp">Duel</string>
     <string name="mode_online_pvp_desc">Duel against a real player</string>
 
     <!-- Leaderboard -->
     <string name="leaderboard_title">Leaderboard</string>
     <string name="leaderboard_tab_arcade">Arcade</string>
     <string name="leaderboard_tab_timed">Timed</string>
-    <string name="leaderboard_tab_duel">Duel</string>
+    <string name="leaderboard_tab_duel">vs Bot</string>
     <string name="leaderboard_tab_online">PvP</string>
     <string name="leaderboard_empty">No results yet</string>
 
@@ -88,8 +88,8 @@
     <string name="cd_logo">Game logo — basketball hoop</string>
     <string name="cd_mode_arcade">Arcade mode icon</string>
     <string name="cd_mode_timed">Timed mode icon</string>
-    <string name="cd_mode_duel">Duel mode icon</string>
-    <string name="cd_mode_online">Online PvP mode icon</string>
+    <string name="cd_mode_duel">vs Bot mode icon</string>
+    <string name="cd_mode_online">Duel mode icon</string>
 
     <!-- Errors and notifications -->
     <string name="error_no_server">Server not configured — bot enabled</string>
@@ -111,7 +111,7 @@
     <!-- Onboarding hints -->
     <string name="onboarding_arcade">Arcade: score points, difficulty increases</string>
     <string name="onboarding_timed">Timed: 60 sec. Combos give score bonus</string>
-    <string name="onboarding_duel">Duel: outscore the rival in 60 sec</string>
+    <string name="onboarding_duel">vs Bot: outscore the rival in 60 sec</string>
 
     <!-- Achievement popup notifications -->
     <string name="ach_popup_streetballer">Streetballer</string>
