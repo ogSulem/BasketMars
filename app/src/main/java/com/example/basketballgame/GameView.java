@@ -1679,7 +1679,8 @@ public class GameView extends View {
         // Достижения (новый стиль)
         if (achievementText != null && System.currentTimeMillis() - achievementShowTime < 2500) {
             float cx = getWidth() / 2f, cy = getHeight() / 2f;
-            float rw = 1100, rh = 700;
+            float rw = Math.min(1100f, getWidth() - 60f);
+            float rh = 700;
             // Карточка popup
             Paint popupBg = new Paint();
             popupBg.setColor(0xFF1A102B);

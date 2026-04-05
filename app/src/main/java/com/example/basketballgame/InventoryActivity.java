@@ -55,9 +55,9 @@ public class InventoryActivity extends AppCompatActivity {
         // Кнопка назад
         ImageView backBtn = new ImageView(this);
         backBtn.setImageResource(R.drawable.ic_back);
-        FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(140, 140);
-        backParams.leftMargin = 32;
-        backParams.topMargin = 48;
+        FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(dp(56), dp(56));
+        backParams.leftMargin = dp(12);
+        backParams.topMargin = dp(14);
         backBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         root.addView(backBtn, backParams);
         backBtn.setOnClickListener(new View.OnClickListener() {

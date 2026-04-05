@@ -34,6 +34,7 @@ public class GameActivity extends AppCompatActivity {
     private LeaderboardRepository leaderboardRepository;
     private String playerName;
     private boolean arcadeSaved = false;
+    private FrameLayout gameRoot;
 
     @Override
     protected void attachBaseContext(android.content.Context base) {
@@ -44,8 +45,12 @@ public class GameActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        FrameLayout root = new FrameLayout(this);
-        root.setBackgroundResource(R.drawable.bg_gradient);
+        SharedPreferences initPrefs = getSharedPreferences("basketball", MODE_PRIVATE);
+        int initBgIdx = initPrefs.getInt("selectedBg", 0);
+        int[] initBgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
+        gameRoot = new FrameLayout(this);
+        gameRoot.setBackgroundResource(initBgDrawables[initBgIdx]);
+        FrameLayout root = gameRoot;
 
         mode = GameMode.fromName(getIntent().getStringExtra(GameMode.EXTRA_KEY));
         gameView = new GameView(this, mode);
@@ -57,9 +62,10 @@ public class GameActivity extends AppCompatActivity {
         backButton.setImageResource(R.drawable.ic_back);
         backButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
         backButton.setContentDescription(getString(R.string.btn_back));
-        FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(140, 140);
-        backParams.leftMargin = 32;
-        backParams.topMargin = 48;
+        int btnSizePx = dp(56);
+        FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(btnSizePx, btnSizePx);
+        backParams.leftMargin = dp(12);
+        backParams.topMargin = dp(14);
         root.addView(backButton, backParams);
         backButton.setOnClickListener(v -> {
             GameView.animateButton(v);
@@ -117,6 +123,7 @@ public class GameActivity extends AppCompatActivity {
         int bgIdx = prefs.getInt("selectedBg", 0);
         int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
         getWindow().getDecorView().setBackgroundResource(bgDrawables[bgIdx]);
+        if (gameRoot != null) gameRoot.setBackgroundResource(bgDrawables[bgIdx]);
         MusicPlayer.ensureState(this);
         updateMusicNoteColor();
 
@@ -272,13 +279,13 @@ public class GameActivity extends AppCompatActivity {
                 break;
             case ONLINE_DUEL:
                 if (playerScore > stats.duelBest) stats.duelBest = playerScore;
-                if (playerScore >= rivalScore) stats.duelWins++;
-                else stats.duelLosses++;
+                if (playerScore > rivalScore) stats.duelWins++;
+                else if (playerScore < rivalScore) stats.duelLosses++;
                 break;
             case ONLINE_PVP:
                 if (playerScore > stats.onlinePvpBest) stats.onlinePvpBest = playerScore;
-                if (playerScore >= rivalScore) stats.onlinePvpWins++;
-                else stats.onlinePvpLosses++;
+                if (playerScore > rivalScore) stats.onlinePvpWins++;
+                else if (playerScore < rivalScore) stats.onlinePvpLosses++;
                 break;
         }
     }
@@ -345,5 +352,9 @@ public class GameActivity extends AppCompatActivity {
         gameView.setDeferOpponentStart(false);
         gameView.setOpponentConnectTarget(roomId);
         matchClient.connect(roomId);
+    }
+
+    private int dp(int v) {
+        return (int) (v * getResources().getDisplayMetrics().density + 0.5f);
     }
 }

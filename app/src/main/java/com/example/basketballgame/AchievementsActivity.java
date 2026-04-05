@@ -213,7 +213,7 @@ public class AchievementsActivity extends AppCompatActivity {
         // Кнопка назад (стрелка)
         ImageView backBtn = new ImageView(this);
         backBtn.setImageResource(R.drawable.ic_back);
-        FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(140, 140);
+        FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(dp(56), dp(56));
         backParams.leftMargin = dp(12);
         backParams.topMargin = dp(14);
         root.addView(backBtn, backParams);
