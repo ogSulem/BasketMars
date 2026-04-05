@@ -2296,12 +2296,12 @@ public class GameView extends View {
                 if (achievementLevel == 3) {
                     achievementText = getContext().getString(R.string.ach_popup_ball_collector);
                     achievementDesc = getContext().getString(R.string.ach_popup_ball_collector_desc);
-                    achievementIconRes = R.drawable.ball3;
+                    achievementIconRes = R.drawable.ball;
                     achievementBgColorType = 0;
                 } else if (achievementLevel == 6) {
                     achievementText = getContext().getString(R.string.ach_popup_hoop_king);
                     achievementDesc = getContext().getString(R.string.ach_popup_hoop_king_desc);
-                    achievementIconRes = R.drawable.hoop3;
+                    achievementIconRes = R.drawable.hoop;
                     achievementBgColorType = 0;
                 }
             }
