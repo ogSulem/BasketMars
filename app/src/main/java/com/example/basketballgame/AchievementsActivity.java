@@ -31,7 +31,11 @@ public class AchievementsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FrameLayout root = new FrameLayout(this);
-        root.setBackgroundResource(R.drawable.bg_gradient);
+
+        SharedPreferences prefs = getSharedPreferences("basketball", Context.MODE_PRIVATE);
+        int selectedBg = prefs.getInt("selectedBg", 0);
+        int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
+        root.setBackgroundResource(bgDrawables[selectedBg]);
 
         // Заголовок
         final TextView title = new TextView(this);
@@ -42,38 +46,39 @@ public class AchievementsActivity extends AppCompatActivity {
         title.setShadowLayer(12, 0, 8, 0xFF8f5cff);
         FrameLayout.LayoutParams titleParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-        titleParams.topMargin = 64;
+        titleParams.topMargin = dp(20);
         root.addView(title, titleParams);
 
         // ScrollView для вертикального списка
         ScrollView scroll = new ScrollView(this);
         FrameLayout.LayoutParams scrollParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-        scrollParams.topMargin = 200;
+        scrollParams.topMargin = dp(80);
         root.addView(scroll, scrollParams);
 
         LinearLayout list = new LinearLayout(this);
         list.setOrientation(LinearLayout.VERTICAL);
         list.setGravity(Gravity.CENTER_HORIZONTAL);
+        list.setPadding(dp(8), 0, dp(8), dp(16));
         scroll.addView(list);
 
         // Achievement data from string resources (i18n-safe)
         String[] titles = getResources().getStringArray(R.array.achievement_titles);
         String[] descs  = getResources().getStringArray(R.array.achievement_descs);
-        // Unlock thresholds must match GameView logic: score % 3 == 0 → levels 1..8 at scores 3,6,9,12,15,18,21,24
+        // Unlock thresholds must match GameView logic: levels 1..8 at scores 3,6,9,12,15,18,21,24
         int[] unlockScore = {3, 6, 9, 12, 15, 18, 21, 24};
-        SharedPreferences prefs = getSharedPreferences("basketball", Context.MODE_PRIVATE);
         int achievementLevel = prefs.getInt("achievementLevel", 0);
 
         for (int i = 0; i < titles.length; i++) {
             FrameLayout card = new FrameLayout(this);
             GradientDrawable cardBg = new GradientDrawable();
             cardBg.setColor(achievementLevel >= i + 1 ? 0xFF1A102B : 0xFF2D193C);
-            cardBg.setStroke(achievementLevel >= i + 1 ? 16 : 10, 0xFF8f5cff);
-            cardBg.setCornerRadius(32);
+            cardBg.setStroke(achievementLevel >= i + 1 ? dp(4) : dp(3), 0xFF8f5cff);
+            cardBg.setCornerRadius(dp(12));
             card.setBackground(cardBg);
-            FrameLayout.LayoutParams cardParams = new FrameLayout.LayoutParams(1200, 500);
-            cardParams.topMargin = 80;
+            LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, dp(140));
+            cardParams.topMargin = dp(12);
             card.setLayoutParams(cardParams);
             // Верх — название достижения
             TextView achTitle = new TextView(this);
@@ -85,15 +90,15 @@ public class AchievementsActivity extends AppCompatActivity {
             achTitle.setPadding(0, 0, 0, 0);
             FrameLayout.LayoutParams achTitleParams = new FrameLayout.LayoutParams(
                     FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            achTitleParams.topMargin = 36;
+            achTitleParams.topMargin = dp(10);
             card.addView(achTitle, achTitleParams);
             // Горизонтальная строка: число — награда — слово
             LinearLayout row = new LinearLayout(this);
             row.setOrientation(LinearLayout.HORIZONTAL);
             row.setGravity(Gravity.CENTER_VERTICAL);
             FrameLayout.LayoutParams rowParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, 400);
-            rowParams.topMargin = 100;
+                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
+            rowParams.topMargin = dp(32);
             row.setLayoutParams(rowParams);
             // Число очков
             TextView pointsView = new TextView(this);
@@ -103,79 +108,77 @@ public class AchievementsActivity extends AppCompatActivity {
             pointsView.setGravity(Gravity.CENTER);
             pointsView.setShadowLayer(4, 0, 2, 0xFF8f5cff);
             LinearLayout.LayoutParams pointsParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-            pointsParams.leftMargin = 40;
+            pointsParams.leftMargin = dp(12);
             row.addView(pointsView, pointsParams);
             // Награда (rewardCard) — всегда квадратная
             FrameLayout rewardCard = new FrameLayout(this);
             GradientDrawable rewardBorder = new GradientDrawable();
             rewardBorder.setColor(0x33000000);
-            rewardBorder.setStroke(8, 0xFFB266FF);
-            rewardBorder.setCornerRadius(24);
+            rewardBorder.setStroke(dp(2), 0xFFB266FF);
+            rewardBorder.setCornerRadius(dp(8));
             rewardCard.setBackground(rewardBorder);
-            LinearLayout.LayoutParams rewardCardParams = new LinearLayout.LayoutParams(180, 180);
+            int rewardSizePx = dp(80);
+            LinearLayout.LayoutParams rewardCardParams = new LinearLayout.LayoutParams(rewardSizePx, rewardSizePx);
             rewardCardParams.gravity = Gravity.CENTER_VERTICAL;
             rewardCard.setLayoutParams(rewardCardParams);
             int rewardRes = 0;
             String rewardLabel = "";
             boolean isBgReward = false;
             int bgPreviewRes = 0;
-            if (i == 0) { rewardRes = R.drawable.ball2; rewardLabel = "Стрит"; }
-            if (i == 1) { rewardRes = R.drawable.hoop2; rewardLabel = "Стрит (сетка)"; }
-            if (i == 2) { rewardRes = R.drawable.ball3; rewardLabel = "Легенда"; }
-            if (i == 3) { rewardRes = R.drawable.hoop3; rewardLabel = "Легенда (сетка)"; }
-            if (i == 4) { rewardRes = R.drawable.ball; rewardLabel = "Все мячи"; }
-            if (i == 5) { rewardRes = R.drawable.hoop; rewardLabel = "Все сетки"; }
+            if (i == 0) { rewardRes = R.drawable.ball2;  rewardLabel = "Стрит"; }
+            if (i == 1) { rewardRes = R.drawable.hoop2;  rewardLabel = "Стрит (сетка)"; }
+            if (i == 2) { rewardRes = R.drawable.ball;   rewardLabel = "Все мячи"; }
+            if (i == 3) { rewardRes = R.drawable.ball3;  rewardLabel = "Легенда"; }
+            if (i == 4) { rewardRes = R.drawable.hoop3;  rewardLabel = "Легенда (сетка)"; }
+            if (i == 5) { rewardRes = R.drawable.hoop;   rewardLabel = "Все сетки"; }
             if (i == 6) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; rewardLabel = "Синий фон"; }
             if (i == 7) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; rewardLabel = "Оранжевый фон"; }
             if (rewardRes != 0) {
                 ImageView rewardImg = new ImageView(this);
                 // Используем процедурные превью для мячей/сеток, чтобы совпадало с игрой.
                 if (rewardRes == R.drawable.ball2) {
-                    Bitmap b = GameView.renderBallPreview(this, 1, 160);
+                    Bitmap b = GameView.renderBallPreview(this, 1, rewardSizePx);
                     rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.ball3) {
-                    Bitmap b = GameView.renderBallPreview(this, 2, 160);
+                    Bitmap b = GameView.renderBallPreview(this, 2, rewardSizePx);
                     rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.ball) {
-                    Bitmap b = GameView.renderBallPreview(this, 0, 160);
+                    Bitmap b = GameView.renderBallPreview(this, 0, rewardSizePx);
                     rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.hoop2) {
-                    Bitmap b = GameView.renderHoopPreview(this, 1, 160);
+                    Bitmap b = GameView.renderHoopPreview(this, 1, rewardSizePx);
                     rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.hoop3) {
-                    Bitmap b = GameView.renderHoopPreview(this, 2, 160);
+                    Bitmap b = GameView.renderHoopPreview(this, 2, rewardSizePx);
                     rewardImg.setImageBitmap(b);
                 } else if (rewardRes == R.drawable.hoop) {
-                    Bitmap b = GameView.renderHoopPreview(this, 0, 160);
+                    Bitmap b = GameView.renderHoopPreview(this, 0, rewardSizePx);
                     rewardImg.setImageBitmap(b);
                 } else {
                     rewardImg.setImageResource(rewardRes);
                 }
-                FrameLayout.LayoutParams imgParams = new FrameLayout.LayoutParams(160, 160);
+                FrameLayout.LayoutParams imgParams = new FrameLayout.LayoutParams(rewardSizePx, rewardSizePx);
                 imgParams.gravity = Gravity.CENTER;
                 rewardCard.addView(rewardImg, imgParams);
             } else if (isBgReward) {
                 View preview = new View(this);
                 preview.setBackgroundResource(bgPreviewRes);
-                FrameLayout.LayoutParams previewParams = new FrameLayout.LayoutParams(160, 160);
+                FrameLayout.LayoutParams previewParams = new FrameLayout.LayoutParams(rewardSizePx, rewardSizePx);
                 previewParams.gravity = Gravity.CENTER;
                 preview.setLayoutParams(previewParams);
                 rewardCard.addView(preview);
             }
             row.addView(rewardCard);
-            // Слово 'очков'
+            // Слово 'очков' / 'points' — из plural-ресурса для корректной локализации
             TextView wordView = new TextView(this);
             int pts = unlockScore[i];
-            String word = "очков";
-            if (pts % 10 == 1 && pts != 11) word = "очко";
-            else if ((pts % 10 >= 2 && pts % 10 <= 4) && (pts < 10 || pts > 20)) word = "очка";
-            wordView.setText(word);
+            wordView.setText(getResources().getQuantityString(R.plurals.achievement_points, pts));
             wordView.setTextColor(0xFF8f5cff);
             wordView.setTextSize(22);
             wordView.setGravity(Gravity.CENTER);
             wordView.setShadowLayer(3, 0, 1, 0xFF8f5cff);
             LinearLayout.LayoutParams wordParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-            wordParams.rightMargin = 40;
+            wordParams.rightMargin = dp(12);
             row.addView(wordView, wordParams);
             card.addView(row);
             // Overlay если не открыто (на всю карточку)
@@ -194,7 +197,7 @@ public class AchievementsActivity extends AppCompatActivity {
                         super.onDraw(canvas);
                         android.graphics.Paint paint = new android.graphics.Paint();
                         paint.setColor(0xCC8f5cff);
-                        paint.setStrokeWidth(14);
+                        paint.setStrokeWidth(dp(4));
                         paint.setAlpha(180);
                         canvas.drawLine(1, 1, getWidth() - 1, getHeight() - 1, paint);
                     }
@@ -211,8 +214,8 @@ public class AchievementsActivity extends AppCompatActivity {
         ImageView backBtn = new ImageView(this);
         backBtn.setImageResource(R.drawable.ic_back);
         FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(140, 140);
-        backParams.leftMargin = 32;
-        backParams.topMargin = 48;
+        backParams.leftMargin = dp(12);
+        backParams.topMargin = dp(14);
         root.addView(backBtn, backParams);
         backBtn.setOnClickListener(v -> {
             GameView.animateButton(v);
@@ -231,6 +234,10 @@ public class AchievementsActivity extends AppCompatActivity {
         int bgIdx = prefs.getInt("selectedBg", 0);
         int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
         getWindow().getDecorView().setBackgroundResource(bgDrawables[bgIdx]);
+    }
+
+    private int dp(int v) {
+        return (int) (v * getResources().getDisplayMetrics().density + 0.5f);
     }
 
     private ShapeDrawable drawUnlockedIcon() {

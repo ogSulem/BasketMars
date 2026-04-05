@@ -74,6 +74,8 @@ public class GameView extends View {
     private int achievementIconRes = 0;
     /** 0 = no BG change, 1 = blue BG, 2 = orange BG — avoids fragile string.contains() checks. */
     private int achievementBgColorType = 0;
+    private Bitmap cachedAchievementIconBitmap = null;
+    private int cachedAchievementIconRes = 0;
 
     private final Bitmap[] hoopPngBitmaps = new Bitmap[3];
 
@@ -1713,9 +1715,24 @@ public class GameView extends View {
             canvas.drawRoundRect(cardRect, 48, 48, cardBg);
             canvas.drawRoundRect(cardRect, 48, 48, cardBorder);
             if (achievementIconRes != 0) {
-                Bitmap icon = BitmapFactory.decodeResource(getResources(), achievementIconRes);
-                RectF iconRect = new RectF(cardX + 32, cardY + 32, cardX + cardSize - 32, cardY + cardSize - 32);
-                canvas.drawBitmap(Bitmap.createScaledBitmap(icon, (int)(cardSize-64), (int)(cardSize-64), false), null, iconRect, null);
+                if (cachedAchievementIconBitmap == null || cachedAchievementIconRes != achievementIconRes) {
+                    if (cachedAchievementIconBitmap != null) {
+                        cachedAchievementIconBitmap.recycle();
+                        cachedAchievementIconBitmap = null;
+                    }
+                    Bitmap raw = BitmapFactory.decodeResource(getResources(), achievementIconRes);
+                    if (raw != null) {
+                        int sz = (int)(cardSize - 64);
+                        Bitmap scaled = Bitmap.createScaledBitmap(raw, sz, sz, true);
+                        if (scaled != raw) raw.recycle();
+                        cachedAchievementIconBitmap = scaled;
+                    }
+                    cachedAchievementIconRes = achievementIconRes;
+                }
+                if (cachedAchievementIconBitmap != null) {
+                    RectF iconRect = new RectF(cardX + 32, cardY + 32, cardX + cardSize - 32, cardY + cardSize - 32);
+                    canvas.drawBitmap(cachedAchievementIconBitmap, null, iconRect, null);
+                }
             } else if (achievementBgColorType == 1) {
                 Paint bgPaint = new Paint();
                 bgPaint.setShader(new android.graphics.LinearGradient(cardX, cardY, cardX + cardSize, cardY + cardSize, 0xFF3A2B5C, 0xFF2D193C, android.graphics.Shader.TileMode.CLAMP));
@@ -1728,6 +1745,12 @@ public class GameView extends View {
                 canvas.drawRoundRect(cardRect, 48, 48, cardBorder);
             }
             if (System.currentTimeMillis() - achievementShowTime < 2500) postInvalidate();
+        } else if (achievementText != null) {
+            achievementText = null;
+            if (cachedAchievementIconBitmap != null) {
+                cachedAchievementIconBitmap.recycle();
+                cachedAchievementIconBitmap = null;
+            }
         }
         if (showObstacle) {
             canvas.drawRoundRect(obstacleX, obstacleY, obstacleX + obstacleW, obstacleY + obstacleH, 24, 24, obsPaint);
@@ -2216,7 +2239,7 @@ public class GameView extends View {
 
         applyArcadeDifficulty();
 
-        if (score > 0 && score % 3 == 0 && achievementLevel < 8) {
+        if (achievementLevel < 8 && score >= (achievementLevel + 1) * 3) {
             achievementLevel++;
             SharedPreferences prefs = getContext().getSharedPreferences("basketball", Context.MODE_PRIVATE);
             prefs.edit().putInt("achievementLevel", achievementLevel).apply();

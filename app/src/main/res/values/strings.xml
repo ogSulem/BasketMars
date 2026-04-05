@@ -171,5 +171,12 @@
 
     <!-- Строка для Google Services (web client ID — генерируется из google-services.json) -->
     <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>
+    <!-- Единица измерения очков для экрана достижений -->
+    <plurals name="achievement_points">
+        <item quantity="one">очко</item>
+        <item quantity="few">очка</item>
+        <item quantity="many">очков</item>
+        <item quantity="other">очков</item>
+    </plurals>
 
 </resources>

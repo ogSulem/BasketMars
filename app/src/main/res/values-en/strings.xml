@@ -167,5 +167,10 @@
     <string name="language_en">🇬🇧 English</string>
     <string name="language_changed">Language changed — please restart the app</string>
 
-    <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>
+    <string name="default_web_client_id" translatable="false">000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com</string>    <!-- Points unit for achievements screen -->
+    <plurals name="achievement_points">
+        <item quantity="one">point</item>
+        <item quantity="other">points</item>
+    </plurals>
+
 </resources>
