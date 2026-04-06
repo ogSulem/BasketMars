@@ -19,7 +19,7 @@
     Поля:  левое 30 мм, правое 15 мм, верхнее 20 мм, нижнее 20 мм
     Абзацный отступ:         1.25 см
     Заголовки:               TNR 14 pt обычный (без жирного), по центру, без отступа
-    Подписи рисунков:        TNR 12 pt, по центру, курсив
+    Подписи рисунков:        TNR 14 pt, по центру, обычный (без курсива — метод. указания КФУ)
     Код (листинг):           Courier New 10 pt, без отступа
 """
 
@@ -109,15 +109,16 @@ def apply_heading_styles(doc: Document) -> None:
 
 
 def add_caption_style(doc: Document) -> None:
-    """Подписи к рисункам/таблицам: TNR 12pt, по центру, без отступа."""
+    """Подписи к рисункам/таблицам: TNR 14pt, по центру, без отступа.
+    Метод. указания КФУ: «весь текст работы ... без курсива» — курсив запрещён."""
     from docx.enum.text import WD_LINE_SPACING
     try:
         style = doc.styles.add_style("Caption", WD_STYLE_TYPE.PARAGRAPH)
     except Exception:
         style = doc.styles["Caption"]
     style.font.name = "Times New Roman"
-    style.font.size = Pt(12)
-    style.font.italic = True
+    style.font.size = Pt(14)
+    style.font.italic = False
     pf = style.paragraph_format
     pf.alignment = WD_ALIGN_PARAGRAPH.CENTER
     pf.first_line_indent = Cm(0)
