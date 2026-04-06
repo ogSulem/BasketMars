@@ -16,9 +16,9 @@
     Шрифт основного текста:  Times New Roman, 14 pt
     Межстрочный интервал:    1.5
     Выравнивание текста:     по ширине
-    Поля:  левое 30 мм, правое 10 мм, верхнее 20 мм, нижнее 25 мм
+    Поля:  левое 30 мм, правое 15 мм, верхнее 20 мм, нижнее 20 мм
     Абзацный отступ:         1.25 см
-    Заголовки:               TNR 14 pt жирный, по центру, без отступа
+    Заголовки:               TNR 14 pt обычный (без жирного), по центру, без отступа
     Подписи рисунков:        TNR 12 pt, по центру, курсив
     Код (листинг):           Courier New 10 pt, без отступа
 """
@@ -35,12 +35,12 @@ OUTPUT = "diploma_reference.docx"
 
 
 def set_page_margins(doc: Document) -> None:
-    """Поля страницы: левое 3 см, правое 1 см, верхнее 2 см, нижнее 2.5 см."""
+    """Поля страницы по метод. указ. КФУ: левое 3 см, правое 1.5 см, верхнее 2 см, нижнее 2 см."""
     section = doc.sections[0]
     section.left_margin = Cm(3.0)
-    section.right_margin = Cm(1.0)
+    section.right_margin = Cm(1.5)
     section.top_margin = Cm(2.0)
-    section.bottom_margin = Cm(2.5)
+    section.bottom_margin = Cm(2.0)
 
 
 def set_run_font(run, name: str, size_pt: float, bold: bool = False,
@@ -89,20 +89,21 @@ def apply_normal_style(doc: Document) -> None:
 
 
 def apply_heading_styles(doc: Document) -> None:
-    """Заголовки 1–3: TNR 14pt жирный, по центру, без отступа."""
+    """Заголовки 1–3: TNR 14pt обычный (без жирного), по центру, без отступа.
+    Метод. указания КФУ: «без жирного выделения, без подчеркиваний»."""
     from docx.enum.text import WD_LINE_SPACING
     for level in range(1, 4):
         name = f"Heading {level}"
         style = doc.styles[name]
         style.font.name = "Times New Roman"
         style.font.size = Pt(14)
-        style.font.bold = True
+        style.font.bold = False
         style.font.color.rgb = RGBColor(0, 0, 0)
         pf = style.paragraph_format
         pf.alignment = WD_ALIGN_PARAGRAPH.CENTER
         pf.first_line_indent = Cm(0)
         pf.space_before = Pt(12 if level == 1 else 6)
-        pf.space_after = Pt(6)
+        pf.space_after = Pt(12)
         pf.line_spacing_rule = WD_LINE_SPACING.ONE_POINT_FIVE
         pf.keep_with_next = True
 
