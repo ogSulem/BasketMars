@@ -642,55 +642,55 @@ public static Context wrap(Context ctx) {
 | Инвентарь | `InventoryActivity` | Секции мячей, сеток, фонов; кнопки выбора |
 | Настройки | `SettingsActivity` | Имя игрока, язык, музыка, вибрация, аккаунт Google |
 
-**Главное меню** содержит градиентный фон (`bg_gradient.xml`), логотип и пять кнопок, оформленных в едином стиле `btn_rounded_dark`. Все кнопки поддерживают тактильную анимацию нажатия через статический метод `GameView.animateButton()`.
+**Главное меню** содержит градиентный фон (`bg_gradient.xml`), логотип и пять кнопок, оформленных в едином стиле `btn_rounded_dark`. Все кнопки поддерживают тактильную анимацию нажатия через статический метод `GameView.animateButton()`. Внешний вид главного меню представлен на рисунке 7.
 
-![Рисунок 7](screenshots/fig07_main_menu.png)
+![Главное меню приложения BasketMars](screenshots/fig07_main_menu.png)
 
 Рисунок 7 – Главное меню приложения BasketMars
 
-**Выбор режима** реализован через `BottomSheetDialog` с прозрачным фоном, содержащий четыре карточки режимов с иконками и описаниями.
+**Выбор режима** реализован через `BottomSheetDialog` с прозрачным фоном, содержащий четыре карточки режимов с иконками и описаниями (рисунок 8).
 
-![Рисунок 8](screenshots/fig08_mode_select.png)
+![Диалог выбора игрового режима](screenshots/fig08_mode_select.png)
 
 Рисунок 8 – Диалог выбора игрового режима (Bottom Sheet)
 
-**Игровое поле** занимает весь экран. В верхней части отображается HUD: счёт текущего игрока, счёт соперника (в режимах дуэли и онлайн PvP) и обратный таймер (в режиме «На время»). Управление музыкой размещено в верхней части экрана. Кнопка «Назад» расположена в левом верхнем углу.
+**Игровое поле** занимает весь экран. В верхней части отображается HUD: счёт текущего игрока, счёт соперника (в режимах дуэли и онлайн PvP) и обратный таймер (в режиме «На время»). Управление музыкой размещено в верхней части экрана. Кнопка «Назад» расположена в левом верхнем углу. Игровое поле в режиме ARCADE с активным препятствием представлено на рисунке 9, в режиме ONLINE_PVP с призраком соперника – на рисунке 10.
 
-![Рисунок 9](screenshots/fig09_arcade.png)
+![Игровое поле в режиме ARCADE](screenshots/fig09_arcade.png)
 
 Рисунок 9 – Игровое поле в режиме ARCADE (с препятствием и анимацией броска)
 
-![Рисунок 10](screenshots/fig10_online_pvp.png)
+![Игровое поле в режиме ONLINE_PVP](screenshots/fig10_online_pvp.png)
 
 Рисунок 10 – Игровое поле в режиме ONLINE_PVP (с призраком соперника и HUD счёта)
 
-**Матчмейкинг** отображает анимированный статус поиска соперника и кнопку отмены. При успешном сопряжении экран автоматически переходит в `GameActivity`.
+**Матчмейкинг** отображает анимированный статус поиска соперника и кнопку отмены. При успешном сопряжении экран автоматически переходит в `GameActivity`. Экран ожидания показан на рисунке 11.
 
-![Рисунок 11](screenshots/fig11_matchmaking.png)
+![Экран ожидания матчмейкинга](screenshots/fig11_matchmaking.png)
 
 Рисунок 11 – Экран ожидания матчмейкинга
 
-**Лидерборд** отображает топ-20 результатов по каждому из четырёх режимов. Переключение режимов производится через `TabLayout`. Под таблицей отображаются личные рекорды игрока по всем режимам.
+**Лидерборд** отображает топ-20 результатов по каждому из четырёх режимов. Переключение режимов производится через `TabLayout`. Под таблицей отображаются личные рекорды игрока по всем режимам (рисунок 12).
 
-![Рисунок 12](screenshots/fig12_leaderboard.png)
+![Экран лидерборда](screenshots/fig12_leaderboard.png)
 
 Рисунок 12 – Экран лидерборда (вкладка «Аркада»)
 
-**Экран достижений** (`AchievementsActivity`) отображает восемь карточек с прогресс-баром и превью разблокируемой награды. Разблокированные достижения выделяются цветом.
+**Экран достижений** (`AchievementsActivity`) отображает восемь карточек с прогресс-баром и превью разблокируемой награды. Разблокированные достижения выделяются цветом (рисунок 13).
 
-![Рисунок 13](screenshots/fig13_achievements.png)
+![Экран достижений](screenshots/fig13_achievements.png)
 
 Рисунок 13 – Экран достижений
 
-**Инвентарь** (`InventoryActivity`) разделён на три секции: мячи, сетки и фоны. Кнопка «Выбрать» активирует соответствующий скин немедленно; предпросмотр отрисовывается методами `GameView.renderBallPreview()` и `GameView.renderHoopPreview()`.
+**Инвентарь** (`InventoryActivity`) разделён на три секции: мячи, сетки и фоны. Кнопка «Выбрать» активирует соответствующий скин немедленно; предпросмотр отрисовывается методами `GameView.renderBallPreview()` и `GameView.renderHoopPreview()`. Экран инвентаря представлен на рисунке 14.
 
-![Рисунок 14](screenshots/fig14_inventory.png)
+![Экран инвентаря скинов](screenshots/fig14_inventory.png)
 
 Рисунок 14 – Экран инвентаря скинов
 
-**Настройки** (`SettingsActivity`) позволяют задать имя игрока, переключить язык интерфейса, включить/выключить музыку и вибрацию, выполнить вход через Google Sign-In или сбросить весь прогресс.
+**Настройки** (`SettingsActivity`) позволяют задать имя игрока, переключить язык интерфейса, включить/выключить музыку и вибрацию, выполнить вход через Google Sign-In или сбросить весь прогресс (рисунок 15).
 
-![Рисунок 15](screenshots/fig15_settings.png)
+![Экран настроек](screenshots/fig15_settings.png)
 
 Рисунок 15 – Экран настроек
 
@@ -813,41 +813,41 @@ public static Context wrap(Context ctx) {
 
 ## Список использованных источников
 
-1. Android Developers. Activity and Fragment Lifecycles. – URL: https://developer.android.com/guide/components/activities/activity-lifecycle (дата обращения: 10.01.2026).
+1. Android Developers. Activity and Fragment Lifecycles [Электронный ресурс]. – URL: https://developer.android.com/guide/components/activities/activity-lifecycle (дата обращения: 10.01.2026).
 
-2. Android Developers. Canvas and Drawables. – URL: https://developer.android.com/develop/ui/views/graphics/drawables (дата обращения: 10.01.2026).
+2. Android Developers. Canvas and Drawables [Электронный ресурс]. – URL: https://developer.android.com/develop/ui/views/graphics/drawables (дата обращения: 10.01.2026).
 
-3. Android Developers. Room Persistence Library. – URL: https://developer.android.com/training/data-storage/room (дата обращения: 10.01.2026).
+3. Android Developers. Room Persistence Library [Электронный ресурс]. – URL: https://developer.android.com/training/data-storage/room (дата обращения: 10.01.2026).
 
-4. Android Developers. Vibration API. – URL: https://developer.android.com/develop/ui/views/haptics/haptic-feedback (дата обращения: 10.01.2026).
+4. Android Developers. Vibration API [Электронный ресурс]. – URL: https://developer.android.com/develop/ui/views/haptics/haptic-feedback (дата обращения: 10.01.2026).
 
 5. App Annie. State of Mobile 2023 Report. – San Francisco : Data.ai, 2023. – 48 с.
 
-6. Firebase Documentation. Cloud Firestore – Transactions and Batched Writes. – URL: https://firebase.google.com/docs/firestore/manage-data/transactions (дата обращения: 12.01.2026).
+6. Firebase Documentation. Cloud Firestore – Transactions and Batched Writes [Электронный ресурс]. – URL: https://firebase.google.com/docs/firestore/manage-data/transactions (дата обращения: 12.01.2026).
 
-7. Firebase Documentation. Get Started with Firebase Authentication on Android. – URL: https://firebase.google.com/docs/auth/android/start (дата обращения: 12.01.2026).
+7. Firebase Documentation. Get Started with Firebase Authentication on Android [Электронный ресурс]. – URL: https://firebase.google.com/docs/auth/android/start (дата обращения: 12.01.2026).
 
-8. Firebase Documentation. Get Started with Cloud Firestore. – URL: https://firebase.google.com/docs/firestore/quickstart (дата обращения: 12.01.2026).
+8. Firebase Documentation. Get Started with Cloud Firestore [Электронный ресурс]. – URL: https://firebase.google.com/docs/firestore/quickstart (дата обращения: 12.01.2026).
 
 9. ГОСТ Р 7.0.100–2018. Система стандартов по информации, библиотечному и издательскому делу. Библиографическая ссылка. Общие требования и правила составления. – М. : Стандартинформ, 2018.
 
-10. Google. Material Design 3 – Bottom sheets. – URL: https://m3.material.io/components/bottom-sheets (дата обращения: 15.01.2026).
+10. Google. Material Design 3 – Bottom sheets [Электронный ресурс]. – URL: https://m3.material.io/components/bottom-sheets (дата обращения: 15.01.2026).
 
-11. Grantham, R. A Comprehensive Guide to Firebase Firestore for Android. – Medium, 2022. – URL: https://medium.com/firebase-developers/guide-to-firestore-android (дата обращения: 20.01.2026).
+11. Grantham R. A Comprehensive Guide to Firebase Firestore for Android [Электронный ресурс]. – Medium, 2022. – URL: https://medium.com/firebase-developers/guide-to-firestore-android (дата обращения: 20.01.2026).
 
-12. Holub A. Building Games with Android Canvas: Techniques and Patterns // Android Dev Summit Talks. – 2022. – URL: https://developer.android.com/events/dev-summit (дата обращения: 20.01.2026).
+12. Holub A. Building Games with Android Canvas: Techniques and Patterns [Электронный ресурс] // Android Dev Summit Talks. – 2022. – URL: https://developer.android.com/events/dev-summit (дата обращения: 20.01.2026).
 
-13. Martin R. C. Clean Architecture: A Craftsman's Guide to Software Structure and Design. – Prentice Hall, 2017. – 432 с.
+13. Martin R. C. Clean Architecture: A Craftsman's Guide to Software Structure and Design. – Upper Saddle River : Prentice Hall, 2017. – 432 с.
 
-14. Pixel, I. Bezier Curves in Android Game Development. – Android Developers Blog, 2023. – URL: https://android-developers.googleblog.com (дата обращения: 25.01.2026).
+14. Pixel I. Bezier Curves in Android Game Development [Электронный ресурс]. – Android Developers Blog, 2023. – URL: https://android-developers.googleblog.com (дата обращения: 25.01.2026).
 
 15. Romanuke V. Mobile Multiplayer Gaming Architecture Patterns // International Journal of Information and Communication Technologies. – 2022. – № 3. – С. 45–57.
 
-16. Russell S., Norvig P. Artificial Intelligence: A Modern Approach. 4th ed. – Prentice Hall, 2020. – 1132 с.
+16. Russell S., Norvig P. Artificial Intelligence: A Modern Approach. 4th ed. – Upper Saddle River : Prentice Hall, 2020. – 1132 с.
 
-17. Sensor Tower. Mobile Gaming Report 2023 – Genres and Engagement. – San Francisco, 2023. – URL: https://sensortower.com/reports (дата обращения: 05.01.2026).
+17. Sensor Tower. Mobile Gaming Report 2023 – Genres and Engagement [Электронный ресурс]. – San Francisco, 2023. – URL: https://sensortower.com/reports (дата обращения: 05.01.2026).
 
-18. Sensor Tower. State of Mobile Gaming 2023. – San Francisco, 2023. – URL: https://sensortower.com/reports (дата обращения: 05.01.2026).
+18. Sensor Tower. State of Mobile Gaming 2023 [Электронный ресурс]. – San Francisco, 2023. – URL: https://sensortower.com/reports (дата обращения: 05.01.2026).
 
 ---
 
