@@ -182,7 +182,7 @@ def main() -> None:
     add_table_style(doc)
     add_info_paragraph(doc)
     doc.save(OUTPUT)
-    print(f"✓ Создан {OUTPUT} с ГОСТ-стилями (TNR 14pt, поля 30/10/20/25 мм, 1.5 интервал).")
+    print(f"✓ Создан {OUTPUT} с ГОСТ-стилями (TNR 14pt, поля 30/15/20/20 мм, 1.5 интервал).")
     print(f"  Теперь запустите: bash convert_diploma.sh")
 
 
