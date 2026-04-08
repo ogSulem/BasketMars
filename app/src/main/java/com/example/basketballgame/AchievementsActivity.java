@@ -70,142 +70,162 @@ public class AchievementsActivity extends AppCompatActivity {
         int achievementLevel = prefs.getInt("achievementLevel", 0);
 
         for (int i = 0; i < titles.length; i++) {
+            boolean unlocked = achievementLevel >= i + 1;
+
+            // Карточка достижения
             FrameLayout card = new FrameLayout(this);
             GradientDrawable cardBg = new GradientDrawable();
-            cardBg.setColor(achievementLevel >= i + 1 ? 0xFF1A102B : 0xFF2D193C);
-            cardBg.setStroke(achievementLevel >= i + 1 ? dp(4) : dp(3), 0xFF8f5cff);
-            cardBg.setCornerRadius(dp(12));
+            cardBg.setColor(unlocked ? 0xFF1A102B : 0xFF2D193C);
+            cardBg.setStroke(dp(unlocked ? 4 : 2), unlocked ? 0xFF8f5cff : 0xFF5a3a7a);
+            cardBg.setCornerRadius(dp(14));
             card.setBackground(cardBg);
             LinearLayout.LayoutParams cardParams = new LinearLayout.LayoutParams(
-                    LinearLayout.LayoutParams.MATCH_PARENT, dp(140));
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
             cardParams.topMargin = dp(12);
             card.setLayoutParams(cardParams);
-            // Верх — название достижения
+
+            // Вертикальный контейнер внутри карточки — исключает наложение элементов
+            LinearLayout cardContent = new LinearLayout(this);
+            cardContent.setOrientation(LinearLayout.VERTICAL);
+            cardContent.setPadding(dp(14), dp(12), dp(14), dp(12));
+            card.addView(cardContent, new FrameLayout.LayoutParams(
+                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT));
+
+            // Название достижения
             TextView achTitle = new TextView(this);
             achTitle.setText(titles[i]);
-            achTitle.setTextColor(achievementLevel >= i + 1 ? 0xFF8f5cff : 0xFFAAAAAA);
-            achTitle.setTextSize(22);
+            achTitle.setTextColor(unlocked ? 0xFF8f5cff : 0xFFAAAAAA);
+            achTitle.setTextSize(20);
             achTitle.setGravity(Gravity.CENTER_HORIZONTAL);
             achTitle.setShadowLayer(4, 0, 2, 0xFF8f5cff);
-            achTitle.setPadding(0, 0, 0, 0);
-            FrameLayout.LayoutParams achTitleParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            achTitleParams.topMargin = dp(10);
-            card.addView(achTitle, achTitleParams);
+            cardContent.addView(achTitle, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            // Разделитель
+            View divider = new View(this);
+            LinearLayout.LayoutParams divParams = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, dp(1));
+            divParams.topMargin = dp(8);
+            divParams.bottomMargin = dp(8);
+            divider.setBackgroundColor(unlocked ? 0x558f5cff : 0x33ffffff);
+            cardContent.addView(divider, divParams);
+
             // Горизонтальная строка: число — награда — слово
             LinearLayout row = new LinearLayout(this);
             row.setOrientation(LinearLayout.HORIZONTAL);
             row.setGravity(Gravity.CENTER_VERTICAL);
-            FrameLayout.LayoutParams rowParams = new FrameLayout.LayoutParams(
-                FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
-            rowParams.topMargin = dp(32);
-            row.setLayoutParams(rowParams);
-            // Число очков
+            cardContent.addView(row, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, dp(90)));
+
+            // Число очков (слева)
+            LinearLayout leftCol = new LinearLayout(this);
+            leftCol.setOrientation(LinearLayout.VERTICAL);
+            leftCol.setGravity(Gravity.CENTER);
+            leftCol.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+
             TextView pointsView = new TextView(this);
             pointsView.setText(String.valueOf(unlockScore[i]));
-            pointsView.setTextColor(0xFF8f5cff);
-            pointsView.setTextSize(32);
+            pointsView.setTextColor(unlocked ? 0xFF8f5cff : 0xFF888888);
+            pointsView.setTextSize(34);
             pointsView.setGravity(Gravity.CENTER);
             pointsView.setShadowLayer(4, 0, 2, 0xFF8f5cff);
-            LinearLayout.LayoutParams pointsParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-            pointsParams.leftMargin = dp(12);
-            row.addView(pointsView, pointsParams);
-            // Награда (rewardCard) — всегда квадратная
+            leftCol.addView(pointsView, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+
+            int pts = unlockScore[i];
+            TextView wordView = new TextView(this);
+            wordView.setText(getResources().getQuantityString(R.plurals.achievement_points, pts));
+            wordView.setTextColor(unlocked ? 0xFFB266FF : 0xFF666666);
+            wordView.setTextSize(13);
+            wordView.setGravity(Gravity.CENTER);
+            leftCol.addView(wordView, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            row.addView(leftCol);
+
+            // Награда (по центру) — всегда квадратная
             FrameLayout rewardCard = new FrameLayout(this);
             GradientDrawable rewardBorder = new GradientDrawable();
-            rewardBorder.setColor(0x33000000);
-            rewardBorder.setStroke(dp(2), 0xFFB266FF);
-            rewardBorder.setCornerRadius(dp(8));
+            rewardBorder.setColor(unlocked ? 0x44000000 : 0x22000000);
+            rewardBorder.setStroke(dp(unlocked ? 3 : 2), unlocked ? 0xFFB266FF : 0xFF5a3a7a);
+            rewardBorder.setCornerRadius(dp(10));
             rewardCard.setBackground(rewardBorder);
             int rewardSizePx = dp(80);
             LinearLayout.LayoutParams rewardCardParams = new LinearLayout.LayoutParams(rewardSizePx, rewardSizePx);
             rewardCardParams.gravity = Gravity.CENTER_VERTICAL;
             rewardCard.setLayoutParams(rewardCardParams);
             int rewardRes = 0;
-            String rewardLabel = "";
             boolean isBgReward = false;
             int bgPreviewRes = 0;
-            if (i == 0) { rewardRes = R.drawable.ball2;  rewardLabel = "Стрит"; }
-            if (i == 1) { rewardRes = R.drawable.hoop2;  rewardLabel = "Стрит (сетка)"; }
-            if (i == 2) { rewardRes = R.drawable.ball;   rewardLabel = "Все мячи"; }
-            if (i == 3) { rewardRes = R.drawable.ball3;  rewardLabel = "Легенда"; }
-            if (i == 4) { rewardRes = R.drawable.hoop3;  rewardLabel = "Легенда (сетка)"; }
-            if (i == 5) { rewardRes = R.drawable.hoop;   rewardLabel = "Все сетки"; }
-            if (i == 6) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; rewardLabel = "Синий фон"; }
-            if (i == 7) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; rewardLabel = "Оранжевый фон"; }
+            if (i == 0) { rewardRes = R.drawable.ball2; }
+            if (i == 1) { rewardRes = R.drawable.hoop2; }
+            if (i == 2) { rewardRes = R.drawable.ball; }
+            if (i == 3) { rewardRes = R.drawable.ball3; }
+            if (i == 4) { rewardRes = R.drawable.hoop3; }
+            if (i == 5) { rewardRes = R.drawable.hoop; }
+            if (i == 6) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; }
+            if (i == 7) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; }
             if (rewardRes != 0) {
                 ImageView rewardImg = new ImageView(this);
-                // Используем процедурные превью для мячей/сеток, чтобы совпадало с игрой.
-                if (rewardRes == R.drawable.ball2) {
-                    Bitmap b = GameView.renderBallPreview(this, 1, rewardSizePx);
-                    rewardImg.setImageBitmap(b);
-                } else if (rewardRes == R.drawable.ball3) {
-                    Bitmap b = GameView.renderBallPreview(this, 2, rewardSizePx);
-                    rewardImg.setImageBitmap(b);
-                } else if (rewardRes == R.drawable.ball) {
-                    Bitmap b = GameView.renderBallPreview(this, 0, rewardSizePx);
-                    rewardImg.setImageBitmap(b);
-                } else if (rewardRes == R.drawable.hoop2) {
-                    Bitmap b = GameView.renderHoopPreview(this, 1, rewardSizePx);
-                    rewardImg.setImageBitmap(b);
-                } else if (rewardRes == R.drawable.hoop3) {
-                    Bitmap b = GameView.renderHoopPreview(this, 2, rewardSizePx);
-                    rewardImg.setImageBitmap(b);
-                } else if (rewardRes == R.drawable.hoop) {
-                    Bitmap b = GameView.renderHoopPreview(this, 0, rewardSizePx);
-                    rewardImg.setImageBitmap(b);
-                } else {
-                    rewardImg.setImageResource(rewardRes);
-                }
+                rewardImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+                Bitmap b = null;
+                if (rewardRes == R.drawable.ball2)  b = GameView.renderBallPreview(this, 1, rewardSizePx);
+                else if (rewardRes == R.drawable.ball3) b = GameView.renderBallPreview(this, 2, rewardSizePx);
+                else if (rewardRes == R.drawable.ball)  b = GameView.renderBallPreview(this, 0, rewardSizePx);
+                else if (rewardRes == R.drawable.hoop2) b = GameView.renderHoopPreview(this, 1, rewardSizePx);
+                else if (rewardRes == R.drawable.hoop3) b = GameView.renderHoopPreview(this, 2, rewardSizePx);
+                else if (rewardRes == R.drawable.hoop)  b = GameView.renderHoopPreview(this, 0, rewardSizePx);
+                if (b != null) rewardImg.setImageBitmap(b);
+                else rewardImg.setImageResource(rewardRes);
                 FrameLayout.LayoutParams imgParams = new FrameLayout.LayoutParams(rewardSizePx, rewardSizePx);
                 imgParams.gravity = Gravity.CENTER;
                 rewardCard.addView(rewardImg, imgParams);
             } else if (isBgReward) {
                 View preview = new View(this);
                 preview.setBackgroundResource(bgPreviewRes);
+                GradientDrawable roundClip = new GradientDrawable();
+                roundClip.setCornerRadius(dp(8));
                 FrameLayout.LayoutParams previewParams = new FrameLayout.LayoutParams(rewardSizePx, rewardSizePx);
                 previewParams.gravity = Gravity.CENTER;
-                preview.setLayoutParams(previewParams);
-                rewardCard.addView(preview);
+                rewardCard.addView(preview, previewParams);
             }
+            if (!unlocked) rewardCard.setAlpha(0.4f);
             row.addView(rewardCard);
-            // Слово 'очков' / 'points' — из plural-ресурса для корректной локализации
-            TextView wordView = new TextView(this);
-            int pts = unlockScore[i];
-            wordView.setText(getResources().getQuantityString(R.plurals.achievement_points, pts));
-            wordView.setTextColor(0xFF8f5cff);
-            wordView.setTextSize(22);
-            wordView.setGravity(Gravity.CENTER);
-            wordView.setShadowLayer(3, 0, 1, 0xFF8f5cff);
-            LinearLayout.LayoutParams wordParams = new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.WRAP_CONTENT, 1f);
-            wordParams.rightMargin = dp(12);
-            row.addView(wordView, wordParams);
-            card.addView(row);
-            // Overlay если не открыто (на всю карточку)
-            if (achievementLevel < i + 1) {
-                // Overlay на всю карточку (чуть светлее)
+
+            // Описание (справа)
+            LinearLayout rightCol = new LinearLayout(this);
+            rightCol.setOrientation(LinearLayout.VERTICAL);
+            rightCol.setGravity(Gravity.CENTER);
+            rightCol.setPadding(dp(10), 0, 0, 0);
+            rightCol.setLayoutParams(new LinearLayout.LayoutParams(0, LinearLayout.LayoutParams.MATCH_PARENT, 1f));
+
+            TextView descView = new TextView(this);
+            descView.setText(descs[i]);
+            descView.setTextColor(unlocked ? 0xFFDDDDDD : 0xFF666666);
+            descView.setTextSize(13);
+            descView.setGravity(Gravity.CENTER_VERTICAL | Gravity.START);
+            rightCol.addView(descView, new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT));
+            row.addView(rightCol);
+
+            // Overlay если не открыто (на всю карточку поверх контента)
+            if (!unlocked) {
                 View overlay = new View(this);
-                overlay.setBackgroundColor(0x77_000000);
-                FrameLayout.LayoutParams overlayParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-                overlay.setLayoutParams(overlayParams);
-                card.addView(overlay);
-                // Диагональная линия на всю карточку
+                overlay.setBackgroundColor(0x55_000000);
+                card.addView(overlay, new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
                 View diag = new View(this) {
                     @Override
                     protected void onDraw(android.graphics.Canvas canvas) {
                         super.onDraw(canvas);
                         android.graphics.Paint paint = new android.graphics.Paint();
                         paint.setColor(0xCC8f5cff);
-                        paint.setStrokeWidth(dp(4));
-                        paint.setAlpha(180);
-                        canvas.drawLine(1, 1, getWidth() - 1, getHeight() - 1, paint);
+                        paint.setStrokeWidth(dp(3));
+                        paint.setAlpha(140);
+                        canvas.drawLine(dp(12), dp(12), getWidth() - dp(12), getHeight() - dp(12), paint);
                     }
                 };
-                FrameLayout.LayoutParams diagParams = new FrameLayout.LayoutParams(
-                    FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT);
-                diag.setLayoutParams(diagParams);
-                card.addView(diag);
+                card.addView(diag, new FrameLayout.LayoutParams(
+                        FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
             }
             list.addView(card);
         }

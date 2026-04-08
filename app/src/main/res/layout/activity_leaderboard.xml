@@ -8,13 +8,13 @@
 
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="140px"
-        android:layout_height="140px"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:src="@drawable/ic_back"
         android:contentDescription="@string/btn_back"
         android:scaleType="centerInside"
-        android:layout_marginStart="32px"
-        android:layout_marginTop="48px"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
