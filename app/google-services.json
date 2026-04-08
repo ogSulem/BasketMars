@@ -1,27 +1,21 @@
 {
   "project_info": {
-    "project_number": "000000000000",
-    "firebase_url": "https://basketmars-placeholder.firebaseio.com",
-    "project_id": "basketmars-placeholder",
-    "storage_bucket": "basketmars-placeholder.appspot.com"
+    "project_number": "919518969626",
+    "project_id": "basketmars-321e2",
+    "storage_bucket": "basketmars-321e2.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:000000000000:android:0000000000000000000000",
+        "mobilesdk_app_id": "1:919518969626:android:264bfdb6f4a060332336a3",
         "android_client_info": {
           "package_name": "com.example.basketballgame"
         }
       },
-      "oauth_client": [
-        {
-          "client_id": "000000000000-xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
+      "oauth_client": [],
       "api_key": [
         {
-          "current_key": "REPLACE_WITH_REAL_API_KEY"
+          "current_key": "AIzaSyDzjalT5_5LfRB7YQuwBgpLGLINTo5Y_xs"
         }
       ],
       "services": {
