@@ -22,6 +22,8 @@ import android.widget.ImageButton;
 
 public class AchievementsActivity extends AppCompatActivity {
 
+    private FrameLayout root;
+
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(LocaleHelper.wrap(base));
@@ -31,6 +33,7 @@ public class AchievementsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         FrameLayout root = new FrameLayout(this);
+        this.root = root;
 
         SharedPreferences prefs = getSharedPreferences("basketball", Context.MODE_PRIVATE);
         int selectedBg = prefs.getInt("selectedBg", 0);
@@ -252,7 +255,7 @@ public class AchievementsActivity extends AppCompatActivity {
         SharedPreferences prefs = getSharedPreferences("basketball", Context.MODE_PRIVATE);
         int bgIdx = prefs.getInt("selectedBg", 0);
         int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
-        getWindow().getDecorView().setBackgroundResource(bgDrawables[bgIdx]);
+        if (root != null) root.setBackgroundResource(bgDrawables[bgIdx]);
     }
 
     private int dp(int v) {

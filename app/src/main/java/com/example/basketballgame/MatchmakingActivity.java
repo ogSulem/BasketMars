@@ -279,4 +279,14 @@ public class MatchmakingActivity extends AppCompatActivity {
         super.onDestroy();
         if (!matched) cancelMatchmaking();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = getSharedPreferences("basketball", MODE_PRIVATE);
+        int bgIdx = prefs.getInt("selectedBg", 0);
+        int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
+        View root = findViewById(R.id.root_layout);
+        if (root != null) root.setBackgroundResource(bgDrawables[bgIdx]);
+    }
 }

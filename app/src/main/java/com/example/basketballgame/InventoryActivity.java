@@ -171,14 +171,20 @@ public class InventoryActivity extends AppCompatActivity {
                 LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.WRAP_CONTENT);
         icons.setLayoutParams(iconsParams);
         for (int i = 0; i < count; i++) {
+            boolean isSelected = selected == i;
             FrameLayout frame = new FrameLayout(this);
             GradientDrawable border = new GradientDrawable();
-            border.setColor(0xFF23143A);
-            border.setStroke(selected == i ? dp(6) : dp(4), 0xFF8f5cff);
+            if (isSelected) {
+                border.setColor(0xFF2E1A52); // lighter purple bg for selected
+                border.setStroke(dp(4), 0xFFFFD700); // gold border
+            } else {
+                border.setColor(0xFF1A0F2E); // darker bg for unselected
+                border.setStroke(dp(2), 0xFF4a2c7a); // dim purple border
+            }
             border.setCornerRadius(dp(18));
             frame.setBackground(border);
             frame.setTranslationZ(12);
-            FrameLayout.LayoutParams frameParams = new FrameLayout.LayoutParams(dp(80), dp(80));
+            FrameLayout.LayoutParams frameParams = new FrameLayout.LayoutParams(dp(86), dp(86));
             frame.setLayoutParams(frameParams);
             View icon;
             if (sectionType == SECTION_BACKGROUNDS) {
@@ -199,7 +205,7 @@ public class InventoryActivity extends AppCompatActivity {
                 icon = img;
             }
 
-            FrameLayout.LayoutParams iconParams = new FrameLayout.LayoutParams(dp(56), dp(56));
+            FrameLayout.LayoutParams iconParams = new FrameLayout.LayoutParams(dp(60), dp(60));
             iconParams.gravity = Gravity.CENTER;
             frame.addView(icon, iconParams);
             if (unlocked < i) {
@@ -211,7 +217,7 @@ public class InventoryActivity extends AppCompatActivity {
                 overlayBg.setColor(0x883A2B5C);
                 overlayBg.setCornerRadius(dp(18));
                 overlay.setBackground(overlayBg);
-                FrameLayout.LayoutParams overlayParams = new FrameLayout.LayoutParams(dp(80), dp(80));
+                FrameLayout.LayoutParams overlayParams = new FrameLayout.LayoutParams(dp(86), dp(86));
                 overlayParams.gravity = Gravity.CENTER;
                 overlay.setLayoutParams(overlayParams);
                 frame.addView(overlay);
@@ -228,7 +234,7 @@ public class InventoryActivity extends AppCompatActivity {
                         canvas.drawLine(pad, pad, getWidth() - pad, getHeight() - pad, paint);
                     }
                 };
-                FrameLayout.LayoutParams diagParams = new FrameLayout.LayoutParams(dp(80), dp(80));
+                FrameLayout.LayoutParams diagParams = new FrameLayout.LayoutParams(dp(86), dp(86));
                 diagParams.gravity = Gravity.CENTER;
                 diag.setLayoutParams(diagParams);
                 frame.addView(diag);
@@ -242,6 +248,25 @@ public class InventoryActivity extends AppCompatActivity {
                         onSelect.onSelect(idx);
                     }
                 });
+                // Checkmark badge for selected item
+                if (isSelected) {
+                    TextView check = new TextView(this);
+                    check.setText("✓");
+                    check.setTextColor(0xFF1A0F2E);
+                    check.setTextSize(11);
+                    check.setTypeface(null, Typeface.BOLD);
+                    check.setGravity(Gravity.CENTER);
+                    GradientDrawable checkBg = new GradientDrawable();
+                    checkBg.setShape(GradientDrawable.OVAL);
+                    checkBg.setColor(0xFFFFD700);
+                    check.setBackground(checkBg);
+                    int badgeSize = dp(20);
+                    FrameLayout.LayoutParams checkParams = new FrameLayout.LayoutParams(badgeSize, badgeSize);
+                    checkParams.gravity = Gravity.TOP | Gravity.END;
+                    checkParams.topMargin = dp(2);
+                    checkParams.rightMargin = dp(2);
+                    frame.addView(check, checkParams);
+                }
             }
             icons.addView(frame);
             if (i < count - 1) {
@@ -262,15 +287,18 @@ public class InventoryActivity extends AppCompatActivity {
         for (int i = 0; i < count; i++) {
             TextView label = new TextView(this);
             label.setText(labels[i]);
-            label.setTextColor(0xFFFFFFFF);
-            label.setTextSize(13);
+            if (selected == i) {
+                label.setTextColor(0xFFFFD700); // gold for selected
+                label.setTextSize(14);
+                label.setShadowLayer(4, 0, 2, 0xAA000000);
+            } else {
+                label.setTextColor(0xFFAA99BB); // dimmer for unselected
+                label.setTextSize(12);
+                label.setShadowLayer(2, 0, 1, 0x88000000);
+            }
             label.setGravity(Gravity.CENTER);
             label.setTypeface(null, Typeface.BOLD);
-            label.setShadowLayer(3, 0, 2, 0xCC000000);
-            if (selected == i) {
-                label.setPaintFlags(label.getPaintFlags() | android.graphics.Paint.UNDERLINE_TEXT_FLAG);
-            }
-            LinearLayout.LayoutParams labelParams = new LinearLayout.LayoutParams(dp(80), LinearLayout.LayoutParams.WRAP_CONTENT);
+            LinearLayout.LayoutParams labelParams = new LinearLayout.LayoutParams(dp(86), LinearLayout.LayoutParams.WRAP_CONTENT);
             labelParams.gravity = Gravity.CENTER;
             labelsRow.addView(label, labelParams);
             if (i < count - 1) {

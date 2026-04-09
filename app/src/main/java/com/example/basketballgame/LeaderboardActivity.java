@@ -1,5 +1,6 @@
 package com.example.basketballgame;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ProgressBar;
@@ -122,5 +123,15 @@ public class LeaderboardActivity extends AppCompatActivity {
         if (statsTimed != null) statsTimed.setText(String.valueOf(stats.timedBest));
         if (statsDuel != null) statsDuel.setText(String.valueOf(stats.duelBest));
         if (statsOnlinePvp != null) statsOnlinePvp.setText(String.valueOf(stats.onlinePvpBest));
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = getSharedPreferences("basketball", MODE_PRIVATE);
+        int bgIdx = prefs.getInt("selectedBg", 0);
+        int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
+        View root = findViewById(R.id.root_layout);
+        if (root != null) root.setBackgroundResource(bgDrawables[bgIdx]);
     }
 }

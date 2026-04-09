@@ -292,7 +292,9 @@ public class GameActivity extends AppCompatActivity {
 
     /** Инициализация бота (единственный вариант дуэли). */
     private void initBotClient() {        MatchClient.Listener listener = new MatchClient.Listener() {
-            @Override public void onConnected() { }
+            @Override public void onConnected() {
+                if (gameView != null) gameView.resetMatchTimer();
+            }
 
             @Override
             public void onDisconnected() {
@@ -322,7 +324,9 @@ public class GameActivity extends AppCompatActivity {
     /** Инициализация реального онлайн-клиента для режима ONLINE_PVP. */
     private void initOnlinePvpClient(String roomId, int myRole) {
         MatchClient.Listener listener = new MatchClient.Listener() {
-            @Override public void onConnected() { }
+            @Override public void onConnected() {
+                if (gameView != null) gameView.resetMatchTimer();
+            }
 
             @Override
             public void onDisconnected() {

@@ -2319,6 +2319,14 @@ public class GameView extends View {
         return gameOver;
     }
 
+    /** Сбрасывает таймер матча на начало — вызывается когда соперник/бот подключается. */
+    public void resetMatchTimer() {
+        if (timedMode || onlineMode) {
+            modeStartMs = System.currentTimeMillis();
+            remainingTimeMs = modeDurationMs;
+        }
+    }
+
     public void setPaused(boolean value) {
         paused = value;
         if (!paused) postInvalidate();

@@ -198,4 +198,14 @@ public class SettingsActivity extends AppCompatActivity {
         if (TextUtils.isEmpty(name)) name = getString(R.string.default_player_name);
         prefs.edit().putString("playerName", name).apply();
     }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences prefs = getSharedPreferences("basketball", MODE_PRIVATE);
+        int bgIdx = prefs.getInt("selectedBg", 0);
+        int[] bgDrawables = {R.drawable.bg_gradient, R.drawable.bg_gradient2, R.drawable.bg_gradient3};
+        View root = findViewById(R.id.root_layout);
+        if (root != null) root.setBackgroundResource(bgDrawables[bgIdx]);
+    }
 }
