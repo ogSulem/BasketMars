@@ -2240,70 +2240,53 @@ public class GameView extends View {
 
         applyArcadeDifficulty();
 
-        if (achievementLevel < 8 && score >= (achievementLevel + 1) * 3) {
+        if (achievementLevel < 6 && score >= (achievementLevel + 1) * 5) {
             achievementLevel++;
             SharedPreferences prefs = getContext().getSharedPreferences("basketball", Context.MODE_PRIVATE);
             prefs.edit().putInt("achievementLevel", achievementLevel).apply();
 
-            int cycle = (achievementLevel - 1) % 3;
-            if (cycle == 0) {
-                if (achievementLevel == 1) {
-                    unlockedBall = Math.max(unlockedBall, 1);
-                    prefs.edit().putInt("unlockedBall", unlockedBall).apply();
-                    achievementText = getContext().getString(R.string.ach_popup_streetballer);
-                    achievementDesc = getContext().getString(R.string.ach_popup_streetballer_desc);
-                    achievementIconRes = R.drawable.ball2;
-                    achievementBgColorType = 0;
-                } else if (achievementLevel == 4) {
-                    unlockedBall = Math.max(unlockedBall, 2);
-                    prefs.edit().putInt("unlockedBall", unlockedBall).apply();
-                    achievementText = getContext().getString(R.string.ach_popup_legend);
-                    achievementDesc = getContext().getString(R.string.ach_popup_legend_desc);
-                    achievementIconRes = R.drawable.ball3;
-                    achievementBgColorType = 0;
-                } else if (achievementLevel == 7) {
-                    unlockedBg = Math.max(unlockedBg, 1);
-                    prefs.edit().putInt("unlockedBg", unlockedBg).apply();
-                    achievementText = getContext().getString(R.string.ach_popup_blue_style);
-                    achievementDesc = getContext().getString(R.string.ach_popup_blue_style_desc);
-                    achievementIconRes = 0;
-                    achievementBgColorType = 1;
-                }
-            } else if (cycle == 1) {
-                if (achievementLevel == 2) {
-                    unlockedHoop = Math.max(unlockedHoop, 1);
-                    prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
-                    achievementText = getContext().getString(R.string.ach_popup_hoop_master);
-                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_master_desc);
-                    achievementIconRes = R.drawable.hoop2;
-                    achievementBgColorType = 0;
-                } else if (achievementLevel == 5) {
-                    unlockedHoop = Math.max(unlockedHoop, 2);
-                    prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
-                    achievementText = getContext().getString(R.string.ach_popup_hoop_champ);
-                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_champ_desc);
-                    achievementIconRes = R.drawable.hoop3;
-                    achievementBgColorType = 0;
-                } else if (achievementLevel == 8) {
-                    unlockedBg = 2;
-                    prefs.edit().putInt("unlockedBg", unlockedBg).apply();
-                    achievementText = getContext().getString(R.string.ach_popup_orange_style);
-                    achievementDesc = getContext().getString(R.string.ach_popup_orange_style_desc);
-                    achievementIconRes = 0;
-                    achievementBgColorType = 2;
-                }
-            } else if (cycle == 2) {
-                if (achievementLevel == 3) {
-                    achievementText = getContext().getString(R.string.ach_popup_ball_collector);
-                    achievementDesc = getContext().getString(R.string.ach_popup_ball_collector_desc);
-                    achievementIconRes = R.drawable.ball;
-                    achievementBgColorType = 0;
-                } else if (achievementLevel == 6) {
-                    achievementText = getContext().getString(R.string.ach_popup_hoop_king);
-                    achievementDesc = getContext().getString(R.string.ach_popup_hoop_king_desc);
-                    achievementIconRes = R.drawable.hoop;
-                    achievementBgColorType = 0;
-                }
+            if (achievementLevel == 1) {
+                unlockedBall = Math.max(unlockedBall, 1);
+                prefs.edit().putInt("unlockedBall", unlockedBall).apply();
+                achievementText = getContext().getString(R.string.ach_popup_streetballer);
+                achievementDesc = getContext().getString(R.string.ach_popup_streetballer_desc);
+                achievementIconRes = R.drawable.ball2;
+                achievementBgColorType = 0;
+            } else if (achievementLevel == 2) {
+                unlockedHoop = Math.max(unlockedHoop, 1);
+                prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
+                achievementText = getContext().getString(R.string.ach_popup_hoop_master);
+                achievementDesc = getContext().getString(R.string.ach_popup_hoop_master_desc);
+                achievementIconRes = R.drawable.hoop2;
+                achievementBgColorType = 0;
+            } else if (achievementLevel == 3) {
+                unlockedBg = Math.max(unlockedBg, 1);
+                prefs.edit().putInt("unlockedBg", unlockedBg).apply();
+                achievementText = getContext().getString(R.string.ach_popup_blue_style);
+                achievementDesc = getContext().getString(R.string.ach_popup_blue_style_desc);
+                achievementIconRes = 0;
+                achievementBgColorType = 1;
+            } else if (achievementLevel == 4) {
+                unlockedBall = Math.max(unlockedBall, 2);
+                prefs.edit().putInt("unlockedBall", unlockedBall).apply();
+                achievementText = getContext().getString(R.string.ach_popup_legend);
+                achievementDesc = getContext().getString(R.string.ach_popup_legend_desc);
+                achievementIconRes = R.drawable.ball3;
+                achievementBgColorType = 0;
+            } else if (achievementLevel == 5) {
+                unlockedHoop = Math.max(unlockedHoop, 2);
+                prefs.edit().putInt("unlockedHoop", unlockedHoop).apply();
+                achievementText = getContext().getString(R.string.ach_popup_hoop_champ);
+                achievementDesc = getContext().getString(R.string.ach_popup_hoop_champ_desc);
+                achievementIconRes = R.drawable.hoop3;
+                achievementBgColorType = 0;
+            } else if (achievementLevel == 6) {
+                unlockedBg = Math.max(unlockedBg, 2);
+                prefs.edit().putInt("unlockedBg", unlockedBg).apply();
+                achievementText = getContext().getString(R.string.ach_popup_orange_style);
+                achievementDesc = getContext().getString(R.string.ach_popup_orange_style_desc);
+                achievementIconRes = 0;
+                achievementBgColorType = 2;
             }
 
             achievementShowTime = System.currentTimeMillis();

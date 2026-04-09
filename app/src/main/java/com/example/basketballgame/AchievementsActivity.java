@@ -66,8 +66,8 @@ public class AchievementsActivity extends AppCompatActivity {
         // Achievement data from string resources (i18n-safe)
         String[] titles = getResources().getStringArray(R.array.achievement_titles);
         String[] descs  = getResources().getStringArray(R.array.achievement_descs);
-        // Unlock thresholds must match GameView logic: levels 1..8 at scores 3,6,9,12,15,18,21,24
-        int[] unlockScore = {3, 6, 9, 12, 15, 18, 21, 24};
+        // Unlock thresholds must match GameView logic: levels 1..6 at scores 5,10,15,20,25,30
+        int[] unlockScore = {5, 10, 15, 20, 25, 30};
         int achievementLevel = prefs.getInt("achievementLevel", 0);
 
         for (int i = 0; i < titles.length; i++) {
@@ -159,12 +159,10 @@ public class AchievementsActivity extends AppCompatActivity {
             int bgPreviewRes = 0;
             if (i == 0) { rewardRes = R.drawable.ball2; }
             if (i == 1) { rewardRes = R.drawable.hoop2; }
-            if (i == 2) { rewardRes = R.drawable.ball; }
+            if (i == 2) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; }
             if (i == 3) { rewardRes = R.drawable.ball3; }
             if (i == 4) { rewardRes = R.drawable.hoop3; }
-            if (i == 5) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient; }
-            if (i == 6) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; }
-            if (i == 7) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; }
+            if (i == 5) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; }
             if (rewardRes != 0) {
                 ImageView rewardImg = new ImageView(this);
                 rewardImg.setScaleType(ImageView.ScaleType.CENTER_INSIDE);

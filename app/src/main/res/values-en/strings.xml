@@ -133,23 +133,19 @@
 
     <!-- Achievement titles and descriptions (Achievements screen) -->
     <string-array name="achievement_titles">
-        <item>First Shot!</item>
-        <item>Street Player</item>
         <item>Streetballer</item>
+        <item>Hoop Master</item>
+        <item>Blue Style</item>
         <item>Court Legend</item>
-        <item>Shot Master</item>
-        <item>King of the Court</item>
-        <item>Gradient: Blue BG</item>
-        <item>Gradient: Orange BG</item>
+        <item>Hoop Champion</item>
+        <item>Orange Style</item>
     </string-array>
     <string-array name="achievement_descs">
-        <item>You\'re in! New ball: Street</item>
-        <item>Like Michael Jordan! Hoop unlocked: Street</item>
-        <item>All balls are yours!</item>
+        <item>Ball unlocked: Street</item>
+        <item>Hoop unlocked: Street</item>
+        <item>Blue background unlocked!</item>
         <item>Ball unlocked: Legend</item>
         <item>Hoop unlocked: Legend</item>
-        <item>All hoops are yours!</item>
-        <item>Blue background unlocked!</item>
         <item>Orange background unlocked!</item>
     </string-array>
 

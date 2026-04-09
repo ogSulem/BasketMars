@@ -134,23 +134,19 @@
 
     <!-- Названия и описания достижений (экран Достижений) -->
     <string-array name="achievement_titles">
-        <item>Первый бросок!</item>
-        <item>Уличный игрок</item>
         <item>Стритболер</item>
+        <item>Сеточный мастер</item>
+        <item>Синий стиль</item>
         <item>Легенда площадки</item>
-        <item>Мастер броска</item>
-        <item>Король улиц</item>
-        <item>Градиент: Синий фон</item>
-        <item>Градиент: Оранжевый фон</item>
+        <item>Сеточный чемпион</item>
+        <item>Оранжевый стиль</item>
     </string-array>
     <string-array name="achievement_descs">
-        <item>Ты в игре! Новый мяч: Стрит</item>
-        <item>Ты как Майкл Джордан! Открыта сетка: Стрит</item>
-        <item>Все мячи теперь твои!</item>
+        <item>Открыт мяч: Стрит</item>
+        <item>Открыта сетка: Стрит</item>
+        <item>Открыт синий фон!</item>
         <item>Открыт мяч: Легенда</item>
         <item>Открыта сетка: Легенда</item>
-        <item>Все сетки теперь твои!</item>
-        <item>Открыт синий фон!</item>
         <item>Открыт оранжевый фон!</item>
     </string-array>
 
