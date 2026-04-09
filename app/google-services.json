@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "919518969626",
+    "project_id": "basketmars-321e2",
+    "storage_bucket": "basketmars-321e2.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:919518969626:android:264bfdb6f4a060332336a3",
+        "android_client_info": {
+          "package_name": "com.example.basketballgame"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzjalT5_5LfRB7YQuwBgpLGLINTo5Y_xs"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

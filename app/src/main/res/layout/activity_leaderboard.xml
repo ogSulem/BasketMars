@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/bg_gradient"
@@ -8,13 +9,13 @@
 
     <ImageView
         android:id="@+id/btn_back"
-        android:layout_width="140px"
-        android:layout_height="140px"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:src="@drawable/ic_back"
-        android:contentDescription="Назад"
-        android:scaleType="centerInside"
-        android:layout_marginStart="32px"
-        android:layout_marginTop="48px"
+        android:contentDescription="@string/btn_back"
+        android:scaleType="fitCenter"
+        android:layout_marginStart="12dp"
+        android:layout_marginTop="14dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -25,7 +26,7 @@
         android:layout_marginStart="20dp"
         android:layout_marginEnd="20dp"
         android:layout_marginTop="20dp"
-        android:text="Лидерборд"
+        android:text="@string/leaderboard_title"
         android:textColor="@android:color/white"
         android:textSize="32sp"
         android:textStyle="bold"
@@ -69,7 +70,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Аркада"
+                    android:text="@string/leaderboard_tab_arcade"
                     android:textColor="#B3FFFFFF"
                     android:textSize="14sp" />
 
@@ -106,7 +107,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="На время"
+                    android:text="@string/leaderboard_tab_timed"
                     android:textColor="#B3FFFFFF"
                     android:textSize="14sp" />
 
@@ -142,12 +143,48 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:text="Дуэли"
+                    android:text="@string/leaderboard_tab_duel"
                     android:textColor="#B3FFFFFF"
                     android:textSize="14sp" />
 
                 <TextView
                     android:id="@+id/stats_duel"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="0"
+                    android:textColor="@android:color/white"
+                    android:textSize="24sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+
+        <com.google.android.material.card.MaterialCardView
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            app:cardBackgroundColor="@android:color/transparent"
+            app:cardCornerRadius="18dp"
+            app:cardElevation="0dp"
+            app:strokeWidth="0dp"
+            android:layout_weight="1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center_horizontal"
+                android:padding="8dp">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:text="@string/leaderboard_tab_online"
+                    android:textColor="#B3FFFFFF"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/stats_online_pvp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -182,7 +219,7 @@
         android:layout_marginEnd="20dp"
         android:layout_marginTop="24dp"
         android:gravity="center"
-        android:text="Пока нет результатов"
+        android:text="@string/leaderboard_empty"
         android:textColor="#CCFFFFFF"
         android:textSize="18sp"
         android:visibility="gone"

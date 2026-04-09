@@ -79,7 +79,9 @@ public class LeaderboardAdapter extends RecyclerView.Adapter<LeaderboardAdapter.
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         LeaderboardEntry entry = entries.get(position);
         holder.position.setText(String.valueOf(position + 1));
-        holder.name.setText(entry.playerName == null || entry.playerName.isEmpty() ? "Игрок" : entry.playerName);
+        holder.name.setText(entry.playerName == null || entry.playerName.isEmpty()
+                ? holder.itemView.getContext().getString(R.string.default_player_name)
+                : entry.playerName);
         holder.score.setText(String.valueOf(entry.score));
 
         int rank = position + 1;

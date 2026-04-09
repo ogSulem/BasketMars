@@ -43,17 +43,17 @@ public class ResetProgress {
             boolean result = editor.commit();
             
             if (result) {
-                Toast.makeText(context, "Прогресс успешно сброшен", Toast.LENGTH_LONG).show();
-                Log.i("ResetProgress", "Прогресс успешно сброшен");
-            } else {
-                Toast.makeText(context, "Ошибка при сбросе прогресса", Toast.LENGTH_LONG).show();
-                Log.e("ResetProgress", "Ошибка при сбросе прогресса");
-            }
+                    Toast.makeText(context, context.getString(R.string.progress_reset_ok), Toast.LENGTH_LONG).show();
+                    Log.i("ResetProgress", "Progress reset successfully");
+                } else {
+                    Toast.makeText(context, context.getString(R.string.progress_reset_error), Toast.LENGTH_LONG).show();
+                    Log.e("ResetProgress", "Failed to reset progress");
+                }
             
             return result;
         } catch (Exception e) {
-            Log.e("ResetProgress", "Исключение при сбросе прогресса", e);
-            Toast.makeText(context, "Ошибка: " + e.getMessage(), Toast.LENGTH_LONG).show();
+            Log.e("ResetProgress", "Exception resetting progress", e);
+            Toast.makeText(context, context.getString(R.string.progress_reset_error), Toast.LENGTH_LONG).show();
             return false;
         }
     }

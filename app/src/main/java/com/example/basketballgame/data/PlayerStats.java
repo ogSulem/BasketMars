@@ -14,5 +14,10 @@ public class PlayerStats {
     public int duelBest;
     public int duelWins;
     public int duelLosses;
+
+    public int onlinePvpBest;
+    public int onlinePvpWins;
+    public int onlinePvpLosses;
+
     public long updatedAt;
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Duel/PvP mode icon: two crossed swords -->
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="56dp"
+    android:height="56dp"
+    android:viewportWidth="56"
+    android:viewportHeight="56">
+
+    <!-- Background circles (consistent with other mode icons) -->
+    <path
+        android:fillColor="#2AFFFFFF"
+        android:pathData="M28,4C14.75,4 4,14.75 4,28c0,13.25 10.75,24 24,24c13.25,0 24,-10.75 24,-24C52,14.75 41.25,4 28,4z"/>
+    <path
+        android:fillColor="#FF3D7BFF"
+        android:pathData="M28,10c-9.94,0 -18,8.06 -18,18c0,9.94 8.06,18 18,18c9.94,0 18,-8.06 18,-18C46,18.06 37.94,10 28,10z"/>
+    <path
+        android:fillColor="#FF1A102B"
+        android:pathData="M28,14c-7.73,0 -14,6.27 -14,14c0,7.73 6.27,14 14,14c7.73,0 14,-6.27 14,-14C42,20.27 35.73,14 28,14z"/>
+
+    <!-- ══ Sword 1: top-left to bottom-right ══ -->
+    <!-- Blade -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M16,16 L40,40"/>
+    <!-- Guard (cross-piece) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFAAAAFF"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M35,21 L39,17"/>
+    <!-- Pommel (handle tip) -->
+    <path
+        android:fillColor="#FFAAAAFF"
+        android:pathData="M14,14 A2.5,2.5 0 1,0 19,14 A2.5,2.5 0 1,0 14,14 Z"/>
+
+    <!-- ══ Sword 2: top-right to bottom-left ══ -->
+    <!-- Blade -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFFFFFFF"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:pathData="M40,16 L16,40"/>
+    <!-- Guard (cross-piece) -->
+    <path
+        android:fillColor="#00000000"
+        android:strokeColor="#FFAAAAFF"
+        android:strokeWidth="2.2"
+        android:strokeLineCap="round"
+        android:pathData="M21,21 L17,17"/>
+    <!-- Pommel -->
+    <path
+        android:fillColor="#FFAAAAFF"
+        android:pathData="M37.5,14 A2.5,2.5 0 1,0 42.5,14 A2.5,2.5 0 1,0 37.5,14 Z"/>
+
+    <!-- Centre cross flash -->
+    <path
+        android:fillColor="#FFFFEE58"
+        android:pathData="M26.5,26.5 A1.8,1.8 0 1,0 29.5,29.5 A1.8,1.8 0 1,0 26.5,26.5 Z"/>
+
+</vector>
