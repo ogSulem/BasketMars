@@ -60,7 +60,7 @@ public class GameActivity extends AppCompatActivity {
         // Кнопка "Назад"
         ImageView backButton = new ImageView(this);
         backButton.setImageResource(R.drawable.ic_back);
-        backButton.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        backButton.setScaleType(ImageView.ScaleType.FIT_CENTER);
         backButton.setContentDescription(getString(R.string.btn_back));
         int btnSizePx = dp(56);
         FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(btnSizePx, btnSizePx);

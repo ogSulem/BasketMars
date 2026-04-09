@@ -44,6 +44,7 @@ public class AchievementsActivity extends AppCompatActivity {
         title.setTextColor(Color.WHITE);
         title.setGravity(Gravity.CENTER);
         title.setShadowLayer(12, 0, 8, 0xFF8f5cff);
+        title.setPadding(dp(68), 0, dp(16), 0);
         FrameLayout.LayoutParams titleParams = new FrameLayout.LayoutParams(
                 FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.WRAP_CONTENT);
         titleParams.topMargin = dp(20);
@@ -161,7 +162,7 @@ public class AchievementsActivity extends AppCompatActivity {
             if (i == 2) { rewardRes = R.drawable.ball; }
             if (i == 3) { rewardRes = R.drawable.ball3; }
             if (i == 4) { rewardRes = R.drawable.hoop3; }
-            if (i == 5) { rewardRes = R.drawable.hoop; }
+            if (i == 5) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient; }
             if (i == 6) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient2; }
             if (i == 7) { isBgReward = true; bgPreviewRes = R.drawable.bg_gradient3; }
             if (rewardRes != 0) {

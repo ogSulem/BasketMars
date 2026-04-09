@@ -8,10 +8,11 @@ import androidx.annotation.Nullable;
 import com.google.firebase.firestore.DocumentReference;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.FirebaseFirestoreSettings;
-import com.google.firebase.firestore.Query;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -117,8 +118,6 @@ public class CloudLeaderboardRepository {
 
         db.collection(COLLECTION)
                 .whereEqualTo("mode", mode)
-                .orderBy("score", Query.Direction.DESCENDING)
-                .limit(limit)
                 .get()
                 .addOnSuccessListener(querySnapshot -> {
                     List<LeaderboardEntry> entries = new ArrayList<>();
@@ -131,6 +130,10 @@ public class CloudLeaderboardRepository {
                         Long ts = doc.getLong("timestamp");
                         entry.timestamp = ts != null ? ts : 0L;
                         entries.add(entry);
+                    }
+                    Collections.sort(entries, (a, b) -> Integer.compare(b.score, a.score));
+                    if (entries.size() > limit) {
+                        entries = entries.subList(0, limit);
                     }
                     callback.onResult(entries);
                 })

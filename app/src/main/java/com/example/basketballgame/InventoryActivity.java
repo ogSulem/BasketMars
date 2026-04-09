@@ -58,7 +58,7 @@ public class InventoryActivity extends AppCompatActivity {
         FrameLayout.LayoutParams backParams = new FrameLayout.LayoutParams(dp(56), dp(56));
         backParams.leftMargin = dp(12);
         backParams.topMargin = dp(14);
-        backBtn.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+        backBtn.setScaleType(ImageView.ScaleType.FIT_CENTER);
         root.addView(backBtn, backParams);
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
